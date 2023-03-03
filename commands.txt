@@ -1,0 +1,6 @@
+docker run -itd -e POSTGRES_USER=lic_livepark -e POSTGRES_PASSWORD=lic_livepark -p 5432:5432 -v /data:/var/lib/postgresql/data --name lic_livepark postgres
+
+PGPASSWORD=lic_livepark psql -U lic_livepark
+\c lic_livepark
+
+CREATE TABLE accounts (user_id serial PRIMARY KEY, username VARCHAR ( 50 ) UNIQUE NOT NULL, password VARCHAR ( 50 ) NOT NULL, email VARCHAR ( 255 ) UNIQUE NOT NULL);
