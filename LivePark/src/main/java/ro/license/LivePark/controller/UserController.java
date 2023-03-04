@@ -1,14 +1,17 @@
 package ro.license.LivePark.controller;
 
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import ro.license.LivePark.entities.IUser;
 import ro.license.LivePark.entities.UserLivePark;
 import ro.license.LivePark.service.IUserService;
 
-@RequestMapping("livepark/user")
+import java.net.URI;
+import java.net.URISyntaxException;
+
+@RequestMapping("api/user")
 @RestController
 public class UserController {
 
@@ -23,14 +26,21 @@ public class UserController {
 
     @GetMapping(path = "/{id}")
     public Iterable<UserLivePark> getUserById(@PathVariable Long id) {
-        System.out.println("Get User by ID: " + id);
         return userLiveParkService.findByUserId(id);
     }
 
     @GetMapping(path = "/username/{username}")
     public Iterable<UserLivePark> getUserByUsername(@PathVariable String username) {
-        System.out.println("Get User by username: " + username);
         return userLiveParkService.findByUsername(username);
+    }
+
+    @PostMapping
+    public ResponseEntity<?> createUserLiverPark(@RequestBody UserLivePark user) throws URISyntaxException {
+        IUser userLivePark = userLiveParkService.save(user);
+        if (!(userLivePark instanceof UserLivePark))
+            return null;
+
+        return ResponseEntity.created(new URI("api/user" + ((UserLivePark) userLivePark).getId())).body(userLivePark);
     }
 
 }

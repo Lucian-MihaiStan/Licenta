@@ -12,17 +12,17 @@ import javax.persistence.*;
 @Table(name="accounts")
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
-public class UserLivePark {
+public class UserLivePark implements IUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name="id", unique = true, nullable = false)
     public Long id;
 
-    @Column(table = "accounts", name = "username")
+    @Column(name = "username", length = 50)
     public String username;
 
-    @Column(table = "accounts", name="password")
+    @Column(name = "password", length = 50)
     public String password;
 
     @Override
