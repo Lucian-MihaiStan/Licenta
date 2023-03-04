@@ -2,11 +2,8 @@ package ro.license.LivePark.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ro.license.LivePark.entities.IUser;
 import ro.license.LivePark.entities.UserLivePark;
 import ro.license.LivePark.repository.UserRepository;
-
-import java.util.List;
 
 @Service
 public class UserService implements IUserService {
@@ -15,8 +12,7 @@ public class UserService implements IUserService {
     private UserRepository repository;
     @Override
     public Iterable<UserLivePark> findAll() {
-        var userLiveParks = (List<UserLivePark>) repository.findAll();
-        return userLiveParks;
+        return repository.findAll();
     }
 
     @Override
@@ -30,7 +26,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public IUser save(UserLivePark user) {
-        return repository.save(user);
+    public Long save(UserLivePark user) {
+        return repository.saveUser(user.getUsername(), user.getPassword());
     }
 }

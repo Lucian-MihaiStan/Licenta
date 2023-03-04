@@ -1,11 +1,11 @@
 package ro.license.LivePark.controller;
 
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.license.LivePark.entities.IUser;
 import ro.license.LivePark.entities.UserLivePark;
+import ro.license.LivePark.entities.UserLivePark.UserLiveParkBuilder;
 import ro.license.LivePark.service.IUserService;
 
 import java.net.URI;
@@ -36,11 +36,9 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> createUserLiverPark(@RequestBody UserLivePark user) throws URISyntaxException {
-        IUser userLivePark = userLiveParkService.save(user);
-        if (!(userLivePark instanceof UserLivePark))
-            return null;
-
-        return ResponseEntity.created(new URI("api/user" + ((UserLivePark) userLivePark).getId())).body(userLivePark);
+        user.setUserId(0L);
+        Long userId = userLiveParkService.save(user);
+        return ResponseEntity.created(new URI("api/user" + userId)).body(userId);
     }
 
 }

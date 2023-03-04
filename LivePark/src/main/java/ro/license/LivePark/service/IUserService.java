@@ -1,6 +1,5 @@
 package ro.license.LivePark.service;
 
-import ro.license.LivePark.entities.IUser;
 import ro.license.LivePark.entities.UserLivePark;
 
 public interface IUserService {
@@ -10,5 +9,5 @@ public interface IUserService {
 
     Iterable<UserLivePark> findByUsername(String username);
 
-    IUser save(UserLivePark user);
+    Long save(UserLivePark user);
 }

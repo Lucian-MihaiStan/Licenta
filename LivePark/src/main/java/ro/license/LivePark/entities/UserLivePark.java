@@ -1,6 +1,7 @@
 package ro.license.LivePark.entities;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.relational.core.mapping.Table;
@@ -12,25 +13,27 @@ import javax.persistence.*;
 @Table(name="accounts")
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
+@Builder
 public class UserLivePark implements IUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", unique = true, nullable = false)
-    public Long id;
+    @Column(name="user_id", unique = true, nullable = false)
+    private Long userId;
 
     @Column(name = "username", length = 50)
-    public String username;
+    private String username;
 
     @Column(name = "password", length = 50)
-    public String password;
+    private String password;
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id=" + userId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
+
 }
