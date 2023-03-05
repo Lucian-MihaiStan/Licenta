@@ -1,13 +1,15 @@
 package ro.license.LivePark.service;
 
-import ro.license.LivePark.entities.UserLivePark;
+import ro.license.LivePark.model.User;
+
+import java.util.List;
 
 public interface IUserService {
-    Iterable<UserLivePark> findAll();
+    List<User> findAll();
 
-    Iterable<UserLivePark> findByUserId(Long id);
+    List<User> findByUserId(Long id);
 
-    Iterable<UserLivePark> findByUsername(String username);
+    List<User> findByUsername(String username);
 
-    Long save(UserLivePark user);
+    Long save(User user);
 }

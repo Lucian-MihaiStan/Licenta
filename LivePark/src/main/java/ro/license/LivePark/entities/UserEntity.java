@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
 @Builder
-public class UserLivePark implements IUser {
+public class UserEntity implements IUserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

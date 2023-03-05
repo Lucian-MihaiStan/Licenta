@@ -1,44 +1,46 @@
 package ro.license.LivePark.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ro.license.LivePark.entities.IUser;
-import ro.license.LivePark.entities.UserLivePark;
-import ro.license.LivePark.entities.UserLivePark.UserLiveParkBuilder;
+import ro.license.LivePark.model.User;
 import ro.license.LivePark.service.IUserService;
 
-import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
+@CrossOrigin(value = "http://localhost:3000")
 @RequestMapping("api/user")
 @RestController
 public class UserController {
 
-    @Autowired
-    private IUserService userLiveParkService;
+    private final IUserService userLiveParkService;
+
+    public UserController(IUserService userLiveParkService) {
+        this.userLiveParkService = userLiveParkService;
+    }
 
 
     @GetMapping(path = "/allusers")
-    public Iterable<UserLivePark> getAllUsers() {
+    public List<User> getAllUsers() {
+        System.out.println("Getting All Users");
         return userLiveParkService.findAll();
     }
 
     @GetMapping(path = "/{id}")
-    public Iterable<UserLivePark> getUserById(@PathVariable Long id) {
-        return userLiveParkService.findByUserId(id);
+    public User getUserById(@PathVariable Long id) {
+        System.out.println("Getting user with id " + id);
+        return userLiveParkService.findByUserId(id).get(0);
     }
 
     @GetMapping(path = "/username/{username}")
-    public Iterable<UserLivePark> getUserByUsername(@PathVariable String username) {
+    public List<User> getUserByUsername(@PathVariable String username) {
+        System.out.println("Getting user with username " + username);
         return userLiveParkService.findByUsername(username);
     }
-
-    @PostMapping
-    public ResponseEntity<?> createUserLiverPark(@RequestBody UserLivePark user) throws URISyntaxException {
+    @PostMapping(value = "/adduser")
+    public Long createUserLiverPark(@RequestBody User user) throws URISyntaxException {
         user.setUserId(0L);
-        Long userId = userLiveParkService.save(user);
-        return ResponseEntity.created(new URI("api/user/" + userId)).body(userId);
+        return userLiveParkService.save(user);
+//        return ResponseEntity.created(new URI("api/user/" + userId)).body(userId);
     }
 
 }

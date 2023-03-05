@@ -1,32 +1,45 @@
 package ro.license.LivePark.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ro.license.LivePark.entities.UserLivePark;
+import ro.license.LivePark.entities.UserEntity;
+import ro.license.LivePark.model.User;
 import ro.license.LivePark.repository.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService implements IUserService {
 
-    @Autowired
-    private UserRepository repository;
-    @Override
-    public Iterable<UserLivePark> findAll() {
-        return repository.findAll();
+    private final UserRepository repository;
+
+    public UserService(UserRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public Iterable<UserLivePark> findByUserId(Long id) {
-        return repository.findByUserId(id);
+    public List<User> findAll() {
+        return collectUsers(repository.findAll());
     }
 
     @Override
-    public Iterable<UserLivePark> findByUsername(String username) {
-        return repository.findByUserName(username);
+    public List<User> findByUserId(Long id) {
+        return collectUsers(repository.findByUserId(id));
+    }
+
+    private List<User> collectUsers(Iterable<UserEntity> userEntities) {
+        List<User> users = new ArrayList<>();
+        userEntities.forEach(userEntity -> users.add(User.createUser(userEntity)));
+        return users;
     }
 
     @Override
-    public Long save(UserLivePark user) {
+    public List<User> findByUsername(String username) {
+        return collectUsers(repository.findByUserName(username));
+    }
+
+    @Override
+    public Long save(User user) {
         return repository.saveUser(user.getUsername(), user.getPassword());
     }
 }
