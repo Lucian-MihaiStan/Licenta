@@ -38,7 +38,7 @@ public class UserController {
     public ResponseEntity<?> createUserLiverPark(@RequestBody UserLivePark user) throws URISyntaxException {
         user.setUserId(0L);
         Long userId = userLiveParkService.save(user);
-        return ResponseEntity.created(new URI("api/user" + userId)).body(userId);
+        return ResponseEntity.created(new URI("api/user/" + userId)).body(userId);
     }
 
 }
