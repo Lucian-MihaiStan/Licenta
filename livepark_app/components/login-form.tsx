@@ -10,6 +10,7 @@ const LoginForm = () => {
     const [user, setUser] = useState({
         id: 0,
         username: "",
+        email: "",
         password: "",
     });
 
@@ -86,6 +87,15 @@ const LoginForm = () => {
                 onChange={(e) => handleChange(e)}
                 value={user.username}/>
             </div>
+
+            <div>
+                <input 
+                type="text" 
+                name="email"
+                onChange={(e) => handleChange(e)}
+                value={user.email}/>
+            </div>
+
             <div>
                 <input 
                 type="password" 

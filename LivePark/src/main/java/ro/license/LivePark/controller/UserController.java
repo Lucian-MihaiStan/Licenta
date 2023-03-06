@@ -1,13 +1,13 @@
 package ro.license.LivePark.controller;
 
 import org.springframework.web.bind.annotation.*;
+import ro.license.LivePark.config.ConnectionUtils;
 import ro.license.LivePark.model.User;
 import ro.license.LivePark.service.IUserService;
 
 import java.net.URISyntaxException;
 import java.util.List;
 
-@CrossOrigin(value = "http://localhost:3000")
 @RequestMapping("api/user")
 @RestController
 public class UserController {
@@ -38,9 +38,7 @@ public class UserController {
     }
     @PostMapping(value = "/adduser")
     public Long createUserLiverPark(@RequestBody User user) throws URISyntaxException {
-        user.setUserId(0L);
         return userLiveParkService.save(user);
-//        return ResponseEntity.created(new URI("api/user/" + userId)).body(userId);
     }
 
 }

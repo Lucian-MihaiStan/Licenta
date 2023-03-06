@@ -21,19 +21,22 @@ public class UserEntity implements IUserEntity {
     @Column(name="user_id", unique = true, nullable = false)
     private Long userId;
 
-    @Column(name = "username", length = 50)
+    @Column(name = "username", length = 50, nullable = false)
     private String username;
 
-    @Column(name = "password", length = 50)
+    @Column(name = "email", length = 50, nullable = false)
+    private String email;
+
+    @Column(name = "password", length = 50, nullable = false)
     private String password;
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + userId +
+        return "UserEntity{" +
+                "userId=" + userId +
                 ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
-
 }

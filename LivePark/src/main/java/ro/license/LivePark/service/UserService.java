@@ -29,7 +29,14 @@ public class UserService implements IUserService {
 
     private List<User> collectUsers(Iterable<UserEntity> userEntities) {
         List<User> users = new ArrayList<>();
-        userEntities.forEach(userEntity -> users.add(User.createUser(userEntity)));
+        userEntities.forEach(userEntity -> users.add(
+                User.builder()
+                        .userId(userEntity.getUserId())
+                        .username(userEntity.getUsername())
+                        .email(userEntity.getEmail())
+                        .password(userEntity.getPassword())
+                        .build())
+        );
         return users;
     }
 
@@ -40,6 +47,6 @@ public class UserService implements IUserService {
 
     @Override
     public Long save(User user) {
-        return repository.saveUser(user.getUsername(), user.getPassword());
+        return repository.saveUser(user.getUsername(), user.getEmail(), user.getPassword());
     }
 }
