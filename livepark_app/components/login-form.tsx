@@ -3,12 +3,9 @@ import {Fragment, useState} from "react"
 
 const LoginForm = () => {
 
-    const API_USER_ADDUSER = "http://localhost:8080/api/user/adduser"
-    const API_USER_ALLUSERS = "http://localhost:8080/api/user/allusers";
-    const API_USER_ALLUSERS_1 = "http://localhost:8080/api/user/1";
+    const API_USER_SIGN_UP = "http://localhost:8080/api/auth/signup";
 
-    const [user, setUser] = useState({
-        id: 0,
+    const [registerUserRequest, setUser] = useState({
         username: "",
         email: "",
         password: "",
@@ -16,20 +13,20 @@ const LoginForm = () => {
 
     const handleChange = (event: any) => {
         const value = event.target.value;
-        setUser({ ...user, [event.target.name]: value });
+        setUser({ ...registerUserRequest, [event.target.name]: value });
     };
 
-    const saveUser = async (event: any) => {
-        console.log(JSON.stringify(user));
+    const registerUser = async (event: any) => {
+        console.log(JSON.stringify(registerUserRequest));
         event.preventDefault();
-        const response = await fetch(API_USER_ADDUSER, {
+        const response = await fetch(API_USER_SIGN_UP, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
+                "Origin": "http://localhost:3000",
             },
             // mode: "no-cors",
-            body: JSON.stringify(user),
+            body: JSON.stringify(registerUserRequest),
         });
 
         console.log(response);
@@ -38,45 +35,6 @@ const LoginForm = () => {
         console.log(_user);
     };
 
-    const allUsers = async (event: any) => {
-        try {
-            const response = await fetch(API_USER_ALLUSERS, {
-                method: "GET",
-                headers: {
-                   "Content-Type": "application/json",
-                   "Access-Control-Allow-Origin": "*"
-                },
-                // mode: "no-cors",
-            });
-
-            console.log(response);
-            const user = await response.json();
-            console.log(user);
-
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const allUsers_1 = async (event: any) => {
-        try {
-            const response = await fetch(API_USER_ALLUSERS_1, {
-                method: "GET",
-                headers: {
-                   "Content-Type": "application/json",
-                   "Access-Control-Allow-Origin": "*",
-                },
-                // mode: "no-cors",
-            });
-
-            console.log(response);
-            const user = await response.json();
-            console.log(user);
-
-        } catch (error) {
-            console.log(error);
-        }
-    };
     return (
         <div className={styles.login_box + ' p-3'}>
           <h1 className="display-6 mb-3">Login</h1>
@@ -85,7 +43,7 @@ const LoginForm = () => {
                 type="text" 
                 name="username"
                 onChange={(e) => handleChange(e)}
-                value={user.username}/>
+                value={registerUserRequest.username}/>
             </div>
 
             <div>
@@ -93,7 +51,7 @@ const LoginForm = () => {
                 type="text" 
                 name="email"
                 onChange={(e) => handleChange(e)}
-                value={user.email}/>
+                value={registerUserRequest.email}/>
             </div>
 
             <div>
@@ -101,12 +59,10 @@ const LoginForm = () => {
                 type="password" 
                 name="password"
                 onChange={(e) => handleChange(e)}
-                value={user.password}/>
+                value={registerUserRequest.password}/>
             </div>
 
-            <button onClick={saveUser}> Login </button>
-            <button onClick={allUsers}> AllUsers </button>
-            <button onClick={allUsers_1}> AllUsers_1 </button>
+            <button onClick={registerUser}> Register </button>
             
         </div>
       );
