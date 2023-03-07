@@ -27,6 +27,11 @@ public class UserService implements IUserService {
         return collectUsers(repository.findByUserId(id));
     }
 
+    @Override
+    public List<User> findByUsername(String username) {
+        return collectUsers(repository.findByUsername(username));
+    }
+
     private List<User> collectUsers(Iterable<UserEntity> userEntities) {
         List<User> users = new ArrayList<>();
         userEntities.forEach(userEntity -> users.add(
@@ -41,12 +46,12 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> findByUsername(String username) {
-        return collectUsers(repository.findByUserName(username));
+    public Long save(User user) {
+        return repository.saveUser(user.getUsername(), user.getEmail(), user.getPassword());
     }
 
     @Override
-    public Long save(User user) {
-        return repository.saveUser(user.getUsername(), user.getEmail(), user.getPassword());
+    public List<User> findByEmail(String email) {
+        return collectUsers(repository.findByEmail(email));
     }
 }

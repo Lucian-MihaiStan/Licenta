@@ -12,4 +12,6 @@ public interface IUserService {
     List<User> findByUsername(String username);
 
     Long save(User user);
+
+    List<User> findByEmail(String email);
 }
