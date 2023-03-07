@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PUBLIC)
 @Builder
-public class LoginRequest {
+public class LoginUserRequest {
 
     private String username;
 

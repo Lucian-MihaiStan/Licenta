@@ -5,9 +5,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ro.license.LivePark.model.User;
-import ro.license.LivePark.request.LoginRequest;
+import ro.license.LivePark.request.LoginUserRequest;
 import ro.license.LivePark.request.RegisterUserRequest;
 import ro.license.LivePark.response.LoginResponse;
 import ro.license.LivePark.response.MessageWrapper;
@@ -24,9 +25,12 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
 
-    public AuthController(IUserService userService, AuthenticationManager authenticationManager) {
+    private final PasswordEncoder passwordEncoder;
+
+    public AuthController(IUserService userService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/allusers")
@@ -36,7 +40,7 @@ public class AuthController {
     }
 
     @PostMapping(ControllerConstants.SIGN_IN)
-    public ResponseEntity<?> signIn(@RequestBody LoginRequest request) {
+    public ResponseEntity<?> signIn(@RequestBody LoginUserRequest request) {
 
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
 
@@ -70,7 +74,7 @@ public class AuthController {
                 .builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .build();
 
         userService.save(user);

@@ -27,7 +27,7 @@ public class UserEntity implements IUserEntity {
     @Column(name = "email", length = 50, nullable = false)
     private String email;
 
-    @Column(name = "password", length = 50, nullable = false)
+    @Column(name = "password", length = 120, nullable = false)
     private String password;
 
     @Override

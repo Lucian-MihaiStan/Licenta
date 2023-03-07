@@ -1,12 +1,11 @@
-import styles from './login-form.module.css'
+import register_styles from './register-form.module.css'
+import global_styles from '../global_module_css/global-form.module.css'
 import {Fragment, useState} from "react"
 
-const LoginForm = () => {
+import { GlobalConstants } from '../globalc_namespace/global-constants';
 
-    const API_USER_SIGN_UP = "http://localhost:8080/api/auth/signup";
-    const API_USER_ALL_USERS = "http://localhost:8080/api/auth/allusers";
-
-
+const RegisterForm = () => {
+    
     const [registerUserRequest, setUser] = useState({
         username: "",
         email: "",
@@ -21,12 +20,12 @@ const LoginForm = () => {
     const registerUser = async (event: any) => {
         console.log(JSON.stringify(registerUserRequest));
         event.preventDefault();
-        const response = await fetch(API_USER_SIGN_UP, {
-            method: "POST",
+        const response = await fetch(GlobalConstants.USER_SIGN_UP_LINK, {
+            method: GlobalConstants.POST_REQUEST,
             headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-                "Origin": "http://localhost:3000",
+                "Content-Type": GlobalConstants.APPLICATION_JSON,
+                "Access-Control-Allow-Origin": GlobalConstants.STAR,
+                "Origin": GlobalConstants.FRONTEND_API_LINK,
             },
             // mode: "no-cors",
             body: JSON.stringify(registerUserRequest),
@@ -38,24 +37,9 @@ const LoginForm = () => {
         console.log(_user);
     };
 
-    const getUsers = async (event: any) => {
-        event.preventDefault();
-        const response = await fetch(API_USER_ALL_USERS, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        })
-
-        console.log(response);
-        console.log(response.status);
-        const _users = await(response.json());
-        console.log(_users);
-    };
-
     return (
-        <div className={styles.login_box + ' p-3'}>
-          <h1 className="display-6 mb-3">Login</h1>
+        <div className={global_styles.login_box + ' p-3'}>
+          <h1 className="display-6 mb-3">Register</h1>
             <div>
                 <input 
                 type="text" 
@@ -81,10 +65,9 @@ const LoginForm = () => {
             </div>
 
             <button onClick={registerUser}> Register </button>
-            <button onClick={getUsers}> AllUsers </button>
             
         </div>
       );
 }
 
-export default LoginForm;
+export default RegisterForm;
