@@ -4,6 +4,8 @@ import {Fragment, useState} from "react"
 const LoginForm = () => {
 
     const API_USER_SIGN_UP = "http://localhost:8080/api/auth/signup";
+    const API_USER_ALL_USERS = "http://localhost:8080/api/auth/allusers";
+
 
     const [registerUserRequest, setUser] = useState({
         username: "",
@@ -23,6 +25,7 @@ const LoginForm = () => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
                 "Origin": "http://localhost:3000",
             },
             // mode: "no-cors",
@@ -33,6 +36,21 @@ const LoginForm = () => {
         console.log(response.status);
         const _user = await response.json();
         console.log(_user);
+    };
+
+    const getUsers = async (event: any) => {
+        event.preventDefault();
+        const response = await fetch(API_USER_ALL_USERS, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+
+        console.log(response);
+        console.log(response.status);
+        const _users = await(response.json());
+        console.log(_users);
     };
 
     return (
@@ -63,6 +81,7 @@ const LoginForm = () => {
             </div>
 
             <button onClick={registerUser}> Register </button>
+            <button onClick={getUsers}> AllUsers </button>
             
         </div>
       );

@@ -6,7 +6,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import ro.license.LivePark.config.ConnectionUtils;
 import ro.license.LivePark.model.User;
 import ro.license.LivePark.request.LoginRequest;
 import ro.license.LivePark.request.RegisterUserRequest;
@@ -16,8 +15,8 @@ import ro.license.LivePark.service.IUserService;
 
 import java.util.List;
 
-@CrossOrigin(value = ConnectionUtils.FH_LOCAL_3000_URL, maxAge = 6000)
-@RequestMapping("/api/auth")
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RequestMapping("api/auth")
 @RestController
 public class AuthController {
 
@@ -28,6 +27,12 @@ public class AuthController {
     public AuthController(IUserService userService, AuthenticationManager authenticationManager) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
+    }
+
+    @GetMapping("/allusers")
+    public ResponseEntity<?> allUsers() {
+        List<User> all = userService.findAll();
+        return ResponseEntity.ok(all);
     }
 
     @PostMapping(ControllerConstants.SIGN_IN)
