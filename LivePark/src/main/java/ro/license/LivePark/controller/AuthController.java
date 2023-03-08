@@ -7,12 +7,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import ro.license.LivePark.jwt.JWToken;
 import ro.license.LivePark.model.User;
 import ro.license.LivePark.request.LoginUserRequest;
 import ro.license.LivePark.request.RegisterUserRequest;
 import ro.license.LivePark.response.LoginResponse;
 import ro.license.LivePark.response.MessageWrapper;
 import ro.license.LivePark.service.IUserService;
+import ro.license.LivePark.service.UserService;
 
 import java.util.List;
 
@@ -21,16 +23,19 @@ import java.util.List;
 @RestController
 public class AuthController {
 
-    private final IUserService userService;
+    private final UserService userService;
 
     private final AuthenticationManager authenticationManager;
 
     private final PasswordEncoder passwordEncoder;
 
-    public AuthController(IUserService userService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
+    private final JWToken tokenizer;
+
+    public AuthController(UserService userService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, JWToken tokenizer) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
+        this.tokenizer = tokenizer;
     }
 
     @GetMapping("/allusers")
@@ -48,12 +53,18 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         Object principal = authentication.getPrincipal();
-//        if (!(principal instanceof))
+        if (!(principal instanceof User))
+            throw new IllegalStateException("Unknown element " + principal);
+
+        User user = (User) principal;
 
         return ResponseEntity.ok(
                 LoginResponse
                         .builder()
-                        .token("") // TODO Lucian continue here
+                        .token((tokenizer.generateJwtToken(authentication)))
+                        .userId(user.getUserId())
+                        .username(user.getUsername())
+                        .email(user.getEmail())
                         .build()
         );
     }
@@ -67,8 +78,6 @@ public class AuthController {
         List<User> userByEmail = userService.findByEmail(request.getEmail());
         if (!userByEmail.isEmpty())
             return ResponseEntity.badRequest().body(MessageWrapper.builder().message(ControllerConstants.ERROR_DUPLICATE_EMAIL));
-
-        // TODO Lucian i have to encode the password here
 
         User user = User
                 .builder()

@@ -1,9 +1,9 @@
 package ro.license.LivePark.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ro.license.LivePark.jwt.AuthEntryPointJwt;
+import ro.license.LivePark.jwt.AuthTokenFilter;
+import ro.license.LivePark.service.UserService;
 
 @Configuration
 @EnableGlobalMethodSecurity(
@@ -23,14 +25,27 @@ public class SecurityConfig {
 
     private final AuthEntryPointJwt unauthorizedHandler;
 
-    public SecurityConfig(AuthEntryPointJwt unauthorizedHandler) {
+    private final UserService userService;
+
+    public SecurityConfig(AuthEntryPointJwt unauthorizedHandler, UserService userService) {
         this.unauthorizedHandler = unauthorizedHandler;
+        this.userService = userService;
     }
 
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+
+        authProvider.setUserDetailsService(userService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+
+        return authProvider;
     }
 
     @Bean
@@ -41,12 +56,22 @@ public class SecurityConfig {
                 .authorizeRequests().requestMatchers("/api/auth/**").permitAll()
                 .anyRequest().authenticated();
 
+        http.authenticationProvider(authenticationProvider());
+
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
+
         return http.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter();
     }
 
 }

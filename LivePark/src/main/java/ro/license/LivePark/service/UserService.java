@@ -1,6 +1,10 @@
 package ro.license.LivePark.service;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ro.license.LivePark.entities.UserEntity;
 import ro.license.LivePark.model.User;
 import ro.license.LivePark.repository.UserRepository;
@@ -9,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserService implements IUserService {
+public class UserService implements UserDetailsService, IUserService {
 
     private final UserRepository repository;
 
@@ -53,5 +57,18 @@ public class UserService implements IUserService {
     @Override
     public List<User> findByEmail(String email) {
         return collectUsers(repository.findByEmail(email));
+    }
+
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        List<User> user = findByUsername(username);
+        if (user.isEmpty())
+            throw new UsernameNotFoundException("User Not Found with username: " + username);
+
+        if (user.size() != 1)
+            throw new IllegalStateException("Found multiple users with the same username :" + username);
+
+        return user.get(0);
     }
 }
