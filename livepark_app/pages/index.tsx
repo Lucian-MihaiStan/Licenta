@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import RegisterForm from '../components/register/register-form'
+import {RegisterForm} from '../components/register/register-form'
 
 import { Utils } from '@/components/utils/utils'
-import LoginForm from '@/components/login/login-form'
+import { LoginForm } from '@/components/login/login-form'
 
 
 const Home: NextPage = () => {
@@ -17,7 +17,6 @@ const Home: NextPage = () => {
       <main className="vh-100 d-flex justify-content-center align-items-center">
         <RegisterForm/>
         <LoginForm/>
-        
         <button onClick={Utils.getUsers}> AllUsers </button>
       </main>
     </div>

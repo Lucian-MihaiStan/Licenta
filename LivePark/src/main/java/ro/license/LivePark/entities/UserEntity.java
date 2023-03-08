@@ -30,6 +30,12 @@ public class UserEntity implements IUserEntity {
     @Column(name = "password", length = 120, nullable = false)
     private String password;
 
+    @Column(name = "firstname", length = 50, nullable = false)
+    private String firstName;
+
+    @Column(name = "lastname", length = 50, nullable = false)
+    private String lastName;
+
     @Override
     public String toString() {
         return "UserEntity{" +
@@ -37,6 +43,8 @@ public class UserEntity implements IUserEntity {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 '}';
     }
 }

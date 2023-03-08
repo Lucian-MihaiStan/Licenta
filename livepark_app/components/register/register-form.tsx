@@ -1,15 +1,22 @@
 import register_styles from './register-form.module.css'
 import global_styles from '../global_module_css/global-form.module.css'
-import {Fragment, useState} from "react"
+import {useState} from "react"
 
 import { GlobalConstants } from '../globalc_namespace/global-constants';
+import { type } from 'os';
+import { InputConstants } from '../globalc_namespace/inputc/input-constants';
 
-const RegisterForm = () => {
+import {TextBoxDivFrom} from '../html_components/textbox-div';
+
+
+export const RegisterForm = () => {
     
     const [registerUserRequest, setUser] = useState({
         username: "",
         email: "",
         password: "",
+        firstName: "",
+        lastName: ""
     });
 
     const handleChange = (event: any) => {
@@ -18,7 +25,6 @@ const RegisterForm = () => {
     };
 
     const registerUser = async (event: any) => {
-        console.log(JSON.stringify(registerUserRequest));
         event.preventDefault();
         const response = await fetch(GlobalConstants.USER_SIGN_UP_LINK, {
             method: GlobalConstants.POST_REQUEST,
@@ -27,47 +33,59 @@ const RegisterForm = () => {
                 "Access-Control-Allow-Origin": GlobalConstants.STAR,
                 "Origin": GlobalConstants.FRONTEND_API_LINK,
             },
-            // mode: "no-cors",
             body: JSON.stringify(registerUserRequest),
         });
 
-        console.log(response);
-        console.log(response.status);
         const _user = await response.json();
         console.log(_user);
     };
 
     return (
         <div className={global_styles.login_box + ' p-3'}>
-          <h1 className="display-6 mb-3">Register</h1>
-            <div>
-                <input 
-                type="text" 
-                name="username"
-                onChange={(e) => handleChange(e)}
-                value={registerUserRequest.username}/>
-            </div>
+          <h1 className="display-6 mb-3">Create Account</h1>
 
-            <div>
-                <input 
-                type="text" 
-                name="email"
-                onChange={(e) => handleChange(e)}
-                value={registerUserRequest.email}/>
-            </div>
+            <TextBoxDivFrom 
+                type={InputConstants.TEXT_TYPE} 
+                name={InputConstants.USERNAME}
+                placeholder={InputConstants.USERNAME_PLACEHOLDER} 
+                value={registerUserRequest.username} 
+                handleOnchange={handleChange}
+            />
 
-            <div>
-                <input 
-                type="password" 
-                name="password"
-                onChange={(e) => handleChange(e)}
-                value={registerUserRequest.password}/>
-            </div>
+            <TextBoxDivFrom 
+                type={InputConstants.TEXT_TYPE} 
+                name={InputConstants.EMAIL}
+                placeholder={InputConstants.EMAIL_PLACEHOLDER} 
+                value={registerUserRequest.email} 
+                handleOnchange={handleChange}
+            />
 
-            <button onClick={registerUser}> Register </button>
+            <TextBoxDivFrom 
+                type={InputConstants.PASSWORD_TYPE} 
+                name={InputConstants.PASSWORD} 
+                placeholder={InputConstants.PASSWORD_PLACEHOLDER}
+                value={registerUserRequest.password} 
+                handleOnchange={handleChange}
+            />
+
+            <TextBoxDivFrom 
+                type={InputConstants.TEXT_TYPE} 
+                name={InputConstants.FIRST_NAME} 
+                placeholder={InputConstants.FIRST_NAME_PLACEHOLDER}
+                value={registerUserRequest.firstName} 
+                handleOnchange={handleChange}
+            />
+
+            <TextBoxDivFrom 
+                type={InputConstants.TEXT_TYPE} 
+                name={InputConstants.LAST_NAME}
+                placeholder={InputConstants.LAST_NAME_PLACEHOLDER}
+                value={registerUserRequest.lastName} 
+                handleOnchange={handleChange}
+            />
+
+            <button onClick={registerUser}> Sign Up </button>
             
         </div>
       );
 }
-
-export default RegisterForm;

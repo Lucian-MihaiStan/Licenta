@@ -51,7 +51,7 @@ public class UserService implements UserDetailsService, IUserService {
 
     @Override
     public Long save(User user) {
-        return repository.saveUser(user.getUsername(), user.getEmail(), user.getPassword());
+        return repository.saveUser(user.getUsername(), user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName());
     }
 
     @Override

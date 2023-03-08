@@ -1,10 +1,12 @@
 import login_styles from "./login-form.module.css"
 import global_styles from '../global_module_css/global-form.module.css'
-import {Fragment, useState} from "react"
+import {useState} from "react"
 
 import { GlobalConstants } from '../globalc_namespace/global-constants';
+import { TextBoxDivFrom } from "../html_components/textbox-div";
+import { InputConstants } from "../globalc_namespace/inputc/input-constants";
 
-const LoginForm = () => {
+export const LoginForm = () => {
 
     const [loginUserRequest, setUser] = useState({
         username: "",
@@ -12,7 +14,6 @@ const LoginForm = () => {
     });
 
     const loginUser = async (event: any) => {
-        console.log(JSON.stringify(loginUserRequest));
         event.preventDefault();
         
         const response = await fetch(GlobalConstants.USER_SIGN_IN_LINK, {
@@ -25,8 +26,6 @@ const LoginForm = () => {
             body: JSON.stringify(loginUserRequest),
         });
 
-        console.log(response);
-        console.log(response.status);
         const _user = await response.json();
         console.log(_user);
     }
@@ -38,26 +37,26 @@ const LoginForm = () => {
 
     return (
         <div className={global_styles.login_box + ' p-3'}>
-          <h1 className="display-6 mb-3">Register</h1>
-            <div>
-                <input 
-                type="text" 
-                name="username"
-                onChange={(e) => handleChange(e)}
-                value={loginUserRequest.username}/>
-            </div>
+          <h1 className="display-6 mb-3">Login to Your Account</h1>
 
-            <div>
-                <input 
-                type="password" 
-                name="password"
-                onChange={(e) => handleChange(e)}
-                value={loginUserRequest.password}/>
-            </div>
+            <TextBoxDivFrom 
+                type={InputConstants.TEXT_TYPE} 
+                name={InputConstants.USERNAME} 
+                placeholder={InputConstants.USERNAME_PLACEHOLDER} 
+                value={loginUserRequest.username} 
+                handleOnchange={handleChange}
+            />
+            
+            
+            <TextBoxDivFrom 
+                type={InputConstants.PASSWORD_TYPE} 
+                name={InputConstants.PASSWORD} 
+                placeholder={InputConstants.PASSWORD_PLACEHOLDER}
+                value={loginUserRequest.password} 
+                handleOnchange={handleChange}
+            />
 
-            <button onClick={loginUser}> Login </button>            
+            <button onClick={loginUser}> Sign In </button>            
         </div>
       );
 }
-
-export default LoginForm;

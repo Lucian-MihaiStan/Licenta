@@ -53,10 +53,8 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         Object principal = authentication.getPrincipal();
-        if (!(principal instanceof User))
+        if (!(principal instanceof User user))
             throw new IllegalStateException("Unknown element " + principal);
-
-        User user = (User) principal;
 
         return ResponseEntity.ok(
                 LoginResponse
@@ -84,6 +82,8 @@ public class AuthController {
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
                 .build();
 
         userService.save(user);

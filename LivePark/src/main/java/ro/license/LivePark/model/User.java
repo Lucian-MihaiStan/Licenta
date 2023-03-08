@@ -1,5 +1,6 @@
 package ro.license.LivePark.model;
 
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -8,7 +9,6 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -16,16 +16,23 @@ import java.util.Objects;
 @Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PUBLIC)
 public class User implements UserDetails {
+    @Id
     private Long userId;
 
-    @Size(max = 50)
+    @Size(min = 3, max = 50)
     private String username;
 
-    @Size(max = 50)
+    @Size(min = 5, max = 50)
     private String email;
 
-    @Size(max = 120)
+    @Size(min = 6, max = 120)
     private String password;
+
+    @Size(min = 3, max = 50)
+    private String firstName;
+
+    @Size(min = 3, max = 50)
+    private String lastName;
 
     private Collection<? extends GrantedAuthority> authorities;
 
