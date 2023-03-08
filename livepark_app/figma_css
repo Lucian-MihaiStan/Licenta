@@ -1,0 +1,379 @@
+https://www.figma.com/file/OW8ZoB6RZ2CdeiqBil0zpO/Licenta?node-id=10-47&t=lJdWatp6A2np8lmb-0
+
+/* Desktop - 1 */
+
+position: relative;
+width: 1529px;
+height: 894px;
+
+background: #F7F9F9;
+
+
+/* Right Panel */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 580px;
+height: 894px;
+left: 949px;
+top: 0px;
+
+background: #629460;
+border: 1px solid #000000;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+
+/* Park Live */
+
+position: absolute;
+width: 530px;
+height: 76px;
+left: 25px;
+top: 253px;
+
+font-family: 'Inter';
+font-style: italic;
+font-weight: 700;
+font-size: 64px;
+line-height: 77px;
+text-align: center;
+
+color: #F5F5F5;
+
+border: 1px solid #000000;
+
+
+/* Do you have account? Login here */
+
+position: absolute;
+width: 580px;
+height: 78px;
+left: 0px;
+top: 408px;
+
+font-family: 'Inter';
+font-style: italic;
+font-weight: 700;
+font-size: 32px;
+line-height: 39px;
+text-align: center;
+
+color: #F5F5F5;
+
+
+
+/* Sign In Button */
+
+position: absolute;
+width: 414px;
+height: 102px;
+left: 83px;
+top: 638px;
+
+background: #F7F9F9;
+border-radius: 50px;
+
+
+/* Sign In */
+
+position: absolute;
+width: 133px;
+height: 48px;
+left: 140px;
+top: 27px;
+
+font-family: 'Inter';
+font-style: italic;
+font-weight: 700;
+font-size: 40px;
+line-height: 48px;
+text-align: center;
+
+color: #283F3B;
+
+
+
+/* Sign Up Button */
+
+position: absolute;
+width: 378px;
+height: 66px;
+left: 260px;
+top: 773px;
+
+background: #283F3B;
+border-radius: 50px;
+
+
+/* Sign Up */
+
+position: absolute;
+width: 152px;
+height: 48px;
+left: 113px;
+top: 9px;
+
+font-family: 'Inter';
+font-style: italic;
+font-weight: 700;
+font-size: 40px;
+line-height: 48px;
+text-align: center;
+
+color: #F7F9F9;
+
+
+
+/* Create Account */
+
+position: absolute;
+width: 307px;
+height: 48px;
+left: 298px;
+top: 36px;
+
+font-family: 'Inter';
+font-style: italic;
+font-weight: 700;
+font-size: 40px;
+line-height: 48px;
+text-align: center;
+
+color: #283F3B;
+
+
+
+/* Separator */
+
+position: absolute;
+width: 485px;
+height: 5px;
+left: 209px;
+top: 107px;
+
+background: #283F3B;
+
+
+/* First Name Area */
+
+position: absolute;
+width: 431px;
+height: 91px;
+left: 32px;
+top: 157px;
+
+background: #E4E4E4;
+border-radius: 50px;
+
+
+/* First Name */
+
+position: absolute;
+width: 127px;
+height: 29px;
+left: 26px;
+top: 31px;
+
+font-family: 'Inter';
+font-style: italic;
+font-weight: 700;
+font-size: 24px;
+line-height: 29px;
+/* identical to box height */
+text-align: center;
+
+color: rgba(0, 0, 0, 0.68);
+
+
+
+/* Last Name Area */
+
+position: absolute;
+width: 424px;
+height: 91px;
+left: 487px;
+top: 157px;
+
+background: #E4E4E4;
+border-radius: 50px;
+
+
+/* Last Name */
+
+position: absolute;
+width: 124px;
+height: 29px;
+left: 27px;
+top: 31px;
+
+font-family: 'Inter';
+font-style: italic;
+font-weight: 700;
+font-size: 24px;
+line-height: 29px;
+/* identical to box height */
+text-align: center;
+
+color: rgba(0, 0, 0, 0.68);
+
+
+
+/* Email Area */
+
+position: absolute;
+width: 879px;
+height: 91px;
+left: 32px;
+top: 271px;
+
+background: #E4E4E4;
+border-radius: 50px;
+
+
+/* Email */
+
+position: absolute;
+width: 64px;
+height: 29px;
+left: 33px;
+top: 31px;
+
+font-family: 'Inter';
+font-style: italic;
+font-weight: 700;
+font-size: 24px;
+line-height: 29px;
+/* identical to box height */
+text-align: center;
+
+color: rgba(0, 0, 0, 0.68);
+
+
+
+/* Password Area */
+
+position: absolute;
+width: 879px;
+height: 91px;
+left: 32px;
+top: 380px;
+
+background: #E4E4E4;
+border-radius: 50px;
+
+
+/* Password */
+
+position: absolute;
+width: 116px;
+height: 29px;
+left: 28px;
+top: 31px;
+
+font-family: 'Inter';
+font-style: italic;
+font-weight: 700;
+font-size: 24px;
+line-height: 29px;
+/* identical to box height */
+text-align: center;
+
+color: rgba(0, 0, 0, 0.68);
+
+
+
+/* Address Area */
+
+position: absolute;
+width: 879px;
+height: 91px;
+left: 32px;
+top: 598px;
+
+background: #E4E4E4;
+border-radius: 50px;
+
+
+/* Address */
+
+position: absolute;
+width: 99px;
+height: 29px;
+left: 26px;
+top: 31px;
+
+font-family: 'Inter';
+font-style: italic;
+font-weight: 700;
+font-size: 24px;
+line-height: 29px;
+/* identical to box height */
+text-align: center;
+
+color: rgba(0, 0, 0, 0.68);
+
+
+
+/* Check Box */
+
+position: absolute;
+width: 22px;
+height: 17px;
+left: 78px;
+top: 721px;
+
+background: #E4E4E4;
+
+
+/* Phone Number Label */
+
+position: absolute;
+width: 879px;
+height: 91px;
+left: 32px;
+top: 487px;
+
+background: #E4E4E4;
+border-radius: 50px;
+
+
+/* Phone Number */
+
+position: absolute;
+width: 174px;
+height: 29px;
+left: 21px;
+top: 31px;
+
+font-family: 'Inter';
+font-style: italic;
+font-weight: 700;
+font-size: 24px;
+line-height: 29px;
+/* identical to box height */
+text-align: center;
+
+color: rgba(0, 0, 0, 0.68);
+
+
+
+/* You agree to our Terms and Privacy Policy */
+
+position: absolute;
+width: 514px;
+height: 29px;
+left: 111px;
+top: 721px;
+
+font-family: 'Inter';
+font-style: italic;
+font-weight: 700;
+font-size: 24px;
+line-height: 29px;
+/* identical to box height */
+text-align: center;
+
+color: rgba(0, 0, 0, 0.68);
+
+

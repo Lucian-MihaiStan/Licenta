@@ -1,0 +1,16 @@
+.create_account_title {
+    position: absolute;
+    width: 307px;
+    height: 48px;
+    left: 298px;
+    top: 36px;
+    
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 48px;
+    text-align: center;
+    
+    color: #283F3B;
+}

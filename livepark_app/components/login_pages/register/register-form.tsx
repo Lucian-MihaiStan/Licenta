@@ -1,12 +1,13 @@
+import common_login_styles from '../common_login_modules/common-login.module.css'
 import register_styles from './register-form.module.css'
 import global_styles from '../global_module_css/global-form.module.css'
 import {useState} from "react"
 
-import { GlobalConstants } from '../globalc_namespace/global-constants';
+import { GlobalConstants } from '../../globalc_namespace/global-constants';
 import { type } from 'os';
-import { InputConstants } from '../globalc_namespace/inputc/input-constants';
+import { InputConstants } from '../../globalc_namespace/inputc/input-constants';
 
-import {TextBoxDivFrom} from '../html_components/textbox-div';
+import {TextBoxDivForm} from '../../html_components/textbox/textbox-register-login';
 
 
 export const RegisterForm = () => {
@@ -41,34 +42,10 @@ export const RegisterForm = () => {
     };
 
     return (
-        <div className={global_styles.login_box + ' p-3'}>
-          <h1 className="display-6 mb-3">Create Account</h1>
+        <div className={common_login_styles.loginmaindiv}>
+          <h1 className={register_styles.create_account_title}>Create Account</h1>
 
-            <TextBoxDivFrom 
-                type={InputConstants.TEXT_TYPE} 
-                name={InputConstants.USERNAME}
-                placeholder={InputConstants.USERNAME_PLACEHOLDER} 
-                value={registerUserRequest.username} 
-                handleOnchange={handleChange}
-            />
-
-            <TextBoxDivFrom 
-                type={InputConstants.TEXT_TYPE} 
-                name={InputConstants.EMAIL}
-                placeholder={InputConstants.EMAIL_PLACEHOLDER} 
-                value={registerUserRequest.email} 
-                handleOnchange={handleChange}
-            />
-
-            <TextBoxDivFrom 
-                type={InputConstants.PASSWORD_TYPE} 
-                name={InputConstants.PASSWORD} 
-                placeholder={InputConstants.PASSWORD_PLACEHOLDER}
-                value={registerUserRequest.password} 
-                handleOnchange={handleChange}
-            />
-
-            <TextBoxDivFrom 
+            <TextBoxDivForm 
                 type={InputConstants.TEXT_TYPE} 
                 name={InputConstants.FIRST_NAME} 
                 placeholder={InputConstants.FIRST_NAME_PLACEHOLDER}
@@ -76,11 +53,35 @@ export const RegisterForm = () => {
                 handleOnchange={handleChange}
             />
 
-            <TextBoxDivFrom 
+            <TextBoxDivForm 
                 type={InputConstants.TEXT_TYPE} 
                 name={InputConstants.LAST_NAME}
                 placeholder={InputConstants.LAST_NAME_PLACEHOLDER}
                 value={registerUserRequest.lastName} 
+                handleOnchange={handleChange}
+            />
+
+            <TextBoxDivForm 
+                type={InputConstants.TEXT_TYPE} 
+                name={InputConstants.USERNAME}
+                placeholder={InputConstants.USERNAME_PLACEHOLDER} 
+                value={registerUserRequest.username} 
+                handleOnchange={handleChange}
+            />
+
+            <TextBoxDivForm 
+                type={InputConstants.TEXT_TYPE} 
+                name={InputConstants.EMAIL}
+                placeholder={InputConstants.EMAIL_PLACEHOLDER} 
+                value={registerUserRequest.email} 
+                handleOnchange={handleChange}
+            />
+
+            <TextBoxDivForm 
+                type={InputConstants.PASSWORD_TYPE} 
+                name={InputConstants.PASSWORD} 
+                placeholder={InputConstants.PASSWORD_PLACEHOLDER}
+                value={registerUserRequest.password} 
                 handleOnchange={handleChange}
             />
 

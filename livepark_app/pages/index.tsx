@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import {RegisterForm} from '../components/register/register-form'
+import {RegisterForm} from '../components/login_pages/register/register-form'
 
 import { Utils } from '@/components/utils/utils'
-import { LoginForm } from '@/components/login/login-form'
+import { LoginForm } from '@/components/login_pages/login/login-form'
 
 
 const Home: NextPage = () => {
