@@ -73,7 +73,7 @@ public class AuthController {
         if (!userByUsername.isEmpty())
             return ResponseEntity.badRequest().body(MessageWrapper.builder().message(ControllerConstants.ERROR_DUPLICATE_USERNAME));
 
-        List<User> userByEmail = userService.findByEmail(request.getEmail());
+        List<User> userByEmail = userService.findByEmail(request.getEmail() );
         if (!userByEmail.isEmpty())
             return ResponseEntity.badRequest().body(MessageWrapper.builder().message(ControllerConstants.ERROR_DUPLICATE_EMAIL));
 

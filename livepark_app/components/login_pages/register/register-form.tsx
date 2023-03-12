@@ -4,11 +4,11 @@ import global_styles from '../global_module_css/global-form.module.css'
 import {useState} from "react"
 
 import { GlobalConstants } from '../../globalc_namespace/global-constants';
-import { type } from 'os';
 import { InputConstants } from '../../globalc_namespace/inputc/input-constants';
 
 import {TextBoxDivForm} from '../../html_components/textbox/textbox-register-login';
-
+import { Utils } from '@/components/utils/utils';
+import { useRouter } from 'next/router';
 
 export const RegisterForm = () => {
     
@@ -41,9 +41,17 @@ export const RegisterForm = () => {
         console.log(_user);
     };
 
+    const routerUtils = useRouter();
+    const routeToPage = async (event: any, path: string) => {
+        event.preventDefault();
+        routerUtils.push(path);
+    }
+
     return (
         <div className={common_login_styles.loginmaindiv}>
-          <h1 className={register_styles.create_account_title}>Create Account</h1>
+          <h1 
+        //   className={ register_styles.create_account_title }
+          >Create Account</h1>
 
             <TextBoxDivForm 
                 type={InputConstants.TEXT_TYPE} 
@@ -85,7 +93,16 @@ export const RegisterForm = () => {
                 handleOnchange={handleChange}
             />
 
-            <button onClick={registerUser}> Sign Up </button>
+            <div>
+                <button onClick={registerUser}> Sign Up </button>
+            </div>
+            
+            <div>
+                <div>
+                    <span> Don't have an account? </span>
+                </div>
+                <button onClick={(e) => routeToPage(e, GlobalConstants.LOGIN_FRONTEND_APP_LINK)}> Sign In</button>
+            </div>
             
         </div>
       );

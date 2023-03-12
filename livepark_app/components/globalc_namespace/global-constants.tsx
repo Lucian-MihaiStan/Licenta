@@ -31,4 +31,7 @@ export namespace GlobalConstants {
     export const APPLICATION_JSON = "application/json";
     export const STAR = "*";
 
+    export const REGISTER_FRONTEND_APP_LINK = "/register";
+    export const LOGIN_FRONTEND_APP_LINK = "/login";
+
 }

@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
 @Builder
-public class UserEntity implements IUserEntity {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
