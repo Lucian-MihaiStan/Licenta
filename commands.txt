@@ -23,3 +23,9 @@ docker run -d -p 27017:27017 --name lic_livepark_mongo -e MONGO_INITDB_ROOT_USER
 
 mongosh
 
+
+
+
+POSTGRES CARS LIVEPARK
+
+docker run -itd -e POSTGRES_USER=lic_livepark_cars -e POSTGRES_PASSWORD=lic_livepark_cars -p 5433:5432 -v /data_cars:/var/lib/postgresql/data --name lic_livepark_cars postgres
