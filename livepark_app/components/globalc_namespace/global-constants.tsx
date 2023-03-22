@@ -34,4 +34,10 @@ export namespace GlobalConstants {
     export const REGISTER_FRONTEND_APP_LINK = "/register";
     export const LOGIN_FRONTEND_APP_LINK = "/login";
 
+
+    // login response fields
+    export const TOKEN = "token";
+    export const USER_ID = "userId";
+
+
 }

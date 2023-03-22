@@ -16,4 +16,5 @@ export namespace InputConstants {
 
     export const FIRST_NAME_PLACEHOLDER = "First Name";
     export const LAST_NAME_PLACEHOLDER = "Last Name";
+
 }

@@ -6,8 +6,9 @@ import { Utils } from "@/components/utils/utils";
 import { GlobalConstants } from '../../globalc_namespace/global-constants';
 import { TextBoxDivForm } from "../../html_components/textbox/textbox-register-login";
 import { InputConstants } from "../../globalc_namespace/inputc/input-constants";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+
 
 export const LoginForm = () => {
 
@@ -18,7 +19,7 @@ export const LoginForm = () => {
 
     const loginUser = async (event: any) => {
         event.preventDefault();
-        
+
         const response = await fetch(GlobalConstants.USER_SIGN_IN_LINK, {
             method: GlobalConstants.POST_REQUEST,
             headers: {
@@ -30,8 +31,35 @@ export const LoginForm = () => {
         });
 
         const _user = await response.json();
-        console.log(_user);
+        if (authentificationSuccesfully(_user)) {
+            console.log("Successfully");
+            
+            const token_data = _user[GlobalConstants.TOKEN];
+            const userId_data = _user[GlobalConstants.USER_ID];
+            const username_data = _user[InputConstants.USERNAME];
+            const email_data = _user[InputConstants.EMAIL];
+
+            localStorage.setItem(GlobalConstants.TOKEN, token_data);
+            localStorage.setItem(GlobalConstants.USER_ID, userId_data);
+            localStorage.setItem(InputConstants.USERNAME, username_data);
+            localStorage.setItem(InputConstants.EMAIL, email_data);
+
+            routerUtils.push("/dashboard");
+
+        } else {
+            // TODO Lucian here you have to clear the user and password field
+            console.log("Failed");
+        }
+        
     }
+
+    const authentificationSuccesfully = (login_response: any) : boolean => {
+        return login_response != null && 
+                login_response[GlobalConstants.TOKEN] != null &&
+                login_response[GlobalConstants.USER_ID] != null &&
+                login_response[InputConstants.USERNAME] != null &&
+                login_response[InputConstants.EMAIL] != null;
+    } 
 
     const handleChange = (event: any) => {
         const value = event.target.value;
@@ -82,3 +110,4 @@ export const LoginForm = () => {
         </div>
       );
 }
+
