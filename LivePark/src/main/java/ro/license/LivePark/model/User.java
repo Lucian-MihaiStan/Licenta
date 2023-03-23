@@ -29,10 +29,10 @@ public class User implements UserDetails {
     private String password;
 
     @Size(min = 3, max = 50)
-    private String firstName;
+    private String firstname;
 
     @Size(min = 3, max = 50)
-    private String lastName;
+    private String lastname;
 
     private Collection<? extends GrantedAuthority> authorities;
 

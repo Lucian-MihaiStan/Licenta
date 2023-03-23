@@ -42,6 +42,8 @@ public class UserService implements UserDetailsService, IUserService {
                 User.builder()
                         .userId(userEntity.getUserId())
                         .username(userEntity.getUsername())
+                        .firstname(userEntity.getFirstname())
+                        .lastname(userEntity.getLastname())
                         .email(userEntity.getEmail())
                         .password(userEntity.getPassword())
                         .build())
@@ -51,7 +53,7 @@ public class UserService implements UserDetailsService, IUserService {
 
     @Override
     public Long save(User user) {
-        return repository.saveUser(user.getUsername(), user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName());
+        return repository.saveUser(user.getUsername(), user.getEmail(), user.getPassword(), user.getFirstname(), user.getLastname());
     }
 
     @Override

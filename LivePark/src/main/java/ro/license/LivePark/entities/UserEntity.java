@@ -31,10 +31,10 @@ public class UserEntity {
     private String password;
 
     @Column(name = "firstname", length = 50, nullable = false)
-    private String firstName;
+    private String firstname;
 
     @Column(name = "lastname", length = 50, nullable = false)
-    private String lastName;
+    private String lastname;
 
     @Override
     public String toString() {
@@ -43,8 +43,8 @@ public class UserEntity {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstname + '\'' +
+                ", lastName='" + lastname + '\'' +
                 '}';
     }
 }

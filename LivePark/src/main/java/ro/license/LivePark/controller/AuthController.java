@@ -13,7 +13,6 @@ import ro.license.LivePark.request.LoginUserRequest;
 import ro.license.LivePark.request.RegisterUserRequest;
 import ro.license.LivePark.response.LoginResponse;
 import ro.license.LivePark.response.MessageWrapper;
-import ro.license.LivePark.service.IUserService;
 import ro.license.LivePark.service.UserService;
 
 import java.util.List;
@@ -36,12 +35,6 @@ public class AuthController {
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.tokenizer = tokenizer;
-    }
-
-    @GetMapping("/allusers")
-    public ResponseEntity<?> allUsers() {
-        List<User> all = userService.findAll();
-        return ResponseEntity.ok(all);
     }
 
     @PostMapping(ControllerConstants.SIGN_IN)
@@ -82,8 +75,8 @@ public class AuthController {
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
+                .firstname(request.getFirstName())
+                .lastname(request.getLastName())
                 .build();
 
         userService.save(user);
