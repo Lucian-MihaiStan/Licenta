@@ -1,4 +1,4 @@
-package ro.license.LivePark.model;
+package ro.license.LivePark.model.user;
 
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;

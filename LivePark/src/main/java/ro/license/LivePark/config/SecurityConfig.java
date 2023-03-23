@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ro.license.LivePark.jwt.AuthEntryPointJwt;
 import ro.license.LivePark.jwt.AuthTokenFilter;
-import ro.license.LivePark.service.UserService;
+import ro.license.LivePark.service.user.UserService;
 
 @Configuration
 @EnableGlobalMethodSecurity(

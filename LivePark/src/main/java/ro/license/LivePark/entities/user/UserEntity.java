@@ -1,4 +1,4 @@
-package ro.license.LivePark.entities;
+package ro.license.LivePark.entities.user;
 
 import lombok.AccessLevel;
 import lombok.Builder;

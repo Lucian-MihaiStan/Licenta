@@ -1,4 +1,4 @@
-package ro.license.LivePark.entities;
+package ro.license.LivePark.entities.car;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,6 +17,12 @@ public class CarEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="car_id", unique = true, nullable = false)
     private Long carId;
+
+    @Column(name="plate")
+    private String plate;
+
+    @Column(name="vin")
+    private String vin;
 
 
 }

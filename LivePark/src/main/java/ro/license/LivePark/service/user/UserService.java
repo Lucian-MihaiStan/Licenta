@@ -1,12 +1,12 @@
-package ro.license.LivePark.service;
+package ro.license.LivePark.service.user;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ro.license.LivePark.entities.UserEntity;
-import ro.license.LivePark.model.User;
+import ro.license.LivePark.entities.user.UserEntity;
+import ro.license.LivePark.model.user.User;
 import ro.license.LivePark.repository.UserRepository;
 
 import java.util.ArrayList;

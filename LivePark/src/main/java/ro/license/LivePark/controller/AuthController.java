@@ -8,12 +8,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ro.license.LivePark.jwt.JWToken;
-import ro.license.LivePark.model.User;
+import ro.license.LivePark.model.user.User;
 import ro.license.LivePark.request.LoginUserRequest;
 import ro.license.LivePark.request.RegisterUserRequest;
 import ro.license.LivePark.response.LoginResponse;
 import ro.license.LivePark.response.MessageWrapper;
-import ro.license.LivePark.service.UserService;
+import ro.license.LivePark.service.user.UserService;
 
 import java.util.List;
 

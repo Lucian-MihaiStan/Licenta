@@ -1,7 +1,5 @@
 package ro.license.LivePark.controller;
 
-import ro.license.LivePark.entities.UserEntity;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

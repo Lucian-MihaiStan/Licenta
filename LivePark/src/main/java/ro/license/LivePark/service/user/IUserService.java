@@ -1,6 +1,6 @@
-package ro.license.LivePark.service;
+package ro.license.LivePark.service.user;
 
-import ro.license.LivePark.model.User;
+import ro.license.LivePark.model.user.User;
 
 import java.util.List;
 
