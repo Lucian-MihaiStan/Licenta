@@ -1,4 +1,4 @@
-package ro.license.lucian.stan.livepark.config;
+package ro.license.lucian.stan.livepark.config.web;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

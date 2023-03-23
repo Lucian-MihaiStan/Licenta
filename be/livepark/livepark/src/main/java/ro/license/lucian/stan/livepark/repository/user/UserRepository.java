@@ -1,4 +1,4 @@
-package ro.license.lucian.stan.livepark.repository;
+package ro.license.lucian.stan.livepark.repository.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;

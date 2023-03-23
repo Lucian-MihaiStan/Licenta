@@ -1,6 +1,5 @@
 package ro.license.lucian.stan.livepark.service.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -8,9 +7,7 @@ import org.springframework.stereotype.Service;
 import ro.license.lucian.stan.livepark.entities.user.User;
 import ro.license.lucian.stan.livepark.entities.user.UserDTO;
 import ro.license.lucian.stan.livepark.entities.user.UserDTOMapper;
-import ro.license.lucian.stan.livepark.repository.UserRepository;
-
-import java.util.Optional;
+import ro.license.lucian.stan.livepark.repository.user.UserRepository;
 
 @Service
 public class UserService implements UserDetailsService {

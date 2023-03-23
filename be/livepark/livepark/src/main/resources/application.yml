@@ -5,6 +5,12 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/lic_livepark
 
+  seconddatasource:
+    username: lic_livepark_cars
+    password: lic_livepark_cars
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/lic_livepark_cars
+
   jpa:
     hibernate:
       ddl-auto: update
