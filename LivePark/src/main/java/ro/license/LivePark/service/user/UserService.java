@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ro.license.LivePark.entities.user.UserEntity;
 import ro.license.LivePark.model.user.User;
-import ro.license.LivePark.repository.UserRepository;
+import ro.license.LivePark.repository.user.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;

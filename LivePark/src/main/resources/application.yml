@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    password: lic_livepark
+    driver-class-name: org.postgresql.Driver
+    username: lic_livepark
+    url: jdbc:postgresql://localhost:5432/lic_livepark
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            non_contextual_creation: 'true'
+    defer-datasource-initialization: 'true'
+    hibernate:
+      ddl-auto: none
+  main:
+    allow-bean-definition-overriding: 'true'
+
+  sql:
+    init:
+      mode: always
+live:
+  park:
+    app:
+      jwtSecret: liveParkSecretKeyliveParkSecretKeyliveParkSecretKeyliveParkSecretKeyliveParkSecretKeylive
+      jwtExpirationMs: '86400000'
+server:
+  port: '8080'

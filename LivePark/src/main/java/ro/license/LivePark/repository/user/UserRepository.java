@@ -1,4 +1,4 @@
-package ro.license.LivePark.repository;
+package ro.license.LivePark.repository.user;
 
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
