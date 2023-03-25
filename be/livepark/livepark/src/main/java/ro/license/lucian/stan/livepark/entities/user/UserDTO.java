@@ -1,7 +1,7 @@
 package ro.license.lucian.stan.livepark.entities.user;
 
 public record UserDTO(
-        Integer userId,
+        Long userId,
         String username,
         String email,
 

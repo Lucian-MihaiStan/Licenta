@@ -6,17 +6,19 @@ import java.util.function.Function;
 
 @Service
 public class UserDTOMapper implements Function<User, UserDTO> {
+
     @Override
     public UserDTO apply(User user) {
         if (user == null)
             return null;
 
         return new UserDTO(
-                Math.toIntExact(user.getUserId()),
+                user.getUserId(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getFirstName(),
                 user.getLastName()
         );
     }
+
 }

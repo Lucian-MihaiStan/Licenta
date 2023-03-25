@@ -24,7 +24,8 @@ import java.util.Objects;
         transactionManagerRef = "carTransactionManager",
         basePackages = {
                 "ro.license.lucian.stan.livepark.repository.car",
-                "ro.license.lucian.stan.livepark.entities.car"
+                "ro.license.lucian.stan.livepark.entities.car",
+                "ro.license.lucian.stan.livepark.entities.driver"
         }
 )
 public class PersistenceConfigCarDB {
@@ -43,7 +44,8 @@ public class PersistenceConfigCarDB {
         em.setDataSource(carDataSource());
         em.setPackagesToScan(
                 "ro.license.lucian.stan.livepark.repository.car",
-                "ro.license.lucian.stan.livepark.entities.car"
+                "ro.license.lucian.stan.livepark.entities.car",
+                "ro.license.lucian.stan.livepark.entities.driver"
         );
 
         HibernateJpaVendorAdapter vendorAdapter

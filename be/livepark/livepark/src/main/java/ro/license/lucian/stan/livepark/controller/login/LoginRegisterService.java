@@ -1,5 +1,7 @@
 package ro.license.lucian.stan.livepark.controller.login;
 
+import org.apache.commons.validator.routines.EmailValidator;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -57,6 +59,10 @@ public class LoginRegisterService {
     }
 
     public ResponseEntity<?> signUp(RegisterUserRequestPkg requestPkg) {
+        // TODO Lucian comment out this
+//        if (!(EmailValidator.getInstance().isValid(requestPkg.getEmail())))
+//            return ResponseEntity.badRequest().body(MessageWrapper.builder().message("Email is not valid!").build());
+
         UserDTO userFound = userService.findByUsername(requestPkg.getUsername());
         if (userFound != null)
             return ResponseEntity.badRequest().body(MessageWrapper.builder().message("Username already exists").build());
