@@ -8,6 +8,7 @@ import { InputConstants } from '../../globalc_namespace/inputc/input-constants';
 
 import {TextBoxDivForm} from '../../html_components/textbox/textbox-register-login';
 import { Utils } from '@/components/utils/utils';
+import * as EmailValidator from 'email-validator';
 import { useRouter } from 'next/router';
 
 export const RegisterForm = () => {
@@ -22,6 +23,13 @@ export const RegisterForm = () => {
 
     const handleChange = (event: any) => {
         const value = event.target.value;
+        setUser({ ...registerUserRequest, [event.target.name]: value });
+    };
+
+    const handleChangeEmail = (event: any) => {
+        const value = event.target.value;
+        if (!EmailValidator.validate(value))
+            console.log("NU");
         setUser({ ...registerUserRequest, [event.target.name]: value });
     };
 
@@ -82,7 +90,7 @@ export const RegisterForm = () => {
                 name={InputConstants.EMAIL}
                 placeholder={InputConstants.EMAIL_PLACEHOLDER} 
                 value={registerUserRequest.email} 
-                handleOnchange={handleChange}
+                handleOnchange={handleChangeEmail}
             />
 
             <TextBoxDivForm 

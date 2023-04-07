@@ -9,10 +9,6 @@ export const DashboardForm = () => {
 
             <p>Welcome</p>
 
-            <p>{localStorage.getItem(GlobalConstants.USER_ID)}</p>
-            <p>{localStorage.getItem(InputConstants.USERNAME)}</p>
-            <p>{localStorage.getItem(InputConstants.EMAIL)}</p>
-
         </div>
 
     );
