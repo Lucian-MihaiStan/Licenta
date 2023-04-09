@@ -1,15 +1,15 @@
 spring:
-  datasource:
-    username: lic_livepark
-    password: lic_livepark
+  userdatasource:
+    username: livepark_admin
+    password: admin_pass
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/lic_livepark
+    url: jdbc:postgresql://localhost:5432/livepark_user_db
 
-  seconddatasource:
-    username: lic_livepark_cars
-    password: lic_livepark_cars
+  globaldatasource:
+    username: livepark_user
+    password: livepark_pass
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5433/lic_livepark_cars
+    url: jdbc:postgresql://localhost:5433/livepark_db
 
   jpa:
     hibernate:

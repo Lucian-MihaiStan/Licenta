@@ -1,0 +1,58 @@
+version: '3.3'
+
+services:
+  db_users:
+    image: 'postgres:13.1-alpine'
+    container_name: db_users
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: livepark_user_db
+      POSTGRES_USER: livepark_admin
+      POSTGRES_PASSWORD: admin_pass
+#    volumes:
+#      - db_data1:/var/lib/postgresql/data
+    networks:
+      - API-network
+      - UI-network
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: livepark_db
+      POSTGRES_USER: livepark_user
+      POSTGRES_PASSWORD: livepark_pass
+#    volumes:
+#      - db_data2:/var/lib/postgresql/data
+    networks:
+      - API-network
+      - UI-network
+
+#  app:
+#    image: 'java-api-image'
+#    container_name: app
+#    build:
+#      context: .
+#    depends_on:
+#      - db
+#    ports:
+#      - "6000:6000"
+#    environment:
+#      - SERVER_PORT=6000
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/Tema2SPRC_DB
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=postgres
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+#      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=org.postgresql.Driver
+#      - SPRING_JPA_HIBERNATE_DDL-AUTO=update
+#      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
+#    networks:
+#      - API-network
+
+networks:
+  API-network:
+  UI-network:
+
