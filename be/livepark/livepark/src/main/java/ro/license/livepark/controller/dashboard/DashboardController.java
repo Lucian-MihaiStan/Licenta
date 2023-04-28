@@ -9,6 +9,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
 @RestController
+@RequestMapping("/api/dashboard")
 public class DashboardController {
 
     private final DashboardService dashboardService;
@@ -17,9 +18,8 @@ public class DashboardController {
         this.dashboardService = dashboardService;
     }
 
-    @RequestMapping("/hello")
+    @RequestMapping("/home")
     public String getName() {
-
         List<CarDTO> allCars = dashboardService.findAllCars();
 
         return "HelloWorld";

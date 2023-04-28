@@ -5,10 +5,18 @@ export namespace GlobalConstants {
     const COLON = ":";
    
     const FRONTEND_PORT = "3000";
-    const BACKEND_PORT = "8080";
+    const BACKEND_PORT = "9090";
 
     export const FRONTEND_API_LINK = LOCAL_HOST + COLON + FRONTEND_PORT;
     export const BACKEND_API_LINK = LOCAL_HOST + COLON + BACKEND_PORT;
+
+    export const PROFILE_PAGE = "/profile";
+    export const DASHBOARD_PAGE = "/dashboard";
+    export const CARS_PAGE = "/cars";
+    export const DOCUMENTS = "/documents";
+    export const SUPPORT_PAGE = "/support";
+    export const NOTIFICATION_PAGE = "/notifications";
+    export const LOGOUT = "/logout";
 
     const API_AUTH_ALLUSERS = "/api/auth/allusers";
     

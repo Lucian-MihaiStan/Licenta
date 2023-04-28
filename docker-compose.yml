@@ -10,8 +10,8 @@ services:
       POSTGRES_DB: livepark_user_db
       POSTGRES_USER: livepark_admin
       POSTGRES_PASSWORD: admin_pass
-#    volumes:
-#      - db_data1:/var/lib/postgresql/data
+    volumes:
+      - ./database/postgres_users/postgres_data:/var/lib/postgresql/data
     networks:
       - API-network
       - UI-network
@@ -25,11 +25,27 @@ services:
       POSTGRES_DB: livepark_db
       POSTGRES_USER: livepark_user
       POSTGRES_PASSWORD: livepark_pass
-#    volumes:
-#      - db_data2:/var/lib/postgresql/data
+    volumes:
+      - ./database/postgres_db/postgres_data:/var/lib/postgresql/data
     networks:
       - API-network
       - UI-network
+
+  adminer:
+    image: adminer:4.8.1
+    restart: always
+    container_name: adminer
+    environment:
+        ADMINER_DEFAULT_SERVER: database
+        ADMINER_DESIGN: ${ADMINER_DESIGN:-nette}
+    ports:
+      - "8080:8080"
+    networks:
+      - API-network
+      - UI-network
+    depends_on:
+      - db_users
+      - db
 
 #  app:
 #    image: 'java-api-image'

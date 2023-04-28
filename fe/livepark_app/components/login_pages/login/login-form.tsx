@@ -44,7 +44,7 @@ export const LoginForm = () => {
             localStorage.setItem(InputConstants.USERNAME, username_data);
             localStorage.setItem(InputConstants.EMAIL, email_data);
 
-            routerUtils.push("/dashboard");
+            routerUtils.push(GlobalConstants.DASHBOARD_PAGE);
 
         } else {
             // TODO Lucian here you have to clear the user and password field
