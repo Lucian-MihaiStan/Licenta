@@ -13,7 +13,7 @@ services:
     volumes:
       - ./database/postgres_users/postgres_data:/var/lib/postgresql/data
     networks:
-      - API-network
+      - DB_USERS-network
       - UI-network
 
   db:
@@ -28,7 +28,7 @@ services:
     volumes:
       - ./database/postgres_db/postgres_data:/var/lib/postgresql/data
     networks:
-      - API-network
+      - DB-network
       - UI-network
 
   adminer:
@@ -41,12 +41,34 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - API-network
-      - UI-network
+      - DB_USERS-network
+      - DB-network
     depends_on:
       - db_users
       - db
 
+  #  kong:
+  #   image: kong:latest
+  #   volumes:
+  #     - ./kong:/usr/local/kong/declarative
+  #   environment:
+  #     KONG_DATABASE: 'off'
+  #     KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
+  #     KONG_PROXY_ACCESS_LOG: /dev/stdout
+  #     KONG_ADMIN_ACCESS_LOG: /dev/stdout
+  #     KONG_PROXY_ERROR_LOG: /dev/stderr
+  #     KONG_ADMIN_ERROR_LOG: /dev/stderr
+  #     KONG_ADMIN_LISTEN: 0.0.0.0:8001, 0.0.0.0:8444 ssl
+  #     KONG_TRUSTED_IPS: 0.0.0.0/0,::/0
+  #   ports:
+  #     - 80:8000
+  #     - 443:8443
+  #     - 8001:8001
+  #     - 8444:8444
+  #   networks:
+  #     - internal
+  #     - logging
+ 
 #  app:
 #    image: 'java-api-image'
 #    container_name: app
@@ -69,6 +91,7 @@ services:
 #      - API-network
 
 networks:
-  API-network:
+  DB_USERS-network:
+  DB-network:
   UI-network:
 

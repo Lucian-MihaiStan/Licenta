@@ -1,9 +1,10 @@
 package ro.license.livepark.controller.dashboard;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ro.license.livepark.entities.car.CarDTO;
+import ro.license.livepark.packages.received.AddCarRequestPkg;
+import ro.license.livepark.service.user.UserService;
 
 import java.util.List;
 
@@ -18,11 +19,26 @@ public class DashboardController {
         this.dashboardService = dashboardService;
     }
 
-    @RequestMapping("/home")
-    public String getName() {
-        List<CarDTO> allCars = dashboardService.findAllCars();
+    @PostMapping("/addcar")
+    public ResponseEntity<?> addCar( @RequestBody AddCarRequestPkg carRequestPkg) {
 
-        return "HelloWorld";
+        if ("".equals(carRequestPkg.getInsuranceId()))
+            return ResponseEntity.badRequest().body("Insurance ID is null");
+
+        if ("".equals(carRequestPkg.getInspectionId()))
+            return ResponseEntity.badRequest().body("Inspection ID is null");
+
+        return dashboardService.addCar(carRequestPkg);
+    }
+
+    @RequestMapping("/getOwnersCars")
+    public ResponseEntity<List<CarDTO>> getOwnersCars(@RequestParam Long ownerId) {
+        return dashboardService.getOwnersCars(ownerId);
+    }
+
+    @RequestMapping("/userInfo")
+    public ResponseEntity<?> getUserInfo(@RequestParam Long userId) {
+        return dashboardService.getUserInfo(userId);
     }
 
 }

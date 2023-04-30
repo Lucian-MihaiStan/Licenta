@@ -17,4 +17,14 @@ export namespace InputConstants {
     export const FIRST_NAME_PLACEHOLDER = "First Name";
     export const LAST_NAME_PLACEHOLDER = "Last Name";
 
+    export const PLATE = "plate";
+    export const VIN = "vin";
+    export const BRAND = "brand";
+    export const MODEL = "model";    
+
+    export const CAR_PLATE_PLACEHOLDER = "License plate";
+    export const VIN_PLACEHOLDER = "VIN";
+    export const BRAND_PLACEHOLDER = "Brand";
+    export const MODEL_PLACEHOLDER = "Model";
+
 }

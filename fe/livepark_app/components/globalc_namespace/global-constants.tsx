@@ -10,13 +10,23 @@ export namespace GlobalConstants {
     export const FRONTEND_API_LINK = LOCAL_HOST + COLON + FRONTEND_PORT;
     export const BACKEND_API_LINK = LOCAL_HOST + COLON + BACKEND_PORT;
 
-    export const PROFILE_PAGE = "/profile";
-    export const DASHBOARD_PAGE = "/dashboard";
-    export const CARS_PAGE = "/cars";
+    export const API = "/api";
+    export const USER_INFO = "/userinfo";
+    
+    export const PROFILE = "/profile";
+    export const DASHBOARD = "/dashboard";
+    export const CARS = "/cars";
     export const DOCUMENTS = "/documents";
-    export const SUPPORT_PAGE = "/support";
-    export const NOTIFICATION_PAGE = "/notifications";
+    export const SUPPORT = "/support";
+    export const NOTIFICATION = "/notifications";
     export const LOGOUT = "/logout";
+
+    export const ADD_CAR_PAGE = "/addcar";
+
+    export const FIRST_NAME = "firstName";
+    export const LAST_NAME = "lastName";
+    export const USERNAME = "username";
+    export const EMAIL = "email";
 
     const API_AUTH_ALLUSERS = "/api/auth/allusers";
     
@@ -47,5 +57,8 @@ export namespace GlobalConstants {
     export const TOKEN = "token";
     export const USER_ID = "userId";
 
-
+    // add car
+    const ADD_CAR = "/addcar";
+    export const ADD_CAR_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + DASHBOARD + ADD_CAR;
+    export const USER_INFO_LINK = BACKEND_API_LINK + API + DASHBOARD + USER_INFO;
 }

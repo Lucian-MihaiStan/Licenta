@@ -50,8 +50,6 @@ public class LoginRegisterService {
                         .builder()
                         .token((tokenizer.generateJwtToken(authentication)))
                         .userId(user.getUserId())
-                        .username(user.getUsername())
-                        .email(user.getEmail())
                         .build()
         );
     }
