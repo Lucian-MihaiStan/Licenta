@@ -7,3 +7,10 @@ export type InputProps = {
     placeholder: string | undefined;
     handleOnchange: ChangeEventHandler<HTMLInputElement> | undefined;
 };
+
+export type ProfileProps = {
+    firstName: string | undefined;
+    lastName: string | undefined;
+    username: string | undefined;
+    email: string | undefined;
+};

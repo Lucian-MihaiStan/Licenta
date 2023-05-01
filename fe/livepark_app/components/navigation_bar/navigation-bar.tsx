@@ -14,7 +14,7 @@ export const NavigationBar = () => {
             <div> <button onClick={(e) => routeToPage(e, GlobalConstants.DASHBOARD)}> Dashboard </button> </div>
             <div> <button onClick={(e) => routeToPage(e, GlobalConstants.PROFILE + "/" + localStorage.getItem(GlobalConstants.USER_ID))}> Profile </button> </div>
             <div> <button onClick={(e) => routeToPage(e, GlobalConstants.CARS + "/" + localStorage.getItem(GlobalConstants.USER_ID))}> Cars </button> </div>
-            <div> <button onClick={(e) => routeToPage(e, GlobalConstants.DOCUMENTS)}> Documents </button> </div>
+            <div> <button onClick={(e) => routeToPage(e, GlobalConstants.DOCUMENTS + "/" + localStorage.getItem(GlobalConstants.USER_ID))}> Documents </button> </div>
             <div> <button onClick={(e) => routeToPage(e, GlobalConstants.SUPPORT)}> Support </button> </div>
             <div> <button onClick={(e) => routeToPage(e, GlobalConstants.NOTIFICATION)}> Notifications </button> </div>
             <div> <button onClick={(e) => routeToPage(e, GlobalConstants.LOGOUT)}> Logout </button> </div>

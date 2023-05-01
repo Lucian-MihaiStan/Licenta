@@ -4,7 +4,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.license.livepark.entities.car.CarDTO;
 import ro.license.livepark.packages.received.AddCarRequestPkg;
-import ro.license.livepark.service.user.UserService;
 
 import java.util.List;
 
@@ -31,13 +30,19 @@ public class DashboardController {
         return dashboardService.addCar(carRequestPkg);
     }
 
-    @RequestMapping("/getOwnersCars")
-    public ResponseEntity<List<CarDTO>> getOwnersCars(@RequestParam Long ownerId) {
+    @GetMapping("/cars")
+    public ResponseEntity<List<CarDTO>> getOwnersCars(@RequestParam("ownerId") Long ownerId) {
         return dashboardService.getOwnersCars(ownerId);
     }
 
-    @RequestMapping("/userInfo")
-    public ResponseEntity<?> getUserInfo(@RequestParam Long userId) {
+    @GetMapping("/car")
+    public ResponseEntity<CarDTO> getCarDocuments(@RequestParam("carId") Long carId) {
+        return dashboardService.getCarById(carId);
+    }
+
+
+    @GetMapping("/userInfo")
+    public ResponseEntity<?> getUserInfo(@RequestParam("userId") Long userId) {
         return dashboardService.getUserInfo(userId);
     }
 

@@ -17,7 +17,8 @@ public class CarDTOMapper implements Function<Car, CarDTO> {
                 car.getOwnerId(),
                 car.getPlate(),
                 car.getVin(),
-                car.getBrand()
+                car.getModel()
+//                car.getBrand()
         );
     }
 

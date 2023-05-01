@@ -58,4 +58,10 @@ public class DashboardService {
 
         return ResponseEntity.ok(userInfo);
     }
+
+    public ResponseEntity<CarDTO> getCarById(Long carId) {
+        return carService.findById(carId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.badRequest().build());
+    }
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { CarsForm } from "../../components/cars_page/cars_form";
+import { CarsForm } from "../../components/cars/cars_form";
 import { NextPage } from "next";
 import { NavigationBar } from "../../components/navigation_bar/navigation-bar";
 import { useRouter } from "next/router";
