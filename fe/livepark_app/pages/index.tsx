@@ -1,9 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import {RegisterForm} from '../components/login_pages/register/register-form'
 
 import { Utils } from '@/components/utils/utils'
-import { LoginForm } from '@/components/login_pages/login/login-form'
 import { GlobalConstants } from '@/components/globalc_namespace/global-constants'
 import { useRouter } from 'next/router'
 

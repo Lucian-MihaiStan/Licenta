@@ -5,6 +5,7 @@ public record CarDTO(
         Long ownerId,
         String plate,
         String vin,
-        CarBrand brand
+        String model
+//        CarBrand brand
 ) {
 }

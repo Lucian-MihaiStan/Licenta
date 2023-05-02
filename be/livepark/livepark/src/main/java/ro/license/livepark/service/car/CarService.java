@@ -1,11 +1,14 @@
 package ro.license.livepark.service.car;
 
+import io.micrometer.observation.ObservationFilter;
 import org.springframework.stereotype.Service;
+import ro.license.livepark.entities.car.Car;
 import ro.license.livepark.entities.car.CarDTO;
 import ro.license.livepark.entities.car.CarDTOMapper;
 import ro.license.livepark.repository.car.CarRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,7 +23,23 @@ public class CarService {
         this.carDTOMapper = carDTOMapper;
     }
 
-    public List<CarDTO> findAll() {
-        return carRepository.findAll().stream().map(carDTOMapper).collect(Collectors.toList());
+    public void addCar(Car car) {
+        carRepository.save(car);
+    }
+
+    public Optional<CarDTO> findByInsuranceId(Long insuranceId) {
+        List<CarDTO> byInsuranceId = carRepository.findByInsuranceId(insuranceId).stream().map(carDTOMapper).toList();
+        if (byInsuranceId.isEmpty())
+            return Optional.empty();
+
+        return Optional.of(byInsuranceId.get(0));
+    }
+
+    public List<CarDTO> findByOwnerId(Long ownerId) {
+        return carRepository.findByOwnerId(ownerId).stream().map(carDTOMapper).toList();
+    }
+
+    public Optional<CarDTO> findById(Long carId) {
+        return carRepository.findById(carId).map(carDTOMapper);
     }
 }

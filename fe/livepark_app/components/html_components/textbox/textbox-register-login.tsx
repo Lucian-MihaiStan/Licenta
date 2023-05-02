@@ -1,4 +1,4 @@
-import { InputProps } from "../props/InputProps";
+import { InputProps } from "../props/Props";
 import textBoxStyles from './textbox_module_css/textbox.module.css'
 
 export const TextBoxDivForm = (props: InputProps) => {

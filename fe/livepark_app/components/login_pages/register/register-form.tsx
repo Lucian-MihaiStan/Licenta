@@ -1,13 +1,10 @@
 import common_login_styles from '../common_login_modules/common-login.module.css'
-import register_styles from './register-form.module.css'
-import global_styles from '../global_module_css/global-form.module.css'
 import {useState} from "react"
 
 import { GlobalConstants } from '../../globalc_namespace/global-constants';
 import { InputConstants } from '../../globalc_namespace/inputc/input-constants';
 
 import {TextBoxDivForm} from '../../html_components/textbox/textbox-register-login';
-import { Utils } from '@/components/utils/utils';
 import * as EmailValidator from 'email-validator';
 import { useRouter } from 'next/router';
 

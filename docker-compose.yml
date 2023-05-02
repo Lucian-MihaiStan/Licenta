@@ -10,10 +10,10 @@ services:
       POSTGRES_DB: livepark_user_db
       POSTGRES_USER: livepark_admin
       POSTGRES_PASSWORD: admin_pass
-#    volumes:
-#      - db_data1:/var/lib/postgresql/data
+    volumes:
+      - ./database/postgres_users/postgres_data:/var/lib/postgresql/data
     networks:
-      - API-network
+      - DB_USERS-network
       - UI-network
 
   db:
@@ -25,12 +25,50 @@ services:
       POSTGRES_DB: livepark_db
       POSTGRES_USER: livepark_user
       POSTGRES_PASSWORD: livepark_pass
-#    volumes:
-#      - db_data2:/var/lib/postgresql/data
+    volumes:
+      - ./database/postgres_db/postgres_data:/var/lib/postgresql/data
     networks:
-      - API-network
+      - DB-network
       - UI-network
 
+  adminer:
+    image: adminer:4.8.1
+    restart: always
+    container_name: adminer
+    environment:
+        ADMINER_DEFAULT_SERVER: database
+        ADMINER_DESIGN: ${ADMINER_DESIGN:-nette}
+    ports:
+      - "8080:8080"
+    networks:
+      - DB_USERS-network
+      - DB-network
+    depends_on:
+      - db_users
+      - db
+
+  #  kong:
+  #   image: kong:latest
+  #   volumes:
+  #     - ./kong:/usr/local/kong/declarative
+  #   environment:
+  #     KONG_DATABASE: 'off'
+  #     KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
+  #     KONG_PROXY_ACCESS_LOG: /dev/stdout
+  #     KONG_ADMIN_ACCESS_LOG: /dev/stdout
+  #     KONG_PROXY_ERROR_LOG: /dev/stderr
+  #     KONG_ADMIN_ERROR_LOG: /dev/stderr
+  #     KONG_ADMIN_LISTEN: 0.0.0.0:8001, 0.0.0.0:8444 ssl
+  #     KONG_TRUSTED_IPS: 0.0.0.0/0,::/0
+  #   ports:
+  #     - 80:8000
+  #     - 443:8443
+  #     - 8001:8001
+  #     - 8444:8444
+  #   networks:
+  #     - internal
+  #     - logging
+ 
 #  app:
 #    image: 'java-api-image'
 #    container_name: app
@@ -53,6 +91,7 @@ services:
 #      - API-network
 
 networks:
-  API-network:
+  DB_USERS-network:
+  DB-network:
   UI-network:
 

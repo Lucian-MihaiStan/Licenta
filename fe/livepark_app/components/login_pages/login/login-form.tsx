@@ -1,12 +1,9 @@
-import login_styles from "./login-form.module.css"
 import common_login_styles from '../common_login_modules/common-login.module.css'
-import global_styles from '../global_m odule_css/global-form.module.css'
-import { Utils } from "@/components/utils/utils";
 
 import { GlobalConstants } from '../../globalc_namespace/global-constants';
 import { TextBoxDivForm } from "../../html_components/textbox/textbox-register-login";
 import { InputConstants } from "../../globalc_namespace/inputc/input-constants";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 
 
@@ -36,15 +33,11 @@ export const LoginForm = () => {
             
             const token_data = _user[GlobalConstants.TOKEN];
             const userId_data = _user[GlobalConstants.USER_ID];
-            const username_data = _user[InputConstants.USERNAME];
-            const email_data = _user[InputConstants.EMAIL];
 
             localStorage.setItem(GlobalConstants.TOKEN, token_data);
             localStorage.setItem(GlobalConstants.USER_ID, userId_data);
-            localStorage.setItem(InputConstants.USERNAME, username_data);
-            localStorage.setItem(InputConstants.EMAIL, email_data);
 
-            routerUtils.push("/dashboard");
+            routerUtils.push(GlobalConstants.DASHBOARD);
 
         } else {
             // TODO Lucian here you have to clear the user and password field
@@ -56,9 +49,7 @@ export const LoginForm = () => {
     const authentificationSuccesfully = (login_response: any) : boolean => {
         return login_response != null && 
                 login_response[GlobalConstants.TOKEN] != null &&
-                login_response[GlobalConstants.USER_ID] != null &&
-                login_response[InputConstants.USERNAME] != null &&
-                login_response[InputConstants.EMAIL] != null;
+                login_response[GlobalConstants.USER_ID] != null;
     } 
 
     const handleChange = (event: any) => {

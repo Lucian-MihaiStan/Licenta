@@ -1,5 +1,6 @@
 package ro.license.livepark.service.user;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,5 +33,10 @@ public class UserService implements UserDetailsService {
 
     public void save(User user) {
         userRepository.save(user);
+    }
+
+    public UserDTO getUserInfo(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        return userDTOMapper.apply(user);
     }
 }
