@@ -31,6 +31,37 @@ services:
       - DB-network
       - UI-network
 
+  mongo_service:
+    build:
+      context: ./be/livepark_mongo
+      dockerfile: Dockerfile
+    image: livepark_mongo:0.1
+    environment:
+      - PYTHONUNBUFFERED=1
+    container_name: mongo_service
+    depends_on:
+      - database_mongo
+    restart: always
+    ports:
+      - 5002:5002 # TODO Lucian must delete this after jsonify all
+    networks:
+      - DB_mongo_wrapper-network
+
+  database_mongo:
+    image: mongo:latest
+    restart: always
+    container_name: database_mongo
+    environment:
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_DATABASE: database_mongo
+    networks:
+      - DB_mongo_wrapper-network
+      - DB_mongo-network
+    volumes:
+      - ./database/mongo/database-init/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      - ./database/mongo/mongo_data:/data/db
+
   adminer:
     image: adminer:4.8.1
     restart: always
@@ -41,11 +72,20 @@ services:
     ports:
       - "8080:8080"
     networks:
+      - DB_mongo-network
       - DB_USERS-network
       - DB-network
     depends_on:
+      - database_mongo
       - db_users
       - db
+
+networks:
+  DB_mongo_wrapper-network:
+  DB_mongo-network:
+  DB_USERS-network:
+  DB-network:
+  UI-network:
 
   #  kong:
   #   image: kong:latest
@@ -90,8 +130,4 @@ services:
 #    networks:
 #      - API-network
 
-networks:
-  DB_USERS-network:
-  DB-network:
-  UI-network:
 

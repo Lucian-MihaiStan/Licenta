@@ -1,0 +1,4 @@
+flask
+flask-cors
+requests==2.18.4
+Flask-PyMongo==2.2.0
