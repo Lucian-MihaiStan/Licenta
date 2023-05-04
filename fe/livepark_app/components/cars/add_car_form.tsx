@@ -34,8 +34,6 @@ export const AddCarForm = () => {
             body: JSON.stringify(addCarRequest)
         });
 
-        console.log(localStorage.getItem(GlobalConstants.USER_ID));
-
         const _car = await response.json();
         console.log(_car);
     }

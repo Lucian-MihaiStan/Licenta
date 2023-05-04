@@ -13,6 +13,8 @@ public class DriverDTOMapper implements Function<Driver, DriverDTO> {
 
         return new DriverDTO(
                 driver.getDriverId(),
+                driver.getLicenseId(),
+                driver.getIdentityCardId(),
                 driver.getGender()
         );
     }

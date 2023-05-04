@@ -7,14 +7,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ro.license.livepark.packages.sent.LoginRegisterResponsePkg;
-import ro.license.livepark.packages.sent.MessageWrapper;
+import ro.license.livepark.http.packages.sent.LoginRegisterResponsePkg;
+import ro.license.livepark.http.packages.sent.MessageWrapper;
 import ro.license.livepark.auth.JWToken;
 import ro.license.livepark.entities.user.User;
 import ro.license.livepark.entities.user.UserDTO;
 import ro.license.livepark.entities.user.UserRole;
-import ro.license.livepark.packages.received.LoginUserRequestPkg;
-import ro.license.livepark.packages.received.RegisterUserRequestPkg;
+import ro.license.livepark.http.packages.received.LoginUserRequestPkg;
+import ro.license.livepark.http.packages.received.RegisterUserRequestPkg;
 import ro.license.livepark.service.user.UserService;
 
 @Service

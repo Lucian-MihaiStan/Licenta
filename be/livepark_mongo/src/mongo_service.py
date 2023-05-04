@@ -15,7 +15,12 @@ mongo_collection = mongo_db[MONGO_COLLECTION]
 def insert_document():
     try:
         print("Inserting document in MongoDB")
-        jsonificat = jsonify({'document_id': str(mongo_collection.insert_one(request.get_json(silent=True)).inserted_id)})
+        posted_info = request.get_json(silent=True)
+        if (isinstance(posted_info, list)):
+            posted_info = posted_info[0]
+        print(type(posted_info))
+        print(posted_info)
+        jsonificat = jsonify({'document_id': str(mongo_collection.insert_one(posted_info).inserted_id)})
         print(jsonificat)
         return jsonificat, 200
     except Exception as e:

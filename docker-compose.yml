@@ -43,7 +43,7 @@ services:
       - database_mongo
     restart: always
     ports:
-      - 5002:5002 # TODO Lucian must delete this after jsonify all
+      - 5002:5002 # TODO Lucian must delete this after dockerize all
     networks:
       - DB_mongo_wrapper-network
 
