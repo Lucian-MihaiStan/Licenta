@@ -23,6 +23,7 @@ import java.util.Objects;
         transactionManagerRef = "globalTransactionManager",
         basePackages = {
                 "ro.license.livepark.repository.car",
+                "ro.license.livepark.repository.driver",
                 "ro.license.livepark.entities.car",
                 "ro.license.livepark.entities.driver"
         }
@@ -43,6 +44,7 @@ public class PersistenceConfigDB {
         em.setDataSource(globalDataSource());
         em.setPackagesToScan(
                 "ro.license.livepark.repository.car",
+                "ro.license.livepark.repository.driver",
                 "ro.license.livepark.entities.car",
                 "ro.license.livepark.entities.driver"
         );

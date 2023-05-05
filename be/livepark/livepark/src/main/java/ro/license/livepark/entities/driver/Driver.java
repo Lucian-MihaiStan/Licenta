@@ -20,12 +20,15 @@ public class Driver {
     @Column(name = "driver_id", unique = true, nullable = false)
     private Long driverId;
 
-    @Column(name = "license_id", unique = true, nullable = false)
-    private Long licenseId;
+    @Column(name="user_id", unique = true, nullable = false)
+    private Long userId;
 
-    @Column(name = "identity_card_id", unique = true, nullable = false)
-    private Long identityCardId;
+    @Column(name = "license_id", unique = true)
+    private String licenseId;
+
+    @Column(name = "identity_card_id", unique = true)
+    private String identityCardId;
 
     @Column(name = "gender", nullable = false)
-    private Gender gender;
+    private Gender gender = Gender.UNSPECIFIED;
 }

@@ -6,6 +6,7 @@ export namespace GlobalConstants {
    
     const FRONTEND_PORT = "3000";
     const BACKEND_PORT = "9090";
+    const MONGO_PORT = "5002";
 
     export const FRONTEND_API_LINK = LOCAL_HOST + COLON + FRONTEND_PORT;
     export const BACKEND_API_LINK = LOCAL_HOST + COLON + BACKEND_PORT;
@@ -14,13 +15,20 @@ export namespace GlobalConstants {
     export const USER_INFO = "/userInfo";
     
     export const PROFILE = "/profile";
-    export const DASHBOARD = "/dashboard";
     export const CARS = "/cars";
-    export const DOCUMENTS = "/documents";
+    export const OWNER = "/owner";
+    export const DASHBOARD = "/dashboard";
     export const SUPPORT = "/support";
     export const NOTIFICATION = "/notifications";
     export const LOGOUT = "/logout";
     export const CAR = "/car";
+
+    export const USER_DTO = "userDTO";
+    export const DRIVER_DTO = "driverDTO";
+
+    export const LICENSE_ID = "licenseId";
+    export const IDENTITY_CARD_ID = "identityCardId";
+    export const GENDER = "gender";
 
     export const ADD_CAR_PAGE = "/addcar";
 
@@ -58,10 +66,25 @@ export namespace GlobalConstants {
     export const TOKEN = "token";
     export const USER_ID = "userId";
 
+    export const INSERT_DOCUMENT = "/insert_document";
+    export const POST_ID_CARD = "/postIdCard"
+    export const POST_LICENSE_CARD = "/postLicenseCard";
+
+    export const POST_INSURANCE = "/postInsurance";
+    export const POST_BRIEF = "/postBrief";
+
     // add car
     const ADD_CAR = "/addcar";
-    export const ADD_CAR_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + DASHBOARD + ADD_CAR;
-    export const USER_INFO_LINK = BACKEND_API_LINK + API + DASHBOARD + USER_INFO;
-    export const CARS_LINK = BACKEND_API_LINK + API + DASHBOARD + CARS;
-    export const CAR_LINK = BACKEND_API_LINK + API + DASHBOARD + CAR;
+    export const ADD_CAR_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + CAR + ADD_CAR;
+    export const USER_INFO_LINK = BACKEND_API_LINK + API + OWNER + USER_INFO;
+    export const CARS_LINK = BACKEND_API_LINK + API + CAR + CARS;
+    export const CAR_LINK = BACKEND_API_LINK + API + CAR + CAR;
+
+    export const ADD_DOCUMENT_LINK = LOCAL_HOST + COLON + MONGO_PORT + INSERT_DOCUMENT;
+    export const POST_ID_CARD_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + OWNER + POST_ID_CARD;
+
+    export const POST_LICENSE_CARD_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + OWNER + POST_LICENSE_CARD;
+
+    export const POST_INSURANCE_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + CAR + POST_INSURANCE;
+    export const POST_BRIEF_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + CAR + POST_BRIEF;
 }

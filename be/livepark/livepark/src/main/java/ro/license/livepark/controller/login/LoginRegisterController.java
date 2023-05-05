@@ -3,8 +3,8 @@ package ro.license.livepark.controller.login;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.license.livepark.controller.constants.LoginRegisterControllerConstants;
-import ro.license.livepark.packages.received.LoginUserRequestPkg;
-import ro.license.livepark.packages.received.RegisterUserRequestPkg;
+import ro.license.livepark.http.packages.received.LoginUserRequestPkg;
+import ro.license.livepark.http.packages.received.RegisterUserRequestPkg;
 
 @CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
 @RequestMapping("/api/auth")

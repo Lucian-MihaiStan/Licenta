@@ -1,4 +1,4 @@
-import { ChangeEventHandler, HTMLInputTypeAttribute } from "react";
+import { ChangeEvent, ChangeEventHandler, FormEvent, HTMLInputTypeAttribute } from "react";
 
 export type InputProps = {
     type: string | HTMLInputTypeAttribute | undefined;
@@ -8,9 +8,8 @@ export type InputProps = {
     handleOnchange: ChangeEventHandler<HTMLInputElement> | undefined;
 };
 
-export type ProfileProps = {
-    firstName: string | undefined;
-    lastName: string | undefined;
-    username: string | undefined;
-    email: string | undefined;
+export type FormProps = {
+    userId: string;
+    document_name: string;
+    url: string;
 };

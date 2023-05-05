@@ -3,10 +3,12 @@ package ro.license.livepark.service.car;
 import io.micrometer.observation.ObservationFilter;
 import org.springframework.stereotype.Service;
 import ro.license.livepark.entities.car.Car;
+import ro.license.livepark.entities.car.CarBrand;
 import ro.license.livepark.entities.car.CarDTO;
 import ro.license.livepark.entities.car.CarDTOMapper;
 import ro.license.livepark.repository.car.CarRepository;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
