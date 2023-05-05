@@ -18,7 +18,6 @@ export namespace GlobalConstants {
     export const CARS = "/cars";
     export const OWNER = "/owner";
     export const DASHBOARD = "/dashboard";
-    export const DOCUMENTS = "/documents";
     export const SUPPORT = "/support";
     export const NOTIFICATION = "/notifications";
     export const LOGOUT = "/logout";
@@ -71,6 +70,9 @@ export namespace GlobalConstants {
     export const POST_ID_CARD = "/postIdCard"
     export const POST_LICENSE_CARD = "/postLicenseCard";
 
+    export const POST_INSURANCE = "/postInsurance";
+    export const POST_BRIEF = "/postBrief";
+
     // add car
     const ADD_CAR = "/addcar";
     export const ADD_CAR_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + CAR + ADD_CAR;
@@ -82,4 +84,7 @@ export namespace GlobalConstants {
     export const POST_ID_CARD_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + OWNER + POST_ID_CARD;
 
     export const POST_LICENSE_CARD_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + OWNER + POST_LICENSE_CARD;
+
+    export const POST_INSURANCE_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + CAR + POST_INSURANCE;
+    export const POST_BRIEF_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + CAR + POST_BRIEF;
 }
