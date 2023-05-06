@@ -4,7 +4,11 @@ export namespace Models {
         ownerId: number,
         plate: string,
         vin: string
-        model: string
+        brand: string,
+        model: string,
+        fabricationDate: string,
+        insuranceId: string,
+        inspectionId: string
     }
 
 }

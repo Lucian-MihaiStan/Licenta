@@ -15,8 +15,6 @@ export const AddCarForm = () => {
         brand: "",
         model: "",
         fabricationDate: "",
-        insuranceId: "",
-        inspectionId: "",
     });
 
     const userId = localStorage.getItem(GlobalConstants.USER_ID) as string;
@@ -24,8 +22,6 @@ export const AddCarForm = () => {
     const postCar = async (event: any) => {
         event.preventDefault();
         addCarRequest.ownerId = userId;
-        addCarRequest.insuranceId = "1";
-        addCarRequest.inspectionId = "1";
         addCarRequest.fabricationDate = "2021-05-05";
         const response = await fetch(GlobalConstants.ADD_CAR_LINK, {
             method: GlobalConstants.POST_REQUEST,
@@ -95,15 +91,7 @@ export const AddCarForm = () => {
                 handleOnchange={handleChange}
             />
 
-            <UploadDocumentForm
-                userId={userId as string}
-                document_name={UploadDocumentFormNamespace.INSURANCE}
-                url={GlobalConstants.POST_INSURANCE_LINK}/>
-
-            <UploadDocumentForm
-                userId={userId as string}
-                document_name={UploadDocumentFormNamespace.BRIEF}
-                url={GlobalConstants.POST_BRIEF_LINK}/>
+            
 
             <div> <button onClick={(e) => removeVehicle(e)}> Remove Vehicle </button> </div>
 

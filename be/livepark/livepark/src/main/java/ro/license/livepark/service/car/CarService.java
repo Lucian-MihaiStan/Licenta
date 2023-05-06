@@ -37,8 +37,8 @@ public class CarService {
         return Optional.of(byInsuranceId.get(0));
     }
 
-    public List<CarDTO> findByOwnerId(Long ownerId) {
-        return carRepository.findByOwnerId(ownerId).stream().map(carDTOMapper).toList();
+    public List<CarDTO> findByOwnerId(Long driverId) {
+        return carRepository.findAllByDriverDriverId(driverId).stream().map(carDTOMapper).toList();
     }
 
     public Optional<CarDTO> findById(Long carId) {

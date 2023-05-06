@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ro.license.livepark.entities.driver.Driver;
 
 import java.sql.Date;
 
@@ -21,8 +22,9 @@ public class Car {
     @Column(name = "car_id", unique = true, nullable = false)
     private Long carId;
 
-    @Column(name = "owner_id", nullable = false)
-    private Long ownerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "driver_id", nullable = false)
+    private Driver driver;
 
     @Column(name = "plate", unique = true, nullable = false)
     private String plate;
@@ -39,11 +41,11 @@ public class Car {
     @Column(name = "fabrication_date", nullable = false)
     private Date fabricationDate;
 
-    @Column(name = "insurance_id", unique = true)
-    private Long insuranceId;
+    @Column(name = "insurance_id", nullable = false, unique = true)
+    private String insuranceId;
 
-    @Column(name = "inspection_id", unique = true)
-    private Long inspectionId;
+    @Column(name = "inspection_id", nullable = false, unique = true)
+    private String inspectionId;
 
 
 }

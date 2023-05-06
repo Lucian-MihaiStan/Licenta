@@ -24,8 +24,10 @@ import java.util.Objects;
         basePackages = {
                 "ro.license.livepark.repository.car",
                 "ro.license.livepark.repository.driver",
+                "ro.license.livepark.repository.notification",
                 "ro.license.livepark.entities.car",
-                "ro.license.livepark.entities.driver"
+                "ro.license.livepark.entities.driver",
+                "ro.license.livepark.entities.notification"
         }
 )
 public class PersistenceConfigDB {
@@ -45,8 +47,10 @@ public class PersistenceConfigDB {
         em.setPackagesToScan(
                 "ro.license.livepark.repository.car",
                 "ro.license.livepark.repository.driver",
+                "ro.license.livepark.repository.notification",
                 "ro.license.livepark.entities.car",
-                "ro.license.livepark.entities.driver"
+                "ro.license.livepark.entities.driver",
+                "ro.license.livepark.entities.notification"
         );
 
         HibernateJpaVendorAdapter vendorAdapter

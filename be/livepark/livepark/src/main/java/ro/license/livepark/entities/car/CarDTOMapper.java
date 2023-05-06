@@ -14,11 +14,14 @@ public class CarDTOMapper implements Function<Car, CarDTO> {
 
         return new CarDTO(
                 car.getCarId(),
-                car.getOwnerId(),
+                car.getDriver().getDriverId(),
                 car.getPlate(),
                 car.getVin(),
-                car.getModel()
-//                car.getBrand()
+                car.getBrand(),
+                car.getModel(),
+                car.getFabricationDate(),
+                car.getInsuranceId(),
+                car.getInspectionId()
         );
     }
 

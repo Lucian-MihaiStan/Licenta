@@ -5,9 +5,11 @@ import org.springframework.web.bind.annotation.*;
 import ro.license.livepark.entities.car.Car;
 import ro.license.livepark.entities.car.CarBrand;
 import ro.license.livepark.entities.car.CarDTO;
-import ro.license.livepark.entities.car.HttpCarMapper;
+import ro.license.livepark.entities.driver.Driver;
+import ro.license.livepark.entities.driver.DriverDTO;
 import ro.license.livepark.http.packages.received.HttpCarPkg;
 import ro.license.livepark.service.car.CarService;
+import ro.license.livepark.service.driver.DriverService;
 
 import java.sql.Date;
 import java.util.HashMap;
@@ -19,26 +21,31 @@ import java.util.Map;
 @RequestMapping("/api/car")
 public class CarController {
 
-    private final HttpCarMapper httpCarMapper;
     private final CarService carService;
+    private final DriverService driverService;
 
-    public CarController(HttpCarMapper httpCarMapper, CarService carService) {
-        this.httpCarMapper = httpCarMapper;
+    public CarController(CarService carService, DriverService driverService) {
         this.carService = carService;
+        this.driverService = driverService;
     }
 
     @PostMapping("/addcar")
     public ResponseEntity<?> addCar(@RequestBody HttpCarPkg carRequestPkg) {
-        if ("".equals(carRequestPkg.getInsuranceId()))
-            return ResponseEntity.badRequest().body("Insurance ID is null");
+        Driver driver = driverService.findDriverByUserId(Long.valueOf(carRequestPkg.getOwnerId()));
 
-        if ("".equals(carRequestPkg.getInspectionId()))
-            return ResponseEntity.badRequest().body("Inspection ID is null");
-
-        if (carService.findByInsuranceId(Long.valueOf(carRequestPkg.getInsuranceId())).isPresent())
-            return ResponseEntity.badRequest().body("Insurance already exists");
-
-        carService.addCar(httpCarMapper.apply(carRequestPkg));
+        carService.addCar(
+                Car
+                        .builder()
+                        .driver(driver)
+                        .vin(carRequestPkg.getVin())
+                        .plate(carRequestPkg.getPlate())
+                        .brand(CarBrand.AUDI)
+                        .model(carRequestPkg.getModel())
+                        .fabricationDate(Date.valueOf(carRequestPkg.getFabricationDate()))
+                        .insuranceId("")
+                        .inspectionId("")
+                        .build()
+        );
 
         Map<String, String> response = new HashMap<>();
         response.put("message", "Car Added");

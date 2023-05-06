@@ -1,2 +1,7 @@
-package ro.license.livepark.entities.notification;public class Verboity {
+package ro.license.livepark.entities.notification;
+
+public enum Verbosity {
+    LOW,
+    MEDIUM,
+    HIGH
 }
