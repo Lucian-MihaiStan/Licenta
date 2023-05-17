@@ -24,11 +24,6 @@ export const CarForm = () => {
     if (car == null)
         return <div> Loading... </div>
 
-    const setInspectionDate = (event: any) => {
-        const value = event.target.value;
-        setDate({ ...date, [event.target.name]: value });
-    };
-
     function removeVehicle(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
         throw new Error("Function not implemented.");
     }

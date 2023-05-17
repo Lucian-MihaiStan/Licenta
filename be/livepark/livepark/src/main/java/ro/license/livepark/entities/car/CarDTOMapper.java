@@ -21,9 +21,13 @@ public class CarDTOMapper implements Function<Car, CarDTO> {
                 car.getModel(),
                 car.getFabricationDate(),
                 car.getRcaId(),
+                car.getRcaExpirationDate(),
                 car.getItpId(),
+                car.getItpExpirationDate(),
                 car.getRovinietaId(),
+                car.getRovinietaExpirationDate(),
                 car.getCascoId(),
+                car.getCascoExpirationDate(),
                 car.getFireExtinguisherExpirationDate(),
                 car.getFirstAidKitExpirationDate()
         );

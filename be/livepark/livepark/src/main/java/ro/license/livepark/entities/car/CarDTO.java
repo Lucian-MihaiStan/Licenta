@@ -10,10 +10,14 @@ public record CarDTO(
         CarBrand brand,
         String model,
         Date fabricationDate,
-        String insuranceId,
-        String inspectionId,
-        String rovinieteId,
+        String rcaId,
+        Date rcaExpirationDate,
+        String itpId,
+        Date itpExpirationDate,
+        String rovinietaId,
+        Date rovinietaExpirationDate,
         String cascoId,
+        Date cascoExpirationDate,
         Date fireExtinguisherExpirationDate,
         Date firstAidKitExpirationDate
 ) {

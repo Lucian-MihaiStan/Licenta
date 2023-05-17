@@ -1,8 +1,9 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationBar } from "../../../../../../components/navigation_bar/navigation-bar";
 import { GlobalConstants } from "@/components/globalc_namespace/global-constants";
+import { CarBackendConnectUtils } from "@/components/cars/car_get";
 
 const EquipmentType: NextPage = () => {
     
@@ -10,9 +11,30 @@ const EquipmentType: NextPage = () => {
     const carId = router.query.carId;
     const equipment_type = router.query.equipment_type;
     const [equipmentExpirationDate, setEquipmentExpirationDate] = useState('');
+    const [oldEquipmentExpirationDate, setOldEquipmentExpirationDate] = useState('no date');
 
     if (carId == null)
         return <div> Loading... </div>
+
+    const equipmentInfo = async() => {
+        const localCar = await CarBackendConnectUtils.requestCar(carId as string);
+        if (localCar != null) {
+            switch (equipment_type) {
+                case GlobalConstants.FIRE_EXTINGUISHER:
+                    localCar.fireExtinguisherExpirationDate != null ? setOldEquipmentExpirationDate(localCar.fireExtinguisherExpirationDate.toLocaleString()) : setEquipmentExpirationDate("");
+                    break;
+                case GlobalConstants.FIRST_AID_KIT:
+                    localCar.firstAidKitExpirationDate != null ? setOldEquipmentExpirationDate(localCar.firstAidKitExpirationDate.toLocaleString()) : setEquipmentExpirationDate("");
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    useEffect(() => {
+        equipmentInfo();
+    }, []);
 
     const postEquipment = async (e: any) => {
         e.preventDefault();
@@ -35,11 +57,17 @@ const EquipmentType: NextPage = () => {
             router.push(`${GlobalConstants.OWNER}/${router.query.ownerId}${GlobalConstants.CAR}/${carId}`);
     }
 
-        return (
+    return (
 
         <div>
             <NavigationBar/>
             {equipment_type}
+
+            {
+                equipmentExpirationDate != null ?
+                <div> Expiration date: {oldEquipmentExpirationDate} </div> :
+                <div> No expiration date set </div>
+            }
 
             <div> Expiration date: 
                 <input
@@ -48,7 +76,7 @@ const EquipmentType: NextPage = () => {
                     onChange={e => { setEquipmentExpirationDate(e.currentTarget.value); }}/> 
             </div>
 
-            <button onClick={(e) => postEquipment(e)}> Save Equipment </button>
+            <button onClick={(e) => postEquipment(e)}> Update Equipment Expiration Date </button>
 
         </div>   
     )

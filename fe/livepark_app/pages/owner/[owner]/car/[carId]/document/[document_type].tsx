@@ -2,9 +2,8 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { NavigationBar } from "../../../../../../components/navigation_bar/navigation-bar";
-import { UploadDocumentForm, UploadDocumentFormNamespace } from "../../../../../../components/upload_document-form";
+import { UploadDocumentForm } from "../../../../../../components/upload_document-form";
 import { GlobalConstants } from "../../../../../../components/globalc_namespace/global-constants";
-import { Models } from "../../../../../../components/cars/car";
 import { CarBackendConnectUtils } from "@/components/cars/car_get";
 
 const DocumentType: NextPage = () => {
@@ -15,27 +14,43 @@ const DocumentType: NextPage = () => {
     const document_type = router.query.document_type;
 
     const [newDocumentExpirationDate, setDocumentExpirationDate] = useState('');
+    const [oldDocumentExpirationdate, setOldDocumentExpirationDate] = useState('no date');
 
-    const [car, setCar] = useState<Models.CarModel>();
     let carDocument = "";
     if (carId == null)
         return <div> Loading... </div>
 
     const documentInfo = async() => {
-        setCar(await CarBackendConnectUtils.requestCar(carId as string));
-        if (car != null) {
+        const localCar = await CarBackendConnectUtils.requestCar(carId as string);
+        if (localCar != null) {
             switch (document_type) {
                 case GlobalConstants.RCA:
-                    carDocument = car.insuranceId;
+                    carDocument = localCar.rcaId;
+                    if (localCar.rcaExpirationDate != null)
+                        setOldDocumentExpirationDate(localCar.rcaExpirationDate.toLocaleString());
+                    else
+                        setOldDocumentExpirationDate("");
                     break;
                 case GlobalConstants.ITP:
-                    carDocument = car.inspectionId;
+                    carDocument = localCar.itpId;
+                    if (localCar.itpExpirationDate != null)
+                        setOldDocumentExpirationDate(localCar.itpExpirationDate.toLocaleString());
+                    else
+                        setOldDocumentExpirationDate("");
                     break;
                 case GlobalConstants.ROVINIETA:
-                    carDocument = car.rovinietaId;
+                    carDocument = localCar.rovinietaId;
+                    if (localCar.rovinietaExpirationDate != null)
+                        setOldDocumentExpirationDate(localCar.rovinietaExpirationDate.toLocaleString());
+                    else
+                        setOldDocumentExpirationDate("");
                     break;
                 case GlobalConstants.CASCO:
-                    carDocument = car.cascoId;
+                    carDocument = localCar.cascoId;
+                    if (localCar.cascoExpirationDate != null)
+                        setOldDocumentExpirationDate(localCar.cascoExpirationDate.toLocaleString());
+                    else
+                        setOldDocumentExpirationDate("");
                     break;
                 default:
                     break;
@@ -69,9 +84,6 @@ const DocumentType: NextPage = () => {
         documentInfo();
     }, []);
 
-    if (car == null)
-        return <div> Loading... </div>
-
     return (
 
         <div>
@@ -81,15 +93,21 @@ const DocumentType: NextPage = () => {
                 carDocument != "" ?
                     <div> {document_type}: {carDocument} </div> :
                     <div>
-                        No insurance Please load
-                        <UploadDocumentForm
-                            entityId={userId as string}
-                            document_name={document_type as string}
-                            url={GlobalConstants.DOCUMENT_LINK}/>
+                        No {document_type} added. Please load the document.
                     </div>
-
             }
             
+            <UploadDocumentForm
+            entityId={userId as string}
+            document_name={document_type as string}
+            url={GlobalConstants.DOCUMENT_LINK}/>
+
+            {
+                oldDocumentExpirationdate != "" ?
+                    <div> Expiration date: {oldDocumentExpirationdate} </div> :
+                    <div> No expiration date set </div>
+            }
+
             <div> Expiration date: 
                 <input
                     type="date"
@@ -97,7 +115,7 @@ const DocumentType: NextPage = () => {
                     onChange={e => { setDocumentExpirationDate(e.currentTarget.value); }}/> 
             </div>
 
-            <button onClick={(e) => postDocument(e)}> Save Document </button>
+            <button onClick={(e) => postDocument(e)}> Update Document Expiration Date </button>
 
         </div>   
     )

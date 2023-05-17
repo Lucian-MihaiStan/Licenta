@@ -7,10 +7,14 @@ export namespace Models {
         brand: string,
         model: string,
         fabricationDate: Date,
-        insuranceId: string,
-        inspectionId: string,
+        rcaId: string,
+        rcaExpirationDate: Date,
+        itpId: string,
+        itpExpirationDate: Date,
         rovinietaId: string,
+        rovinietaExpirationDate: Date,
         cascoId: string,
+        cascoExpirationDate: Date,
         fireExtinguisherExpirationDate: Date,
         firstAidKitExpirationDate: Date
     }
