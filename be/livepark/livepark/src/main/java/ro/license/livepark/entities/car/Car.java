@@ -1,10 +1,7 @@
 package ro.license.livepark.entities.car;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ro.license.livepark.entities.driver.Driver;
 
 import java.sql.Date;
@@ -15,6 +12,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Entity(name = "car")
 @Table(name = "cars")
+@ToString(exclude = "driver")
 public class Car {
 
     @Id
@@ -41,11 +39,33 @@ public class Car {
     @Column(name = "fabrication_date", nullable = false)
     private Date fabricationDate;
 
-    @Column(name = "insurance_id", nullable = false, unique = true)
-    private String insuranceId;
+    @Column(name = "rca_id", unique = true)
+    private String rcaId;
 
-    @Column(name = "inspection_id", nullable = false, unique = true)
-    private String inspectionId;
+    @Column(name = "rca_expiration_date")
+    private Date rcaExpirationDate;
 
+    @Column(name = "itp_id", unique = true)
+    private String itpId;
 
+    @Column(name = "itp_expiration_date")
+    private Date itpExpirationDate;
+
+    @Column(name = "rovinieta_id", unique = true)
+    private String rovinietaId;
+
+    @Column(name = "rovinieta_expiration_date")
+    private Date rovinietaExpirationDate;
+
+    @Column(name = "casco_id", unique = true)
+    private String cascoId;
+
+    @Column(name = "casco_expiration_date")
+    private Date cascoExpirationDate;
+
+    @Column(name = "fire_extinguisher_expiration_date")
+    private Date fireExtinguisherExpirationDate;
+
+    @Column(name = "first_aid_kit_expiration_date")
+    private Date firstAidKitExpirationDate;
 }

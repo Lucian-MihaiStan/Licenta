@@ -9,7 +9,7 @@ export type InputProps = {
 };
 
 export type FormProps = {
-    userId: string;
+    entityId: string;
     document_name: string;
     url: string;
 };

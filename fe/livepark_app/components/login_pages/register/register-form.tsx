@@ -18,6 +18,8 @@ export const RegisterForm = () => {
         lastName: ""
     });
 
+    const routerUtils = useRouter();
+
     const handleChange = (event: any) => {
         const value = event.target.value;
         setUser({ ...registerUserRequest, [event.target.name]: value });
@@ -44,9 +46,12 @@ export const RegisterForm = () => {
 
         const _user = await response.json();
         console.log(_user);
+        if (response.ok)
+            routerUtils.push(GlobalConstants.LOGIN_FRONTEND_APP_LINK);
+        else
+            console.log("Failed");
     };
 
-    const routerUtils = useRouter();
     const routeToPage = async (event: any, path: string) => {
         event.preventDefault();
         routerUtils.push(path);

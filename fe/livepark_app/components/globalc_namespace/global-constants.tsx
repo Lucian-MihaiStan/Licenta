@@ -22,6 +22,8 @@ export namespace GlobalConstants {
     export const NOTIFICATION = "/notifications";
     export const LOGOUT = "/logout";
     export const CAR = "/car";
+    export const DOCUMENT = "/document";
+    export const DOCUMENT_EXPIRATION_DATE = "/documentExpirationDate";
 
     export const USER_DTO = "userDTO";
     export const DRIVER_DTO = "driverDTO";
@@ -73,18 +75,28 @@ export namespace GlobalConstants {
     export const POST_INSURANCE = "/postInsurance";
     export const POST_BRIEF = "/postBrief";
 
+    export const RCA = "rca";
+    export const ITP = "itp";
+    export const ROVINIETA = "rovinieta";
+    export const FIRE_EXTINGUISHER = "fireExtinguisher";
+    export const FIRST_AID_KIT = "firstAidKit";
+    export const CASCO = "casco";
+
+    export const EQUIPMENT = "/equipment";
+
     // add car
     const ADD_CAR = "/addcar";
     export const ADD_CAR_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + CAR + ADD_CAR;
     export const USER_INFO_LINK = BACKEND_API_LINK + API + OWNER + USER_INFO;
     export const CARS_LINK = BACKEND_API_LINK + API + CAR + CARS;
     export const CAR_LINK = BACKEND_API_LINK + API + CAR + CAR;
+    export const DASHBOARD_LINK = BACKEND_API_LINK + API  + DASHBOARD;
 
     export const ADD_DOCUMENT_LINK = LOCAL_HOST + COLON + MONGO_PORT + INSERT_DOCUMENT;
     export const POST_ID_CARD_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + OWNER + POST_ID_CARD;
 
     export const POST_LICENSE_CARD_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + OWNER + POST_LICENSE_CARD;
 
-    export const POST_INSURANCE_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + CAR + POST_INSURANCE;
-    export const POST_BRIEF_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + CAR + POST_BRIEF;
+    export const EQUIPMENT_LINK = CAR_LINK + EQUIPMENT;
+    export const DOCUMENT_LINK = CAR_LINK + DOCUMENT;
 }

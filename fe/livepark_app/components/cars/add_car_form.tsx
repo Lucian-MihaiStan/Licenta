@@ -3,7 +3,6 @@ import { GlobalConstants } from "../globalc_namespace/global-constants";
 import { InputConstants } from '../globalc_namespace/inputc/input-constants';
 import { TextBoxDivForm } from '../html_components/textbox/textbox-register-login';
 import common_login_styles from '../login_pages/common_login_modules/common-login.module.css'
-import { UploadDocumentForm, UploadDocumentFormNamespace } from "../upload_document-form";
 import { useRouter } from "next/router";
 
 export const AddCarForm = () => {
@@ -15,9 +14,16 @@ export const AddCarForm = () => {
         brand: "",
         model: "",
         fabricationDate: "",
+        insuranceId: "",
+        inspectionId: "",
+        rovinietaId: "",
+        cascoId: "",
+        fireExtinguisherExpirationDate: "",
+        firstAidKitExpirationDate: ""
     });
 
     const userId = localStorage.getItem(GlobalConstants.USER_ID) as string;
+    const routerUtils = useRouter();
 
     const postCar = async (event: any) => {
         event.preventDefault();
@@ -36,15 +42,14 @@ export const AddCarForm = () => {
 
         const _car = await response.json();
         console.log(_car);
+        if (response.ok) {
+            routerUtils.push(GlobalConstants.CARS + "/" + userId);
+        }
     }
 
     function handleChange(event: ChangeEvent<HTMLInputElement>): void {
         const value = event.target.value;
         setCar({ ...addCarRequest, [event.target.name]: value });
-    }
-
-    function removeVehicle(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
-        throw new Error("Function not implemented.");
     }
 
     return (
@@ -93,7 +98,6 @@ export const AddCarForm = () => {
 
             
 
-            <div> <button onClick={(e) => removeVehicle(e)}> Remove Vehicle </button> </div>
 
             <div> <button onClick={(e) => postCar(e)}> Add car </button> </div>
         </div>

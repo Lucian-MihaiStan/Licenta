@@ -20,7 +20,7 @@ export const CarsForm = () => {
     }
 
     const handleCars = async () => {
-        const url = `${GlobalConstants.CARS_LINK}?ownerId=${userId}`;
+        const url = `${GlobalConstants.CARS_LINK}?userId=${userId}`;
         const _carsinfo = await fetch(url, {
             method: 'GET',
             headers: {

@@ -9,9 +9,6 @@ export namespace UploadDocumentFormNamespace {
     export const IDENTITY_CARD = "Identity Card";
     export const DRIVING_LICENSE = "Driving License";
 
-    export const INSURANCE = "Insurance";
-    export const BRIEF = "Brief";
-
 }
 
 export const UploadDocumentForm = (props: FormProps) => {
@@ -47,7 +44,8 @@ export const UploadDocumentForm = (props: FormProps) => {
 
             const documentJson = {
                 documentId: document_id,
-                userId: props.userId
+                documentType: props.document_name,
+                entityId: props.entityId
             }
 
             const responsePost = await fetch(props.url, {

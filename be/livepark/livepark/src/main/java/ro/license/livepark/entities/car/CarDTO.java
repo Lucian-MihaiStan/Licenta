@@ -11,6 +11,10 @@ public record CarDTO(
         String model,
         Date fabricationDate,
         String insuranceId,
-        String inspectionId
+        String inspectionId,
+        String rovinieteId,
+        String cascoId,
+        Date fireExtinguisherExpirationDate,
+        Date firstAidKitExpirationDate
 ) {
 }

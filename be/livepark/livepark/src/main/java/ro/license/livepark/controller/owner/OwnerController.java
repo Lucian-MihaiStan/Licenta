@@ -3,7 +3,7 @@ package ro.license.livepark.controller.owner;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.license.livepark.controller.GlobalConstants;
-import ro.license.livepark.http.packages.received.HttpCardIdPkg;
+import ro.license.livepark.http.packages.received.DocumentIdEntityPkg;
 import ro.license.livepark.service.driver.DriverService;
 import ro.license.livepark.service.user.UserService;
 
@@ -34,14 +34,14 @@ public class OwnerController {
     }
 
     @PostMapping("/postIdCard")
-    public ResponseEntity<?> postDriverCardId(@RequestBody HttpCardIdPkg documentPkg) {
-        driverService.updateOrCreateDriverCardId(Long.valueOf(documentPkg.getUserId()), documentPkg.getDocumentId());
+    public ResponseEntity<?> postDriverCardId(@RequestBody DocumentIdEntityPkg documentPkg) {
+        driverService.updateOrCreateDriverCardId(documentPkg.getEntityId(), documentPkg.getDocumentId());
         return ResponseEntity.ok(GlobalConstants.OK_STATUS);
     }
 
     @PostMapping("/postLicenseCard")
-    public ResponseEntity<?> postDriverLicenseCard(@RequestBody HttpCardIdPkg documentPkg) {
-        driverService.updateOrCreateDriverLicenseId(Long.valueOf(documentPkg.getUserId()), documentPkg.getDocumentId());
+    public ResponseEntity<?> postDriverLicenseCard(@RequestBody DocumentIdEntityPkg documentPkg) {
+        driverService.updateOrCreateDriverLicenseId(documentPkg.getEntityId(), documentPkg.getDocumentId());
         return ResponseEntity.ok(GlobalConstants.OK_STATUS);
     }
 

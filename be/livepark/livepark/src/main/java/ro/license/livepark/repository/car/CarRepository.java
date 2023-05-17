@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long> {
-    List<Car> findByInsuranceId(Long insuranceId);
 
     List<Car> findAllByDriverDriverId(Long driverId);
 }

@@ -3,8 +3,8 @@ package ro.license.livepark.http.packages.received;
 import lombok.Data;
 
 @Data
-public class HttpCardIdPkg {
-    String userId;
-
+public class DocumentIdEntityPkg {
+    Long entityId;
+    String documentType;
     String documentId;
 }

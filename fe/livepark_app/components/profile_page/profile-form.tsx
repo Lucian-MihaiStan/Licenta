@@ -114,12 +114,12 @@ export const ProfileForm = () => {
                 </div>
 
                 <UploadDocumentForm
-                    userId={userId as string}
+                    entityId={userId as string}
                     document_name={UploadDocumentFormNamespace.IDENTITY_CARD}
                     url={GlobalConstants.POST_ID_CARD_LINK}/>
 
                 <UploadDocumentForm
-                    userId={userId as string}
+                    entityId={userId as string}
                     document_name={UploadDocumentFormNamespace.DRIVING_LICENSE}
                     url={GlobalConstants.POST_LICENSE_CARD_LINK}/>
                 

@@ -14,15 +14,10 @@ mongo_collection = mongo_db[MONGO_COLLECTION]
 @app.route('/insert_document', methods=['POST'])
 def insert_document():
     try:
-        print("Inserting document in MongoDB")
         posted_info = request.get_json(silent=True)
         if (isinstance(posted_info, list)):
             posted_info = posted_info[0]
-        print(type(posted_info))
-        print(posted_info)
-        jsonificat = jsonify({'document_id': str(mongo_collection.insert_one(posted_info).inserted_id)})
-        print(jsonificat)
-        return jsonificat, 200
+        return jsonify({'document_id': str(mongo_collection.insert_one(posted_info).inserted_id)}), 200
     except Exception as e:
         print("Encountered exception while trying to add photo in MongoDB")
         print(e)
@@ -34,8 +29,9 @@ def find_document():
         document_id = request.json['document_id']
         entry = mongo_collection.find_one({"_id": ObjectId(document_id)})
         return jsonify({'document': entry['document']}), 200 
-    except Exception:
+    except Exception as e:
         print("Encountered exception while trying to search photo in MongoDB")
+        print(e)
     return jsonify({'Error': 400}), 400
 
 if __name__ == '__main__':

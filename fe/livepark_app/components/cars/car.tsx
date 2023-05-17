@@ -6,9 +6,13 @@ export namespace Models {
         vin: string
         brand: string,
         model: string,
-        fabricationDate: string,
+        fabricationDate: Date,
         insuranceId: string,
-        inspectionId: string
+        inspectionId: string,
+        rovinietaId: string,
+        cascoId: string,
+        fireExtinguisherExpirationDate: Date,
+        firstAidKitExpirationDate: Date
     }
 
 }

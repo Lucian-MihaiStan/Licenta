@@ -65,4 +65,17 @@ public class DriverService {
                 driverRepository.findByUserId(userId).get() :
                 null;
     }
+
+    public void createDriver(Long userId) {
+        if (driverRepository.findByUserId(userId).isPresent())
+            return;
+
+        driverRepository.save(
+                Driver
+                        .builder()
+                        .userId(userId)
+                        .gender(Gender.UNSPECIFIED)
+                        .build()
+        );
+    }
 }

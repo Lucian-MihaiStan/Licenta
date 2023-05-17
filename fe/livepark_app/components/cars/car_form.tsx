@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react"
 import { Models } from "./car";
 import { GlobalConstants } from "../globalc_namespace/global-constants";
-import { UploadDocumentForm, UploadDocumentFormNamespace } from "../upload_document-form";
+import { CarBackendConnectUtils } from "./car_get";
 
 export const CarForm = () => {
 
@@ -11,29 +11,36 @@ export const CarForm = () => {
     const userId = router.query.owner;
 
     const [car, setCar] = useState<Models.CarModel>();
+    const [date, setDate] = useState<Date>(new Date());
 
-    const handleCar = async () => {
-        const url = `${GlobalConstants.CAR_LINK}?carId=${carId}`;
-        const _carinfo = await fetch(url, {
-            method: 'GET',
-            headers: {
-                "Content-Type": GlobalConstants.APPLICATION_JSON,
-                "Access-Control-Allow-Origin": GlobalConstants.STAR,
-                "Authorization": "Bearer " + localStorage.getItem(GlobalConstants.TOKEN),
-                "Origin": GlobalConstants.FRONTEND_API_LINK
-            }
-        });
-
-        const _car = await _carinfo.json();
-        setCar(_car);
+    const carInfo = async () => {
+        setCar(await CarBackendConnectUtils.requestCar(carId as string));
     }
 
     useEffect(() => {
-        handleCar();
+        carInfo();
     }, []);
 
     if (car == null)
         return <div> Loading... </div>
+
+    const setInspectionDate = (event: any) => {
+        const value = event.target.value;
+        setDate({ ...date, [event.target.name]: value });
+    };
+
+    function removeVehicle(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
+        throw new Error("Function not implemented.");
+    }
+
+    function routeToCarDocument(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, document_type: string): void {
+        e.preventDefault();
+        router.push(`${GlobalConstants.OWNER}/${userId}${GlobalConstants.CAR}/${carId}${GlobalConstants.DOCUMENT}/${document_type}`);
+    }
+
+    function routeToEquipment(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, equipment_type: any): void {
+        router.push(`${GlobalConstants.OWNER}/${userId}${GlobalConstants.CAR}/${carId}${GlobalConstants.EQUIPMENT}/${equipment_type}`);
+    }
 
     return (
         <div>
@@ -45,31 +52,34 @@ export const CarForm = () => {
                 <div>{car.model}</div>
                 <div>{car.plate}</div>
                 <div>{car.vin}</div>
-                <div>{car.fabricationDate}</div>
+                <div>{car.fabricationDate.toLocaleString()}</div>
 
-                {
-                    car.inspectionId != "" ? 
-                        <div> Inspection: {car.inspectionId} </div> : 
-                        <div> 
-                            No inspection Please load 
-                            <UploadDocumentForm
-                                userId={userId as string}
-                                document_name={UploadDocumentFormNamespace.INSURANCE}
-                                url={GlobalConstants.POST_INSURANCE_LINK}/>
-                        </div>
-                }
+                <div>
+                    <button onClick={(e) => routeToCarDocument(e, GlobalConstants.RCA)}> RCA </button>
+                </div>
+                
+                <div>
+                    <button onClick={(e) => routeToCarDocument(e, GlobalConstants.ITP)}> ITP </button>
+                </div>
 
-                {
-                    car.insuranceId != "" ?
-                        <div> Insurance: {car.insuranceId} </div> :
-                        <div>
-                            No insurance Please load
-                            <UploadDocumentForm
-                                userId={userId as string}
-                                document_name={UploadDocumentFormNamespace.BRIEF}
-                                url={GlobalConstants.POST_BRIEF_LINK}/>
-                        </div>
-                }
+                <div>
+                    <button onClick={(e) => routeToCarDocument(e, GlobalConstants.ROVINIETA)}> Rovinieta </button>
+                </div>
+
+                <div>
+                    <button onClick={(e) => routeToCarDocument(e, GlobalConstants.CASCO)}> CASCO </button>
+                </div>
+
+                <div>
+                    <button onClick={(e) => routeToEquipment(e, GlobalConstants.FIRE_EXTINGUISHER)}> Fire Extinguisher </button>
+                </div>
+
+                <div>
+                    <button onClick={(e) => routeToEquipment(e, GlobalConstants.FIRST_AID_KIT)}> First Aid Kit </button>
+                </div>
+
+                <div> <button onClick={(e) => removeVehicle(e)}> Remove Vehicle </button> </div>
+
             </div>
 
 </div>
