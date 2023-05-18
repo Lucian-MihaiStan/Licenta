@@ -9,52 +9,85 @@ import { CarBackendConnectUtils } from "@/components/cars/car_get";
 const DocumentType: NextPage = () => {
     
     const router = useRouter();
-    const userId = router.query.userId;
+    const userId = router.query.owner;
     const carId = router.query.carId;
     const document_type = router.query.document_type;
 
     const [newDocumentExpirationDate, setDocumentExpirationDate] = useState('');
     const [oldDocumentExpirationdate, setOldDocumentExpirationDate] = useState('no date');
+    const [oldCarDocumentId, setOldCarDocumentId] = useState('no data');
 
-    let carDocument = "";
     if (carId == null)
         return <div> Loading... </div>
 
     const documentInfo = async() => {
         const localCar = await CarBackendConnectUtils.requestCar(carId as string);
-        if (localCar != null) {
-            switch (document_type) {
-                case GlobalConstants.RCA:
-                    carDocument = localCar.rcaId;
-                    if (localCar.rcaExpirationDate != null)
-                        setOldDocumentExpirationDate(localCar.rcaExpirationDate.toLocaleString());
-                    else
-                        setOldDocumentExpirationDate("");
-                    break;
-                case GlobalConstants.ITP:
-                    carDocument = localCar.itpId;
-                    if (localCar.itpExpirationDate != null)
-                        setOldDocumentExpirationDate(localCar.itpExpirationDate.toLocaleString());
-                    else
-                        setOldDocumentExpirationDate("");
-                    break;
-                case GlobalConstants.ROVINIETA:
-                    carDocument = localCar.rovinietaId;
-                    if (localCar.rovinietaExpirationDate != null)
-                        setOldDocumentExpirationDate(localCar.rovinietaExpirationDate.toLocaleString());
-                    else
-                        setOldDocumentExpirationDate("");
-                    break;
-                case GlobalConstants.CASCO:
-                    carDocument = localCar.cascoId;
-                    if (localCar.cascoExpirationDate != null)
-                        setOldDocumentExpirationDate(localCar.cascoExpirationDate.toLocaleString());
-                    else
-                        setOldDocumentExpirationDate("");
-                    break;
-                default:
-                    break;
+        if (localCar == null)
+            return;
+
+        let localDocToRequest = null;
+        
+        switch (document_type) {
+            case GlobalConstants.RCA:
+                setOldCarDocumentId(localCar.rcaId);
+                localDocToRequest = localCar.rcaId;
+                if (localCar.rcaExpirationDate != null)
+                    setOldDocumentExpirationDate(localCar.rcaExpirationDate.toLocaleString());
+                break;
+            case GlobalConstants.ITP:
+                setOldCarDocumentId(localCar.itpId);
+                localDocToRequest = localCar.itpId;
+                if (localCar.itpExpirationDate != null)
+                    setOldDocumentExpirationDate(localCar.itpExpirationDate.toLocaleString());
+                break;
+            case GlobalConstants.ROVINIETA:
+                setOldCarDocumentId(localCar.rovinietaId);
+                localDocToRequest = localCar.rovinietaId;
+                if (localCar.rovinietaExpirationDate != null)
+                    setOldDocumentExpirationDate(localCar.rovinietaExpirationDate.toLocaleString());
+                break;
+            case GlobalConstants.CASCO:
+                setOldCarDocumentId(localCar.cascoId);
+                localDocToRequest = localCar.cascoId;
+                if (localCar.cascoExpirationDate != null)
+                    setOldDocumentExpirationDate(localCar.cascoExpirationDate.toLocaleString());
+                break;
+            default:
+                break;
+        }
+
+        console.log("old document");
+        console.log(localDocToRequest);
+
+        if (localDocToRequest == null || localDocToRequest == 'no data')
+            return;
+
+        try {
+            const url = `${GlobalConstants.GET_DOCUMENT_LINK}/${localDocToRequest}`;
+            console.log(url);
+            const response = await fetch(url, {
+                method: GlobalConstants.GET_REQUEST,
+                headers: {
+                    "Access-Control-Allow-Origin": GlobalConstants.STAR,
+                    "Content-Type": GlobalConstants.APPLICATION_JSON,
+                    "Origin": GlobalConstants.FRONTEND_API_LINK,
+                }
+            });
+
+            if (!response.ok) {
+                console.log("Not found");
+                return;
             }
+
+            const _document = await response.json();
+            if (_document['document'] == null) {
+                console.log("No document send");
+                return;
+            }
+
+            console.log("found");
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -90,8 +123,8 @@ const DocumentType: NextPage = () => {
             <NavigationBar/>
 
             {
-                carDocument != "" ?
-                    <div> {document_type}: {carDocument} </div> :
+                oldCarDocumentId != null && oldCarDocumentId != '' && oldCarDocumentId != 'no data' ?
+                    <div> {document_type}: {oldCarDocumentId} </div> :
                     <div>
                         No {document_type} added. Please load the document.
                     </div>

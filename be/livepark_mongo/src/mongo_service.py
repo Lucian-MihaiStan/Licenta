@@ -23,10 +23,10 @@ def insert_document():
         print(e)
     return jsonify({'Error': 400}), 400
 
-@app.route('/find_document', methods=['GET'])
-def find_document():
+@app.route('/find_document/<document_id>', methods=['GET'])
+def find_document(document_id):
     try:
-        document_id = request.json['document_id']
+        print(document_id)
         entry = mongo_collection.find_one({"_id": ObjectId(document_id)})
         return jsonify({'document': entry['document']}), 200 
     except Exception as e:

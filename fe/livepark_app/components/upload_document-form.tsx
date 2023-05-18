@@ -41,11 +41,12 @@ export const UploadDocumentForm = (props: FormProps) => {
             }
             
             const document_id = result['document_id'];
-
+            console.log(props.entityId);
+            console.log(parseInt(props.entityId));
             const documentJson = {
+                entityId: props.entityId,
                 documentId: document_id,
                 documentType: props.document_name,
-                entityId: props.entityId
             }
 
             const responsePost = await fetch(props.url, {
@@ -59,8 +60,7 @@ export const UploadDocumentForm = (props: FormProps) => {
                 body: JSON.stringify(documentJson),
             });
 
-            const resultPost = await responsePost.json();
-            if (resultPost['posted'] == false) {
+            if (!responsePost.ok) {
                 alert("Document not posted");
                 return;
             }

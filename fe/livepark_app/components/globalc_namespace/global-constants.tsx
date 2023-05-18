@@ -69,7 +69,8 @@ export namespace GlobalConstants {
     export const USER_ID = "userId";
 
     export const INSERT_DOCUMENT = "/insert_document";
-    export const POST_ID_CARD = "/postIdCard"
+    export const FIND_DOCUMENT = "/find_document";
+    export const POST_ID_CARD = "/postIdCard";
     export const POST_LICENSE_CARD = "/postLicenseCard";
 
     export const POST_INSURANCE = "/postInsurance";
@@ -94,6 +95,7 @@ export namespace GlobalConstants {
 
     export const ADD_DOCUMENT_LINK = LOCAL_HOST + COLON + MONGO_PORT + INSERT_DOCUMENT;
     export const POST_ID_CARD_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + OWNER + POST_ID_CARD;
+    export const GET_DOCUMENT_LINK = LOCAL_HOST + COLON + MONGO_PORT + FIND_DOCUMENT;
 
     export const POST_LICENSE_CARD_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + OWNER + POST_LICENSE_CARD;
 

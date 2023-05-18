@@ -11,7 +11,6 @@ export const CarForm = () => {
     const userId = router.query.owner;
 
     const [car, setCar] = useState<Models.CarModel>();
-    const [date, setDate] = useState<Date>(new Date());
 
     const carInfo = async () => {
         setCar(await CarBackendConnectUtils.requestCar(carId as string));
