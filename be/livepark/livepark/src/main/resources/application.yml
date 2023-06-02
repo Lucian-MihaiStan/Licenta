@@ -21,6 +21,19 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: livepark08@gmail.com
+    password: LivePark00.
+    properties:
+        mail:
+            smtp:
+            auth: true
+            starttls:
+                enable: true
+                required: true
+
 server:
   port: 9090
 

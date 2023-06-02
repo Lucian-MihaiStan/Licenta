@@ -35,6 +35,7 @@ export const UploadDocumentForm = (props: FormProps) => {
             reader.onerror = (error) => {
               console.log("error: ", error);
             };
+
             const response = await fetch(GlobalConstants.ADD_DOCUMENT_LINK, {
                 method: GlobalConstants.POST_REQUEST,
                 headers: {
@@ -54,8 +55,6 @@ export const UploadDocumentForm = (props: FormProps) => {
             }
             
             const document_id = result['document_id'];
-            console.log(props.entityId);
-            console.log(parseInt(props.entityId));
             const documentJson = {
                 entityId: props.entityId,
                 documentId: document_id,

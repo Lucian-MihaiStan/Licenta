@@ -81,6 +81,16 @@ const DocumentType: NextPage = () => {
             }
 
             const _document = await response.json();
+            if (_document == null) {
+                console.log("data base didn't retrive the document");
+                return;
+            }
+
+            if (_document['file'] == null) {
+                console.log("data base didn't retrive the document in json");
+                return;
+            }
+
             setOldDocumentBase64Encode(_document['file']);
         } catch (error) {
             console.log(error);
@@ -135,10 +145,10 @@ const DocumentType: NextPage = () => {
                         No document added. Please load the document.
                     </div>
             }
-            
+
             <UploadDocumentForm
-            entityId={userId as string}
-            document_name={document_type as string}
+            entityId={userId}
+            document_name={document_type}
             url={GlobalConstants.DOCUMENT_LINK}/>
 
             {

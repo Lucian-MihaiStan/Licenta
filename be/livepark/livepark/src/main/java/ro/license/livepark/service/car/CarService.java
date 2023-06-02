@@ -79,4 +79,12 @@ public class CarService {
 
         carRepository.save(car);
     }
+
+    public List<CarDTO> findAll() {
+        return carRepository.findAll().stream().map(carDTOMapper).toList();
+    }
+
+    public CarDTO findByPlate(String plate) {
+        return carDTOMapper.apply(carRepository.findByPlate(plate));
+    }
 }

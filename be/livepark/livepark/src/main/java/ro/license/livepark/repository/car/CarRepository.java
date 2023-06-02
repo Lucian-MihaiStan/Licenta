@@ -13,4 +13,7 @@ import java.util.Optional;
 public interface CarRepository extends JpaRepository<Car, Long> {
 
     List<Car> findAllByDriverDriverId(Long driverId);
+
+    Car findByPlate(String plate);
+
 }
