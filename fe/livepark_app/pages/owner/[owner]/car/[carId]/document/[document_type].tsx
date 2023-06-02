@@ -17,6 +17,8 @@ const DocumentType: NextPage = () => {
     const [oldDocumentExpirationdate, setOldDocumentExpirationDate] = useState('no date');
     const [oldCarDocumentId, setOldCarDocumentId] = useState('no data');
 
+    const [oldDocumentBase64Encode, setOldDocumentBase64Encode] = useState("");
+
     if (carId == null)
         return <div> Loading... </div>
 
@@ -64,7 +66,6 @@ const DocumentType: NextPage = () => {
 
         try {
             const url = `${GlobalConstants.GET_DOCUMENT_LINK}/${localDocToRequest}`;
-            console.log(url);
             const response = await fetch(url, {
                 method: GlobalConstants.GET_REQUEST,
                 headers: {
@@ -80,12 +81,7 @@ const DocumentType: NextPage = () => {
             }
 
             const _document = await response.json();
-            if (_document['document'] == null) {
-                console.log("No document send");
-                return;
-            }
-
-            console.log("found");
+            setOldDocumentBase64Encode(_document['file']);
         } catch (error) {
             console.log(error);
         }
@@ -127,6 +123,16 @@ const DocumentType: NextPage = () => {
                     <div> {document_type}: {oldCarDocumentId} </div> :
                     <div>
                         No {document_type} added. Please load the document.
+                    </div>
+            }
+
+            {
+                oldDocumentBase64Encode != null && oldDocumentBase64Encode != "" ?
+                    <div>
+                        <embed src={oldDocumentBase64Encode} />
+                    </div> :
+                    <div>
+                        No document added. Please load the document.
                     </div>
             }
             

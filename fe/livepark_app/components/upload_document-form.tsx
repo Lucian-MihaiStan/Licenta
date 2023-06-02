@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormProps } from "./html_components/props/Props";
 import { GlobalConstants } from "./globalc_namespace/global-constants";
 
@@ -13,8 +13,9 @@ export namespace UploadDocumentFormNamespace {
 
 export const UploadDocumentForm = (props: FormProps) => {
     
-    const [document, setDocument] = React.useState<File>(new File([], ""));
-    
+    const [file_document, setDocument] = useState<File>(new File([], ""));
+    const [fileBase64String, setFileBase64String] = useState(null);
+
     function handleOnchange(e: React.ChangeEvent<HTMLInputElement>): void {
         e.preventDefault();
         if (e.target.files == null)
@@ -24,6 +25,16 @@ export const UploadDocumentForm = (props: FormProps) => {
 
     async function uploadFile() {
         try {
+
+            var reader = new FileReader();
+            reader.readAsDataURL(file_document);
+            reader.onload = () => {
+              setFileBase64String(reader.result);
+            };
+
+            reader.onerror = (error) => {
+              console.log("error: ", error);
+            };
             const response = await fetch(GlobalConstants.ADD_DOCUMENT_LINK, {
                 method: GlobalConstants.POST_REQUEST,
                 headers: {
@@ -31,7 +42,9 @@ export const UploadDocumentForm = (props: FormProps) => {
                     "Content-Type": GlobalConstants.APPLICATION_JSON,
                     "Origin": GlobalConstants.FRONTEND_API_LINK,
                 },
-                body: JSON.stringify(document),
+                body: JSON.stringify({
+                    file: fileBase64String
+                })
             });
 
             const result = await response.json();

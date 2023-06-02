@@ -19,18 +19,17 @@ def insert_document():
             posted_info = posted_info[0]
         return jsonify({'document_id': str(mongo_collection.insert_one(posted_info).inserted_id)}), 200
     except Exception as e:
-        print("Encountered exception while trying to add photo in MongoDB")
+        print("Encountered exception while trying to add file in MongoDB")
         print(e)
     return jsonify({'Error': 400}), 400
 
 @app.route('/find_document/<document_id>', methods=['GET'])
 def find_document(document_id):
     try:
-        print(document_id)
         entry = mongo_collection.find_one({"_id": ObjectId(document_id)})
-        return jsonify({'document': entry['document']}), 200 
+        return jsonify({'file': entry['file']}), 200 
     except Exception as e:
-        print("Encountered exception while trying to search photo in MongoDB")
+        print("Encountered exception while trying to search file in MongoDB")
         print(e)
     return jsonify({'Error': 400}), 400
 
