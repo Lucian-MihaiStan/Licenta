@@ -24,6 +24,8 @@ import java.util.Objects;
         basePackages = {
                 "ro.license.livepark.repository.car",
                 "ro.license.livepark.repository.driver",
+                "ro.license.livepark.repository.parking",
+                "ro.license.livepark.entities.parking",
                 "ro.license.livepark.entities.car",
                 "ro.license.livepark.entities.driver"
         }
@@ -45,6 +47,8 @@ public class PersistenceConfigDB {
         em.setPackagesToScan(
                 "ro.license.livepark.repository.car",
                 "ro.license.livepark.repository.driver",
+                "ro.license.livepark.repository.parking",
+                "ro.license.livepark.entities.parking",
                 "ro.license.livepark.entities.car",
                 "ro.license.livepark.entities.driver"
         );

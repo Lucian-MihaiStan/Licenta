@@ -1,15 +1,11 @@
 package ro.license.livepark.entities.parking;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -25,18 +21,20 @@ public class Parking {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "longitude")
-    private Double longitude;
-
-    @Column(name = "latitude")
-    private Double latitude;
-
     @Column(name = "mapsLink")
     private String mapsLink;
 
     // private User admin;
 
-    @OneToMany(mappedBy = "parking", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Column(name = "parkingFee")
+    private String parkingFee;
+
+    @OneToMany(mappedBy = "parking", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ParkingSpot> parkingSpots;
 
+    @Transient
+    private Integer EXPIRATION_HOURS;
+
+    @Transient
+    private Integer EXPIRATION_MINUTES;
 }

@@ -1,15 +1,10 @@
 package ro.license.livepark.entities.parking;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
-
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -19,16 +14,19 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "parkingSpot_id")
+    @ManyToOne
+    @JoinColumn(name = "parkingSpot_id", nullable = false)
     private ParkingSpot parkingSpot;
 
     @CreatedDate
-    @Column(name = "createdDate")
-    private Date createdDate;
+    @Column(name = "created_time")
+    private Date createdTime;
 
-    @Column(name = "expirationDate")
-    private Date expirationDate;
+    @Column(name = "expiration_time")
+    private Date expirationTime;
+
+    @Column(name = "used")
+    private boolean isUsed;
 
     // private User user;
 }

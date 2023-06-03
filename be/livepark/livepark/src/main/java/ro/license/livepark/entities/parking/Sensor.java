@@ -1,13 +1,9 @@
 package ro.license.livepark.entities.parking;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -21,6 +17,5 @@ public class Sensor {
     private String accessUrl;
 
     @OneToOne(mappedBy = "sensor")
-    @JoinColumn(name = "parkingSpot_id")
     private ParkingSpot parkingSpot;
 }

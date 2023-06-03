@@ -1,13 +1,11 @@
 package ro.license.livepark.entities.parking;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+import java.util.List;
+
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -24,10 +22,18 @@ public class ParkingSpot {
     @JoinColumn(name = "sensor_id")
     private Sensor sensor;
 
-    @Column(name = "isOccupied")
-    private Boolean isOccupied;
+
+    public enum ParkingSpotStatus {
+        UNKNOWN, OCCUPIED, EMPTY, RESERVED
+    }
+
+    @Column(name = "status")
+    private ParkingSpotStatus status = ParkingSpotStatus.UNKNOWN;
 
     @ManyToOne
     @JoinColumn(name = "parking_id", nullable = false)
     private Parking parking;
+
+    @OneToMany(mappedBy = "parkingSpot", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Reservation> reservationList;
 }
