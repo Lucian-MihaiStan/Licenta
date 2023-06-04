@@ -1,6 +1,7 @@
 package ro.license.livepark.repository.car;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ro.license.livepark.entities.car.Car;
 
@@ -10,7 +11,9 @@ import java.util.Optional;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long> {
-    List<Car> findByInsuranceId(Long insuranceId);
 
-    List<Car> findByOwnerId(Long ownerId);
+    List<Car> findAllByDriverDriverId(Long driverId);
+
+    Car findByPlate(String plate);
+
 }

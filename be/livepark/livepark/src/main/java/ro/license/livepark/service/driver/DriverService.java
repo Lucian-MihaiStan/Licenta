@@ -54,9 +54,28 @@ public class DriverService {
         );
     }
 
-    public DriverDTO findDriverByUserId(Long userId) {
+    public DriverDTO findDriverDTOByUserId(Long userId) {
         return driverRepository.findByUserId(userId).isPresent() ?
                 driverDTOMapper.apply(driverRepository.findByUserId(userId).get()) :
                 null;
+    }
+
+    public Driver findDriverByUserId(Long userId) {
+        return driverRepository.findByUserId(userId).isPresent() ?
+                driverRepository.findByUserId(userId).get() :
+                null;
+    }
+
+    public void createDriver(Long userId) {
+        if (driverRepository.findByUserId(userId).isPresent())
+            return;
+
+        driverRepository.save(
+                Driver
+                        .builder()
+                        .userId(userId)
+                        .gender(Gender.UNSPECIFIED)
+                        .build()
+        );
     }
 }

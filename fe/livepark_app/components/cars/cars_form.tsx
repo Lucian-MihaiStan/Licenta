@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { GlobalConstants } from "../globalc_namespace/global-constants";
 import { useRouter } from "next/router";
 import { Models } from "../../components/cars/car";
@@ -20,7 +20,7 @@ export const CarsForm = () => {
     }
 
     const handleCars = async () => {
-        const url = `${GlobalConstants.CARS_LINK}?ownerId=${userId}`;
+        const url = `${GlobalConstants.CARS_LINK}?userId=${userId}`;
         const _carsinfo = await fetch(url, {
             method: 'GET',
             headers: {
@@ -49,7 +49,7 @@ export const CarsForm = () => {
                     ? cars.map((car) => {
                         return (
                             <div>
-                                <button onClick={(e) => routeToPage(e, GlobalConstants.CAR + "/" + car.carId)}> {car.plate} </button>
+                                <button onClick={(e) => routeToPage(e, `${GlobalConstants.OWNER}/${userId}${GlobalConstants.CAR}/${car.carId}`)}> {car.plate} </button>
                             </div>
                         )
                     }) : null
