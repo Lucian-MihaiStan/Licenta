@@ -10,7 +10,5 @@ public class HttpCarPkg {
     private String brand;
     private String model;
     private String fabricationDate;
-    private String insuranceId;
-    private String inspectionId;
 
 }

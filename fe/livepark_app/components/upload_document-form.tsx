@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormProps } from "./html_components/props/Props";
 import { GlobalConstants } from "./globalc_namespace/global-constants";
 
@@ -9,15 +9,13 @@ export namespace UploadDocumentFormNamespace {
     export const IDENTITY_CARD = "Identity Card";
     export const DRIVING_LICENSE = "Driving License";
 
-    export const INSURANCE = "Insurance";
-    export const BRIEF = "Brief";
-
 }
 
 export const UploadDocumentForm = (props: FormProps) => {
     
-    const [document, setDocument] = React.useState<File>(new File([], ""));
-    
+    const [file_document, setDocument] = useState<File>(new File([], ""));
+    const [fileBase64String, setFileBase64String] = useState(null);
+
     function handleOnchange(e: React.ChangeEvent<HTMLInputElement>): void {
         e.preventDefault();
         if (e.target.files == null)
@@ -27,6 +25,17 @@ export const UploadDocumentForm = (props: FormProps) => {
 
     async function uploadFile() {
         try {
+
+            var reader = new FileReader();
+            reader.readAsDataURL(file_document);
+            reader.onload = () => {
+              setFileBase64String(reader.result);
+            };
+
+            reader.onerror = (error) => {
+              console.log("error: ", error);
+            };
+
             const response = await fetch(GlobalConstants.ADD_DOCUMENT_LINK, {
                 method: GlobalConstants.POST_REQUEST,
                 headers: {
@@ -34,7 +43,9 @@ export const UploadDocumentForm = (props: FormProps) => {
                     "Content-Type": GlobalConstants.APPLICATION_JSON,
                     "Origin": GlobalConstants.FRONTEND_API_LINK,
                 },
-                body: JSON.stringify(document),
+                body: JSON.stringify({
+                    file: fileBase64String
+                })
             });
 
             const result = await response.json();
@@ -44,10 +55,10 @@ export const UploadDocumentForm = (props: FormProps) => {
             }
             
             const document_id = result['document_id'];
-
             const documentJson = {
+                entityId: props.entityId,
                 documentId: document_id,
-                userId: props.userId
+                documentType: props.document_name,
             }
 
             const responsePost = await fetch(props.url, {
@@ -61,8 +72,7 @@ export const UploadDocumentForm = (props: FormProps) => {
                 body: JSON.stringify(documentJson),
             });
 
-            const resultPost = await responsePost.json();
-            if (resultPost['posted'] == false) {
+            if (!responsePost.ok) {
                 alert("Document not posted");
                 return;
             }

@@ -3,7 +3,6 @@ import { GlobalConstants } from "../globalc_namespace/global-constants";
 import { InputConstants } from '../globalc_namespace/inputc/input-constants';
 import { TextBoxDivForm } from '../html_components/textbox/textbox-register-login';
 import common_login_styles from '../login_pages/common_login_modules/common-login.module.css'
-import { UploadDocumentForm, UploadDocumentFormNamespace } from "../upload_document-form";
 import { useRouter } from "next/router";
 
 export const AddCarForm = () => {
@@ -17,15 +16,18 @@ export const AddCarForm = () => {
         fabricationDate: "",
         insuranceId: "",
         inspectionId: "",
+        rovinietaId: "",
+        cascoId: "",
+        fireExtinguisherExpirationDate: "",
+        firstAidKitExpirationDate: ""
     });
 
     const userId = localStorage.getItem(GlobalConstants.USER_ID) as string;
+    const routerUtils = useRouter();
 
     const postCar = async (event: any) => {
         event.preventDefault();
         addCarRequest.ownerId = userId;
-        addCarRequest.insuranceId = "1";
-        addCarRequest.inspectionId = "1";
         addCarRequest.fabricationDate = "2021-05-05";
         const response = await fetch(GlobalConstants.ADD_CAR_LINK, {
             method: GlobalConstants.POST_REQUEST,
@@ -40,15 +42,14 @@ export const AddCarForm = () => {
 
         const _car = await response.json();
         console.log(_car);
+        if (response.ok) {
+            routerUtils.push(GlobalConstants.CARS + "/" + userId);
+        }
     }
 
     function handleChange(event: ChangeEvent<HTMLInputElement>): void {
         const value = event.target.value;
         setCar({ ...addCarRequest, [event.target.name]: value });
-    }
-
-    function removeVehicle(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
-        throw new Error("Function not implemented.");
     }
 
     return (
@@ -95,17 +96,8 @@ export const AddCarForm = () => {
                 handleOnchange={handleChange}
             />
 
-            <UploadDocumentForm
-                userId={userId as string}
-                document_name={UploadDocumentFormNamespace.INSURANCE}
-                url={GlobalConstants.POST_INSURANCE_LINK}/>
+            
 
-            <UploadDocumentForm
-                userId={userId as string}
-                document_name={UploadDocumentFormNamespace.BRIEF}
-                url={GlobalConstants.POST_BRIEF_LINK}/>
-
-            <div> <button onClick={(e) => removeVehicle(e)}> Remove Vehicle </button> </div>
 
             <div> <button onClick={(e) => postCar(e)}> Add car </button> </div>
         </div>
