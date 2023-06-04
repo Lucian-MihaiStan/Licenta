@@ -99,6 +99,8 @@ export namespace GlobalConstants {
 
     export const POST_LICENSE_CARD_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + OWNER + POST_LICENSE_CARD;
 
+
+    
     export const EQUIPMENT_LINK = CAR_LINK + EQUIPMENT;
     export const DOCUMENT_LINK = CAR_LINK + DOCUMENT;
 }

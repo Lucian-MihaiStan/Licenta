@@ -19,9 +19,6 @@ const DocumentType: NextPage = () => {
 
     const [oldDocumentBase64Encode, setOldDocumentBase64Encode] = useState("");
 
-    if (carId == null)
-        return <div> Loading... </div>
-
     const documentInfo = async() => {
         const localCar = await CarBackendConnectUtils.requestCar(carId as string);
         if (localCar == null)
@@ -121,7 +118,10 @@ const DocumentType: NextPage = () => {
 
     useEffect(() => {
         documentInfo();
-    }, []);
+    }, [carId, userId, document_type]);
+
+    if (carId == null)
+        return <div> Loading... </div>
 
     return (
 
