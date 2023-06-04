@@ -12,6 +12,7 @@ import ro.license.livepark.entities.notification.Notification;
 import ro.license.livepark.entities.user.UserDTO;
 import ro.license.livepark.service.car.CarService;
 import ro.license.livepark.service.driver.DriverService;
+import ro.license.livepark.service.notification.NotificationService;
 import ro.license.livepark.service.user.UserService;
 
 import java.util.Map;
@@ -24,15 +25,16 @@ public class NotificationOTDJob {
     private final CarService carService;
     private final DriverService driverService;
     private final UserService userService;
-
     private final JavaMailSender javaMailSender;
+    private final NotificationService notificationService;
 
-    public NotificationOTDJob(NotificationLocalCacheJob notificationLocalCacheJob, CarService carService, DriverService driverService, UserService userService, JavaMailSender javaMailSender) {
+    public NotificationOTDJob(NotificationLocalCacheJob notificationLocalCacheJob, CarService carService, DriverService driverService, UserService userService, JavaMailSender javaMailSender, NotificationService notificationService) {
         this.notificationLocalCacheJob = notificationLocalCacheJob;
         this.carService = carService;
         this.driverService = driverService;
         this.userService = userService;
         this.javaMailSender = javaMailSender;
+        this.notificationService = notificationService;
     }
 
     @Scheduled(fixedDelay = 60000) // Run every 60 seconds
@@ -84,14 +86,18 @@ public class NotificationOTDJob {
                 if (notification == null)
                     continue;
 
+                notificationService.save(notification);
+
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setTo(email);
-                message.setSubject(String.format("LivePark - %s is expiring!", keyword ) + notification.getVerbosity().getText());
+                message.setSubject(String.format("LivePark - %s is expiring!", keyword) + notification.getVerbosity().getText());
                 message.setText(
                         "Hi " +
                         String.format("Your %s is expiring in %d days!", keyword, NotificationLocalCacheJob.numberOfDaysLeft(notification.getCreatedAt()))
                 );
                 javaMailSender.send(message);
+
+
             }
         }
     }

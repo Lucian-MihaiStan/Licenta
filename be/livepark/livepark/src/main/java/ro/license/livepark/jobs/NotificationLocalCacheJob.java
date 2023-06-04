@@ -133,7 +133,10 @@ public class NotificationLocalCacheJob {
     }
 
     public static long numberOfDaysLeft(Date expirationDate) {
-        return Duration.between(expirationDate.toInstant(), new Date().toInstant()).toDays();
+        return Math.abs(Duration.between(
+                new java.util.Date(expirationDate.getTime()).toInstant(),
+                new Date().toInstant()
+        ).toDays());
     }
 
     public Map<String, Map<String, Notification>> getLocalCache() {

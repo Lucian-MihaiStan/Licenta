@@ -34,7 +34,7 @@ public class Notification {
     @Column(name = "createdAt", nullable = false)
     private Date createdAt;
 
-    @Column(name = "updatedAt", nullable = false)
+    @Column(name = "updatedAt")
     private Date updatedAt;
 
     @Column(name = "isClosed", nullable = false)
