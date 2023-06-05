@@ -3,19 +3,20 @@ import common_login_styles from '../common_login_modules/common-login.module.css
 import { GlobalConstants } from '../../globalc_namespace/global-constants';
 import { TextBoxDivForm } from "../../html_components/textbox/textbox-register-login";
 import { InputConstants } from "../../globalc_namespace/inputc/input-constants";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/router";
 
 
 export const LoginForm = () => {
 
-    const [loginUserRequest, setUser] = useState({
-        username: "",
-        password: "",
-    });
+    const usernameRef = useRef<any>(null);
+    const passwordRef = useRef<any>(null);
 
     const loginUser = async (event: any) => {
         event.preventDefault();
+
+        console.log(usernameRef.current?.getData());
+        console.log(passwordRef.current?.getData());
 
         const response = await fetch(GlobalConstants.USER_SIGN_IN_LINK, {
             method: GlobalConstants.POST_REQUEST,
@@ -24,7 +25,10 @@ export const LoginForm = () => {
                 "Access-Control-Allow-Origin": GlobalConstants.STAR,
                 "Origin": GlobalConstants.FRONTEND_API_LINK,
             },
-            body: JSON.stringify(loginUserRequest),
+            body: JSON.stringify({
+                username: usernameRef.current?.getData(),
+                password: passwordRef.current?.getData()
+            }),
         });
 
         const _user = await response.json();
@@ -51,12 +55,6 @@ export const LoginForm = () => {
                 login_response[GlobalConstants.TOKEN] != null &&
                 login_response[GlobalConstants.USER_ID] != null;
     } 
-
-    const handleChange = (event: any) => {
-        const value = event.target.value;
-        setUser({ ...loginUserRequest, [event.target.name]: value });
-    };
-
     
     const routerUtils = useRouter();
     const routeToPage = async (event: any, path: string) => {
@@ -72,8 +70,7 @@ export const LoginForm = () => {
                 type={InputConstants.TEXT_TYPE} 
                 name={InputConstants.USERNAME} 
                 placeholder={InputConstants.USERNAME_PLACEHOLDER} 
-                value={loginUserRequest.username} 
-                handleOnchange={handleChange}
+                ref={usernameRef}
             />
             
             
@@ -81,8 +78,7 @@ export const LoginForm = () => {
                 type={InputConstants.PASSWORD_TYPE} 
                 name={InputConstants.PASSWORD} 
                 placeholder={InputConstants.PASSWORD_PLACEHOLDER}
-                value={loginUserRequest.password} 
-                handleOnchange={handleChange}
+                ref={passwordRef}
             />
 
             <div>

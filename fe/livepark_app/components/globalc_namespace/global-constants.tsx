@@ -19,7 +19,8 @@ export namespace GlobalConstants {
     export const OWNER = "/owner";
     export const DASHBOARD = "/dashboard";
     export const SUPPORT = "/support";
-    export const NOTIFICATION = "/notifications";
+    export const NOTIFICATIONS = "/notifications";
+    export const NOTIFICATION = "/notification";
     export const LOGOUT = "/logout";
     export const CAR = "/car";
     export const DOCUMENT = "/document";
@@ -98,7 +99,9 @@ export namespace GlobalConstants {
     export const GET_DOCUMENT_LINK = LOCAL_HOST + COLON + MONGO_PORT + FIND_DOCUMENT;
 
     export const POST_LICENSE_CARD_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + OWNER + POST_LICENSE_CARD;
+    export const NOTIFICATIONS_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + NOTIFICATIONS + NOTIFICATION;
 
+    
     export const EQUIPMENT_LINK = CAR_LINK + EQUIPMENT;
     export const DOCUMENT_LINK = CAR_LINK + DOCUMENT;
 

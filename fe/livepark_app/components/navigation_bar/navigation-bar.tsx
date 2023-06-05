@@ -21,7 +21,7 @@ export const NavigationBar = () => {
             <div> <button onClick={(e) => routeToPage(e, GlobalConstants.PARKING_AREAS_PAGE)}> Parking areas </button> </div>
             <div> <button onClick={(e) => routeToPage(e, GlobalConstants.CARS + "/" + userId)}> Cars </button> </div>
             <div> <button onClick={(e) => routeToPage(e, GlobalConstants.SUPPORT)}> Support </button> </div>
-            <div> <button onClick={(e) => routeToPage(e, GlobalConstants.NOTIFICATION + "/" + userId)}> Notifications </button> </div>
+            <div> <button onClick={(e) => routeToPage(e, GlobalConstants.NOTIFICATIONS + "/" + userId)}> Notifications </button> </div>
             <div> <button onClick={(e) => routeToPage(e, GlobalConstants.LOGOUT)}> Logout </button> </div>
         </div>
     );

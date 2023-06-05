@@ -1,8 +1,7 @@
 package ro.license.livepark.jobs;
 
 
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -19,26 +18,20 @@ import java.util.Map;
 
 @EnableScheduling
 @Component
+@RequiredArgsConstructor
 public class NotificationOTDJob {
 
     private final NotificationLocalCacheJob notificationLocalCacheJob;
     private final CarService carService;
     private final DriverService driverService;
     private final UserService userService;
-    private final JavaMailSender javaMailSender;
+    private final NotificationEmailService emailService;
     private final NotificationService notificationService;
-
-    public NotificationOTDJob(NotificationLocalCacheJob notificationLocalCacheJob, CarService carService, DriverService driverService, UserService userService, JavaMailSender javaMailSender, NotificationService notificationService) {
-        this.notificationLocalCacheJob = notificationLocalCacheJob;
-        this.carService = carService;
-        this.driverService = driverService;
-        this.userService = userService;
-        this.javaMailSender = javaMailSender;
-        this.notificationService = notificationService;
-    }
 
     @Scheduled(fixedDelay = 60000) // Run every 60 seconds
     public void runJob() {
+        System.out.println("Scheduled NotificationOTD job is running...");
+
         if (notificationLocalCacheJob == null) {
             System.err.println("NotificationLocalCacheJob is null");
             return;
@@ -88,16 +81,14 @@ public class NotificationOTDJob {
 
                 notificationService.save(notification);
 
-                SimpleMailMessage message = new SimpleMailMessage();
-                message.setTo(email);
-                message.setSubject(String.format("LivePark - %s is expiring!", keyword) + notification.getVerbosity().getText());
-                message.setText(
-                        "Hi " +
-                        String.format("Your %s is expiring in %d days!", keyword, NotificationLocalCacheJob.numberOfDaysLeft(notification.getCreatedAt()))
-                );
-                javaMailSender.send(message);
-
-
+                try {
+                    emailService.send(email, String.format("LivePark - %s is expiring!", keyword) + notification.getVerbosity().getText(),
+                            "Hi " +
+                                    String.format("Your %s is expiring in %d days!", keyword, NotificationLocalCacheJob.numberOfDaysLeft(notification.getCreatedAt())));
+                 } catch (Exception e) {
+                    System.err.println("Unable to send email to " + email);
+                    e.printStackTrace();
+                }
             }
         }
     }

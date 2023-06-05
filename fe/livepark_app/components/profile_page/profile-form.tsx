@@ -58,7 +58,7 @@ export const ProfileForm = () => {
     useEffect(() => {
         if (!profileFetched) 
             handleProfile();
-    }, []);
+    }, [userId]);
 
     return (
         <div>

@@ -1,5 +1,5 @@
 import common_login_styles from '../common_login_modules/common-login.module.css'
-import {useState} from "react"
+import {HTMLInputTypeAttribute, useImperativeHandle, useRef, useState} from "react"
 
 import { GlobalConstants } from '../../globalc_namespace/global-constants';
 import { InputConstants } from '../../globalc_namespace/inputc/input-constants';
@@ -9,31 +9,20 @@ import * as EmailValidator from 'email-validator';
 import { useRouter } from 'next/router';
 
 export const RegisterForm = () => {
-    
-    const [registerUserRequest, setUser] = useState({
-        username: "",
-        email: "",
-        password: "",
-        firstName: "",
-        lastName: ""
-    });
 
     const routerUtils = useRouter();
 
-    const handleChange = (event: any) => {
-        const value = event.target.value;
-        setUser({ ...registerUserRequest, [event.target.name]: value });
-    };
-
-    const handleChangeEmail = (event: any) => {
-        const value = event.target.value;
-        if (!EmailValidator.validate(value))
-            console.log("NU");
-        setUser({ ...registerUserRequest, [event.target.name]: value });
-    };
+    const firstNameRef = useRef<any>(null);
+    const lastNameRef = useRef<any>(null);
+    const usernameRef = useRef<any>(null);
+    const emailRef = useRef<any>(null);
+    const passwordRef = useRef<any>(null);
 
     const registerUser = async (event: any) => {
         event.preventDefault();
+        if (!EmailValidator.validate(emailRef.current?.getData()))
+            return;
+        
         const response = await fetch(GlobalConstants.USER_SIGN_UP_LINK, {
             method: GlobalConstants.POST_REQUEST,
             headers: {
@@ -41,7 +30,13 @@ export const RegisterForm = () => {
                 "Access-Control-Allow-Origin": GlobalConstants.STAR,
                 "Origin": GlobalConstants.FRONTEND_API_LINK,
             },
-            body: JSON.stringify(registerUserRequest),
+            body: JSON.stringify({
+                firstName: firstNameRef.current?.getData(),
+                lastName: lastNameRef.current?.getData(),
+                username: usernameRef.current?.getData(),
+                email: emailRef.current?.getData(),
+                password: passwordRef.current?.getData()
+            }),
         });
 
         const _user = await response.json();
@@ -59,61 +54,66 @@ export const RegisterForm = () => {
 
     return (
         <div className={common_login_styles.loginmaindiv}>
-          <h1 
-        //   className={ register_styles.create_account_title }
-          >Create Account</h1>
+          <h1>Create Account</h1>
 
-            <TextBoxDivForm 
-                type={InputConstants.TEXT_TYPE} 
-                name={InputConstants.FIRST_NAME} 
-                placeholder={InputConstants.FIRST_NAME_PLACEHOLDER}
-                value={registerUserRequest.firstName} 
-                handleOnchange={handleChange}
-            />
-
-            <TextBoxDivForm 
-                type={InputConstants.TEXT_TYPE} 
-                name={InputConstants.LAST_NAME}
-                placeholder={InputConstants.LAST_NAME_PLACEHOLDER}
-                value={registerUserRequest.lastName} 
-                handleOnchange={handleChange}
-            />
-
-            <TextBoxDivForm 
-                type={InputConstants.TEXT_TYPE} 
-                name={InputConstants.USERNAME}
-                placeholder={InputConstants.USERNAME_PLACEHOLDER} 
-                value={registerUserRequest.username} 
-                handleOnchange={handleChange}
-            />
-
-            <TextBoxDivForm 
-                type={InputConstants.TEXT_TYPE} 
-                name={InputConstants.EMAIL}
-                placeholder={InputConstants.EMAIL_PLACEHOLDER} 
-                value={registerUserRequest.email} 
-                handleOnchange={handleChangeEmail}
-            />
-
-            <TextBoxDivForm 
-                type={InputConstants.PASSWORD_TYPE} 
-                name={InputConstants.PASSWORD} 
-                placeholder={InputConstants.PASSWORD_PLACEHOLDER}
-                value={registerUserRequest.password} 
-                handleOnchange={handleChange}
-            />
+        <form onSubmit={registerUser}>
 
             <div>
-                <button onClick={registerUser}> Sign Up </button>
+                <TextBoxDivForm 
+                    type={InputConstants.TEXT_TYPE} 
+                    name={InputConstants.FIRST_NAME} 
+                    placeholder={InputConstants.FIRST_NAME_PLACEHOLDER}
+                    ref={firstNameRef}
+                />
+
             </div>
-            
+
             <div>
-                <div>
-                    <span> Don't have an account? </span>
-                </div>
-                <button onClick={(e) => routeToPage(e, GlobalConstants.LOGIN_FRONTEND_APP_LINK)}> Sign In</button>
+                <TextBoxDivForm 
+                    type={InputConstants.TEXT_TYPE} 
+                    name={InputConstants.LAST_NAME}
+                    placeholder={InputConstants.LAST_NAME_PLACEHOLDER}
+                    ref={lastNameRef}
+                />
             </div>
+
+            <div>
+                <TextBoxDivForm 
+                    type={InputConstants.TEXT_TYPE} 
+                    name={InputConstants.USERNAME}
+                    placeholder={InputConstants.USERNAME_PLACEHOLDER} 
+                    ref={usernameRef}
+                />  
+            </div>
+
+            <div>
+                <TextBoxDivForm 
+                    type={InputConstants.TEXT_TYPE} 
+                    name={InputConstants.EMAIL}
+                    placeholder={InputConstants.EMAIL_PLACEHOLDER} 
+                    ref={emailRef}
+                />
+            </div>
+
+            <div>
+                <TextBoxDivForm 
+                    type={InputConstants.PASSWORD_TYPE} 
+                    name={InputConstants.PASSWORD} 
+                    placeholder={InputConstants.PASSWORD_PLACEHOLDER}
+                    ref={passwordRef}
+                />
+            </div>
+
             
+            <input type="submit" title='Sign Up '/> 
+            
+        </form>
+        <div>
+            <div>
+                <span> Don't have an account? </span>
+            </div>
+            <button onClick={(e) => routeToPage(e, GlobalConstants.LOGIN_FRONTEND_APP_LINK)}> Sign In</button>
+        </div>
         </div>
       );
 }

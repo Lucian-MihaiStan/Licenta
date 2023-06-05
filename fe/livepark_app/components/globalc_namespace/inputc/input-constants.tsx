@@ -30,6 +30,8 @@ export namespace InputConstants {
     export const FABRICATION_DATE = "fabricationDate";
     export const FABRICATION_DATE_PLACEHOLDER = "Fabrication date";
 
+    export const DATE = "date";
+
 
     export const PARKING_NAME = "name";
     export const PARKING_ADDRESS = "address";
