@@ -40,14 +40,14 @@ export namespace GlobalConstants {
     export const EMAIL = "email";
 
     const API_AUTH_ALLUSERS = "/api/auth/allusers";
-    
+
     // register
     const API_AUTH_SIGNUP = "/api/auth/signup";
-    export const USER_SIGN_UP_LINK = BACKEND_API_LINK + API_AUTH_SIGNUP; 
+    export const USER_SIGN_UP_LINK = BACKEND_API_LINK + API_AUTH_SIGNUP;
 
     // login
     const API_AUTH_SIGNIN = "/api/auth/signin";
-    export const USER_SIGN_IN_LINK = BACKEND_API_LINK + API_AUTH_SIGNIN; 
+    export const USER_SIGN_IN_LINK = BACKEND_API_LINK + API_AUTH_SIGNIN;
 
     export const ALL_USERS_LINK = BACKEND_API_LINK + API_AUTH_ALLUSERS;
 
@@ -101,4 +101,9 @@ export namespace GlobalConstants {
 
     export const EQUIPMENT_LINK = CAR_LINK + EQUIPMENT;
     export const DOCUMENT_LINK = CAR_LINK + DOCUMENT;
+
+
+    export const PARKING_LINK = BACKEND_API_LINK + API + "/parkings";
+    export const ADD_PARKING_PAGE = "addParking";
+    export const PARKING_AREAS_PAGE = "/parking/parkingAreas";
 }

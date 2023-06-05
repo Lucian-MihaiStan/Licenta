@@ -26,11 +26,13 @@ public class ParkingService {
         dto.setId(p.getId());
         dto.setName(p.getName());
         dto.setAddress(p.getAddress());
-        dto.setMapsLink(p.getMapsLink());
+        dto.setLat(p.getLat());
+        dto.setLng(p.getLng());
         dto.setParkingFee(p.getParkingFee());
         dto.setTotalSpots(p.getParkingSpots().size());
         dto.setHasSensors(hasSensors);
         dto.setEmptySpots(emptySpots);
+        dto.setAdminId(p.getAdminId());
         return dto;
     }
 
@@ -47,21 +49,28 @@ public class ParkingService {
         ParkingDTO dto = new ParkingDTO();
         dto.setName(p.getName());
         dto.setAddress(p.getAddress());
-        dto.setMapsLink(p.getMapsLink());
+        dto.setLat(p.getLat());
+        dto.setLng(p.getLng());
         dto.setParkingFee(p.getParkingFee());
-        dto.setEXPIRATION_HOURS(p.getEXPIRATION_HOURS());
-        dto.setEXPIRATION_MINUTES(p.getEXPIRATION_MINUTES());
+        dto.setExpiration_hours(p.getEXPIRATION_HOURS());
+        dto.setExpiration_minutes(p.getEXPIRATION_MINUTES());
         return dto;
     }
 
-    public void addParking(ParkingDTO dto) {
-        Parking p = new Parking();
+    private void initParkingFromDTO(Parking p, ParkingDTO dto) {
         p.setName(dto.getName());
         p.setAddress(dto.getAddress());
-        p.setMapsLink(dto.getMapsLink());
+        p.setLat(dto.getLat());
+        p.setLng(dto.getLng());
         p.setParkingFee(dto.getParkingFee());
-        p.setEXPIRATION_HOURS(dto.getEXPIRATION_HOURS());
-        p.setEXPIRATION_MINUTES(dto.getEXPIRATION_MINUTES());
+        p.setEXPIRATION_HOURS(dto.getExpiration_hours());
+        p.setEXPIRATION_MINUTES(dto.getExpiration_minutes());
+    }
+
+    public void addParking(ParkingDTO dto, Long adminId) {
+        Parking p = new Parking();
+        initParkingFromDTO(p, dto);
+        p.setAdminId(adminId);
         parkingRepository.save(p);
     }
 
@@ -69,12 +78,8 @@ public class ParkingService {
         if (parkingRepository.findById(id).isEmpty())
             return false;
         Parking p = parkingRepository.findById(id).get();
-        p.setName(dto.getName());
-        p.setAddress(dto.getAddress());
-        p.setMapsLink(dto.getMapsLink());
-        p.setParkingFee(dto.getParkingFee());
-        p.setEXPIRATION_HOURS(dto.getEXPIRATION_HOURS());
-        p.setEXPIRATION_MINUTES(dto.getEXPIRATION_MINUTES());
+        initParkingFromDTO(p, dto);
+        parkingRepository.save(p);
         return true;
     }
 

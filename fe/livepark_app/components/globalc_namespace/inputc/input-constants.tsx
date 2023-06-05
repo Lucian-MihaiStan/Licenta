@@ -29,4 +29,19 @@ export namespace InputConstants {
 
     export const FABRICATION_DATE = "fabricationDate";
     export const FABRICATION_DATE_PLACEHOLDER = "Fabrication date";
+
+
+    export const PARKING_NAME = "name";
+    export const PARKING_ADDRESS = "address";
+    export const PARKING_LATITUDE = "lat";
+    export const PARKING_LONGITUDE = "lng";
+    export const PARKING_FEE = "parkingFee";
+    export const PARKING_EXPIRATION_HOURS = "expiration_hours";
+    export const PARKING_EXPIRATION_MINUTES = "expiration_minutes";
+    export const PARKING_NAME_PLACEHOLDER = "Parking name";
+    export const PARKING_ADDRESS_PLACEHOLDER = "Address";
+    export const PARKING_FEE_PLACEHOLDER = "Parking fee";
+    export const PARKING_EXPIRATION_HOURS_PLACEHOLDER = "Hours until a reservation expires";
+    export const PARKING_EXPIRATION_MINUTES_PLACEHOLDER = "Minutes until a reservation expires";
+
 }

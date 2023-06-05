@@ -8,11 +8,13 @@ public class ParkingDTO {
 
     private String address;
 
-    private String mapsLink;
+    private Double lat;
+
+    private Double lng;
 
     private String parkingFee;
 
-    private Integer EXPIRATION_HOURS;
+    private Integer expiration_hours;
 
-    private Integer EXPIRATION_MINUTES;
+    private Integer expiration_minutes;
 }

@@ -21,20 +21,24 @@ public class Parking {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "mapsLink")
-    private String mapsLink;
+    @Column(name = "latitude")
+    private Double lat;
 
-    // private User admin;
+    @Column(name = "longitude")
+    private Double lng;
 
-    @Column(name = "parkingFee")
+    @Column(name = "parking_fee")
     private String parkingFee;
 
     @OneToMany(mappedBy = "parking", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ParkingSpot> parkingSpots;
 
-    @Transient
+    @Column(name = "reservation_hours")
     private Integer EXPIRATION_HOURS;
 
-    @Transient
+    @Column(name = "reservation_minutes")
     private Integer EXPIRATION_MINUTES;
+
+    @Column(name = "admin_id")
+    private Long adminId;
 }

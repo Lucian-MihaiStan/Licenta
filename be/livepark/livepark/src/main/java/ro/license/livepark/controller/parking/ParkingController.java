@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.license.livepark.dto.parking.ParkingDTO;
 import ro.license.livepark.dto.parking.ParkingInfoDTO;
+import ro.license.livepark.entities.user.UserRole;
 import ro.license.livepark.service.parking.ParkingService;
+import ro.license.livepark.service.user.UserService;
 
 import java.util.List;
 
@@ -24,8 +26,8 @@ public class ParkingController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addParking(@RequestBody ParkingDTO parkingDTO) {
-        parkingService.addParking(parkingDTO);
+    public ResponseEntity<?> addParking(@RequestBody ParkingDTO parkingDTO, @RequestParam("userId") Long adminId) {
+        parkingService.addParking(parkingDTO, adminId);
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 

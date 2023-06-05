@@ -10,7 +10,9 @@ public class ParkingInfoDTO {
 
     private String address;
 
-    private String mapsLink;
+    private Double lat;
+
+    private Double lng;
 
     private String parkingFee;
 
@@ -19,5 +21,7 @@ public class ParkingInfoDTO {
     private Integer totalSpots;
 
     private Integer emptySpots;
+
+    private Long adminId;
 
 }
