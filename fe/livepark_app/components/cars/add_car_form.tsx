@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useRef, useState } from "react";
 import { GlobalConstants } from "../globalc_namespace/global-constants";
 import { InputConstants } from '../globalc_namespace/inputc/input-constants';
 import { TextBoxDivForm } from '../html_components/textbox/textbox-register-login';
@@ -7,28 +7,17 @@ import { useRouter } from "next/router";
 
 export const AddCarForm = () => {
 
-    const [addCarRequest, setCar] = useState({
-        ownerId: "",
-        plate: "",
-        vin: "",
-        brand: "",
-        model: "",
-        fabricationDate: "",
-        insuranceId: "",
-        inspectionId: "",
-        rovinietaId: "",
-        cascoId: "",
-        fireExtinguisherExpirationDate: "",
-        firstAidKitExpirationDate: ""
-    });
+    const plateRef = useRef<any>(null);
+    const vinRef = useRef<any>(null);
+    const brandRef = useRef<any>(null);
+    const modelRef = useRef<any>(null);
+    const fabricationDateRef = useRef<any>(null); 
 
     const userId = localStorage.getItem(GlobalConstants.USER_ID) as string;
     const routerUtils = useRouter();
 
     const postCar = async (event: any) => {
         event.preventDefault();
-        addCarRequest.ownerId = userId;
-        addCarRequest.fabricationDate = "2021-05-05";
         const response = await fetch(GlobalConstants.ADD_CAR_LINK, {
             method: GlobalConstants.POST_REQUEST,
             headers: {
@@ -37,7 +26,14 @@ export const AddCarForm = () => {
                 "Origin": GlobalConstants.FRONTEND_API_LINK,
                 "Authorization": "Bearer " + localStorage.getItem(GlobalConstants.TOKEN) 
             },
-            body: JSON.stringify(addCarRequest)
+            body: JSON.stringify({
+                ownerId: userId,
+                plate: plateRef.current?.getData(),
+                vin: vinRef.current?.getData(),
+                brand: brandRef.current?.getData(),
+                model: modelRef.current?.getData(),
+                fabricationDate: fabricationDateRef.current?.getData(),
+            })
         });
 
         const _car = await response.json();
@@ -45,11 +41,6 @@ export const AddCarForm = () => {
         if (response.ok) {
             routerUtils.push(GlobalConstants.CARS + "/" + userId);
         }
-    }
-
-    function handleChange(event: ChangeEvent<HTMLInputElement>): void {
-        const value = event.target.value;
-        setCar({ ...addCarRequest, [event.target.name]: value });
     }
 
     return (
@@ -60,44 +51,36 @@ export const AddCarForm = () => {
                 type={InputConstants.TEXT_TYPE}
                 name={InputConstants.PLATE}
                 placeholder={InputConstants.CAR_PLATE_PLACEHOLDER}
-                value={addCarRequest.plate}
-                handleOnchange={handleChange}
+                ref={plateRef}
             />
 
             <TextBoxDivForm
                 type={InputConstants.TEXT_TYPE}
                 name={InputConstants.VIN}
                 placeholder={InputConstants.VIN_PLACEHOLDER}
-                value={addCarRequest.vin}
-                handleOnchange={handleChange}
+                ref={vinRef}
             />
 
             <TextBoxDivForm
                 type={InputConstants.TEXT_TYPE}
                 name={InputConstants.BRAND}
                 placeholder={InputConstants.BRAND_PLACEHOLDER}
-                value={addCarRequest.brand}
-                handleOnchange={handleChange}
+                ref={brandRef}
             />
 
             <TextBoxDivForm
                 type={InputConstants.TEXT_TYPE}
                 name={InputConstants.MODEL}
                 placeholder={InputConstants.MODEL_PLACEHOLDER}
-                value={addCarRequest.model}
-                handleOnchange={handleChange}
+                ref={modelRef}
             />
-
+           
             <TextBoxDivForm
-                type={InputConstants.TEXT_TYPE}
+                type={InputConstants.DATE}
                 name={InputConstants.FABRICATION_DATE}
                 placeholder={InputConstants.FABRICATION_DATE_PLACEHOLDER}
-                value={addCarRequest.fabricationDate}
-                handleOnchange={handleChange}
+                ref={fabricationDateRef}
             />
-
-            
-
 
             <div> <button onClick={(e) => postCar(e)}> Add car </button> </div>
         </div>

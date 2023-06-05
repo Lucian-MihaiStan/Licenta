@@ -13,9 +13,6 @@ const EquipmentType: NextPage = () => {
     const [equipmentExpirationDate, setEquipmentExpirationDate] = useState('');
     const [oldEquipmentExpirationDate, setOldEquipmentExpirationDate] = useState('no date');
 
-    if (carId == null)
-        return <div> Loading... </div>
-
     const equipmentInfo = async() => {
         const localCar = await CarBackendConnectUtils.requestCar(carId as string);
         if (localCar != null) {
@@ -34,7 +31,10 @@ const EquipmentType: NextPage = () => {
 
     useEffect(() => {
         equipmentInfo();
-    }, []);
+    }, [carId, equipment_type]);
+
+    if (carId == null)
+        return <div> Loading... </div>
 
     const postEquipment = async (e: any) => {
         e.preventDefault();

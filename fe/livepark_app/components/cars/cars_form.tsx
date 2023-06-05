@@ -9,11 +9,6 @@ export const CarsForm = () => {
     const userId = routerUtils.query.userId;
     const [cars, setCars] = useState<Models.CarModel[]>([]);
 
-    
-    if (userId == null) {
-        return <div> Loading... </div>
-    }
-
     function routeToPage(e: any, path: string): void {
         e.preventDefault();
         routerUtils.push(path);
@@ -22,7 +17,7 @@ export const CarsForm = () => {
     const handleCars = async () => {
         const url = `${GlobalConstants.CARS_LINK}?userId=${userId}`;
         const _carsinfo = await fetch(url, {
-            method: 'GET',
+            method: GlobalConstants.GET_REQUEST,
             headers: {
                 "Content-Type": GlobalConstants.APPLICATION_JSON,
                 "Access-Control-Allow-Origin": GlobalConstants.STAR,
@@ -37,8 +32,12 @@ export const CarsForm = () => {
 
     useEffect(() => {
         handleCars();
-    }, []);
+    }, [userId]);
 
+        
+    if (userId == null) {
+        return <div> Loading... </div>
+    }
 
     return (
         <div>

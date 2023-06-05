@@ -33,7 +33,7 @@ public class NotificationLocalCacheJob {
     @Scheduled(fixedDelay = 20000) // Run every 20 seconds
     public void runJob() {
         try {
-            System.out.println("Scheduled job is running...");
+            System.out.println("Scheduled NotificationLocalCache job is running...");
 
             List<CarDTO> cars = carService.findAll();
 

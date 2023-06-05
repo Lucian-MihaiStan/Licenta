@@ -19,5 +19,12 @@ export namespace Models {
         firstAidKitExpirationDate: Date
     }
 
+    export type NotificationModel = {
+        id: number,
+        title: string,
+        message: string,
+        createdAt: Date,
+    }
+
 }
 

@@ -18,7 +18,7 @@ export const CarForm = () => {
 
     useEffect(() => {
         carInfo();
-    }, []);
+    }, [carId, userId]);
 
     if (car == null)
         return <div> Loading... </div>
