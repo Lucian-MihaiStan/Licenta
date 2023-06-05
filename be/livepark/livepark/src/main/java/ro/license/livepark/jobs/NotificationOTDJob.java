@@ -39,6 +39,8 @@ public class NotificationOTDJob {
 
     @Scheduled(fixedDelay = 60000) // Run every 60 seconds
     public void runJob() {
+        System.out.println("Scheduled NotificationOTD job is running...");
+
         if (notificationLocalCacheJob == null) {
             System.err.println("NotificationLocalCacheJob is null");
             return;
@@ -88,16 +90,19 @@ public class NotificationOTDJob {
 
                 notificationService.save(notification);
 
-                SimpleMailMessage message = new SimpleMailMessage();
-                message.setTo(email);
-                message.setSubject(String.format("LivePark - %s is expiring!", keyword) + notification.getVerbosity().getText());
-                message.setText(
-                        "Hi " +
-                        String.format("Your %s is expiring in %d days!", keyword, NotificationLocalCacheJob.numberOfDaysLeft(notification.getCreatedAt()))
-                );
-                javaMailSender.send(message);
-
-
+                try {
+                    SimpleMailMessage message = new SimpleMailMessage();
+                    message.setTo(email);
+                    message.setSubject(String.format("LivePark - %s is expiring!", keyword) + notification.getVerbosity().getText());
+                    message.setText(
+                            "Hi " +
+                                    String.format("Your %s is expiring in %d days!", keyword, NotificationLocalCacheJob.numberOfDaysLeft(notification.getCreatedAt()))
+                    );
+                    javaMailSender.send(message);
+                } catch (Exception e) {
+                    System.err.println("Unable to send email to " + email);
+                    e.printStackTrace();
+                }
             }
         }
     }

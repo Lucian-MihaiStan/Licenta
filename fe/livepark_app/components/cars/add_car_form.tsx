@@ -74,9 +74,9 @@ export const AddCarForm = () => {
                 placeholder={InputConstants.MODEL_PLACEHOLDER}
                 ref={modelRef}
             />
-
+           
             <TextBoxDivForm
-                type={InputConstants.TEXT_TYPE}
+                type={InputConstants.DATE}
                 name={InputConstants.FABRICATION_DATE}
                 placeholder={InputConstants.FABRICATION_DATE_PLACEHOLDER}
                 ref={fabricationDateRef}
