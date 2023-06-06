@@ -3,11 +3,29 @@ import { GlobalConstants } from "../globalc_namespace/global-constants";
 import { InputConstants } from '../globalc_namespace/inputc/input-constants';
 import {number} from "prop-types";
 import styles from "@/components/parking/configure_parking_slots.module.css";
+import {Models} from "@/components/parking/parkingSpot";
+import ParkingSpotModel = Models.ParkingSpotModel;
+import Position = Models.Position;
 
 export const ParkingSpotsForm = () => {
-    const [width, setWidth] = React.useState<number>(10);
+    const [width, setWidth] = React.useState<number>(2);
     const [height, setHeight] = React.useState<number>(1);
-    const [slots, setSlots] = useState<number[][]>([[1]]);
+    const [slots, setSlots] = useState<ParkingSpotModel[][]>([[
+        {
+        key: 0,
+        number: "",
+        isRotated: false,
+        isDeleted: false,
+        position: {i: 0, j: 0}
+        },
+        {
+            key: 1,
+            number: "",
+            isRotated: false,
+            isDeleted: false,
+            position: {i: 0, j: 1}
+        }
+        ]]);
 
     function handleChange(e : ChangeEvent<HTMLInputElement>): void {
         let h = height;
@@ -19,24 +37,30 @@ export const ParkingSpotsForm = () => {
             w = +e.target.value;
             setWidth(w);
         }
-        const arr : number[][] = [];
+        const arr : ParkingSpotModel[][] = [];
         for (let i: number = 0; i < h; i++) {
             arr[i] = [];
             for (let j : number = 0; j < w; j++) {
-                arr[i][j] = i*j + j;
+                arr[i][j] = {
+                    key: i * j + j,
+                    number: "",
+                    isRotated: false,
+                    isDeleted: false,
+                    position: {i: i, j: j}
+                };
             }
         }
         setSlots(arr);
     }
 
-    function applyMap(arr : number[]): any {
+    function applyMap(arr : ParkingSpotModel[]): any {
         return (
             <div className={styles.line}>
                 {
                     Array.isArray(arr)
                         ? arr.map((s) => {
                             return (
-                                <div key = {s} className={styles.slot}>
+                                <div key = {s.key} className={styles.slot}>
                                 </div>
                             )
                         }) : <div className={styles.slot}></div>
@@ -63,8 +87,7 @@ export const ParkingSpotsForm = () => {
             />
             <div>
                 {
-                    Array.isArray(slots)
-                        ? slots.map(applyMap) : <div className={styles.slot}></div>
+                    slots.map(applyMap)
                 }
             </div>
         </div>
