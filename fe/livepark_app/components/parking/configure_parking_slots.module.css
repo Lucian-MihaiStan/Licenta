@@ -1,0 +1,14 @@
+.slot{
+    position: relative;
+    width: 50px;
+    height: 100px;
+    border: 3px solid black;
+    background: grey;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: table-cell;
+}
+.line{
+    border-spacing: 20px;
+    border-collapse: separate;
+}
