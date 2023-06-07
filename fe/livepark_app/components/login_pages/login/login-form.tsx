@@ -15,9 +15,6 @@ export const LoginForm = () => {
     const loginUser = async (event: any) => {
         event.preventDefault();
 
-        console.log(usernameRef.current?.getData());
-        console.log(passwordRef.current?.getData());
-
         const response = await fetch(GlobalConstants.USER_SIGN_IN_LINK, {
             method: GlobalConstants.POST_REQUEST,
             headers: {
@@ -33,8 +30,6 @@ export const LoginForm = () => {
 
         const _user = await response.json();
         if (authentificationSuccesfully(_user)) {
-            console.log("Successfully");
-            
             const token_data = _user[GlobalConstants.TOKEN];
             const userId_data = _user[GlobalConstants.USER_ID];
 

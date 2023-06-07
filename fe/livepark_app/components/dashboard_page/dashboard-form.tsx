@@ -27,7 +27,7 @@ export const DashboardForm = () => {
 
     return (
         <div>
-            <p>Welcome, {username}</p>
+            Welcome, {username}
         </div>
 
     );

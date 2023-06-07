@@ -13,7 +13,6 @@ const Notifications: NextPage = () => {
 
     const notificationInfo = async () => {
         const url = `${GlobalConstants.NOTIFICATIONS_LINK}?userId=${userId}`;
-        console.log(url);
         const request = await fetch(url, {
             method: GlobalConstants.GET_REQUEST,
             headers: {

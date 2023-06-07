@@ -1,5 +1,8 @@
 import { GlobalConstants } from '../globalc_namespace/global-constants';
 import { useRouter } from 'next/router';
+import navigationBarStyle from './navigation-bar.module.css'
+import { BsCarFrontFill } from 'react-icons/bs'
+import Head from 'next/head';
 
 export const NavigationBar = () => {
 
@@ -16,12 +19,74 @@ export const NavigationBar = () => {
 
     return (
         <div>
-            <div> <button onClick={(e) => routeToPage(e, GlobalConstants.DASHBOARD)}> Dashboard </button> </div>
-            <div> <button onClick={(e) => routeToPage(e, GlobalConstants.PROFILE + "/" + userId)}> Profile </button> </div>
-            <div> <button onClick={(e) => routeToPage(e, GlobalConstants.CARS + "/" + userId)}> Cars </button> </div>
-            <div> <button onClick={(e) => routeToPage(e, GlobalConstants.SUPPORT)}> Support </button> </div>
-            <div> <button onClick={(e) => routeToPage(e, GlobalConstants.NOTIFICATIONS + "/" + userId)}> Notifications </button> </div>
-            <div> <button onClick={(e) => routeToPage(e, GlobalConstants.LOGOUT)}> Logout </button> </div>
+
+        <Head>
+            <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+            <link rel="stylesheet" href="navigation-bar.module.css" />
+        </Head>
+
+        <main>
+        <div className={navigationBarStyle.sidebar}>
+            <div className={navigationBarStyle.logo_details}>
+                <div className={navigationBarStyle.logo_name}>Parklive</div> 
+                <i className='bx bx-menu' id={navigationBarStyle.btn}></i>
+            </div>
+            <ul className={navigationBarStyle.nav_list}>
+                <li>
+                    <a onClick={(e) => routeToPage(e, GlobalConstants.DASHBOARD)}>
+                        <i className='bx bx-grid-alt'></i>
+                        
+                        <span className={navigationBarStyle.links_name}>Dashboard</span>
+                    </a>
+                    <span className={navigationBarStyle.tooltip}>Dashboard</span>
+                </li>
+
+                <li>
+                    <a onClick={(e) => routeToPage(e, GlobalConstants.PROFILE + "/" + userId)}>
+                        <i className='bx bx-user'></i>
+                        <span className={navigationBarStyle.links_name}>Profile</span>
+                    </a>
+                    <span className={navigationBarStyle.tooltip}>Profile</span>
+                </li>
+
+                <li>
+                    <a onClick={(e) => routeToPage(e, GlobalConstants.CARS + "/" + userId)}>
+                        <i className='bx bx-car'></i>
+                        <span className={navigationBarStyle.links_name}>Cars</span>
+                    </a>
+                    <span className={navigationBarStyle.tooltip}>Cars</span>
+                </li>
+
+                <li>
+                    <a onClick={(e) => routeToPage(e, GlobalConstants.SUPPORT)}>
+                        <i className='bx bx-support'></i>
+                        <span className={navigationBarStyle.links_name}>Support</span>
+                    </a>
+                    <span className={navigationBarStyle.tooltip}>Support</span>
+                </li>
+
+                <li>
+                    <a onClick={(e) => routeToPage(e, GlobalConstants.NOTIFICATIONS + "/" + userId)}>
+                        <i className='bx bxs-bell'></i>
+                        <span className={navigationBarStyle.links_name}>Notifications</span>
+                    </a>
+                    <span className={navigationBarStyle.tooltip}>Notifications</span>
+                </li>
+
+                <li>
+                    <a onClick={(e) => routeToPage(e, GlobalConstants.LOGOUT)}>
+                        <i className='bx bx-log-out'></i>
+                        <span className={navigationBarStyle.links_name}>Logout</span>
+                    </a>
+                    <span className={navigationBarStyle.tooltip}>Logout</span>
+                </li>
+            </ul>
+        </div>
+
+        <script src="script.js"></script>
+
+        </main>
+
         </div>
     );
 }

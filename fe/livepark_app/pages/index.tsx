@@ -19,9 +19,9 @@ const Home: NextPage = () => {
         <title>Login Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className="vh-100 d-flex justify-content-center align-items-center">
 
+      </Head>
+      <main>
         <div>
           <button onClick={(e) => routeToPage(e, GlobalConstants.LOGIN_FRONTEND_APP_LINK)}> Sign In </button>
         </div>
