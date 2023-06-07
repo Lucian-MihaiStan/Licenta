@@ -74,7 +74,7 @@ export const ParkingPage = () => {
                     Array.isArray(parkings)
                         ? parkings.map((p) => {
                             return (
-                                <div className={styles.parkingSlot}
+                                <div key={p.id} className={styles.parkingSlot}
                                      onMouseEnter={() => handleHover(p)}>
                                     <div>
                                         <div className={styles.parkingName}>{p.name}</div>
@@ -96,9 +96,16 @@ export const ParkingPage = () => {
                 zoom={14}
                 center={mapCenter}
                 mapTypeId={google.maps.MapTypeId.ROADMAP}
-                mapContainerStyle={{ width: '700px', height: '700px', position: 'absolute', right: '150px', top: '25px', outline: 'transparent 1px', borderRadius: '25px'}}
+                mapContainerStyle={{ width: '600px', height: '600px', position: 'absolute', right: '150px', top: '25px', outline: 'transparent 1px', borderRadius: '25px'}}
                 onLoad={() => console.log('Map Component Loaded...')}
             >
+                {/*{*/}
+                {/*    Array.isArray(parkings)*/}
+                {/*        ? parkings.map((p) => {*/}
+                {/*            return (*/}
+                {/*                <MarkerF key={p.id} position={{lat: p.lat, lng: p.lng}} ></MarkerF>*/}
+                {/*            )}) : null*/}
+                {/*}*/}
                 <MarkerF position={mapCenter}/>
             </GoogleMap>
             </div>

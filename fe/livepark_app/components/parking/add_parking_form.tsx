@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useMemo, useState} from "react";
+import React, {useMemo, useRef} from "react";
 import { GlobalConstants } from "../globalc_namespace/global-constants";
 import { InputConstants } from '../globalc_namespace/inputc/input-constants';
 import { TextBoxDivForm } from '../html_components/textbox/textbox-register-login';
@@ -8,23 +8,17 @@ import {GoogleMap, MarkerF, useLoadScript} from '@react-google-maps/api';
 
 export const AddParkingForm = () => {
 
-    const [addParkingRequest, setParking] = useState({
-        name: "",
-        address: "",
-        lat: 0,
-        lng: 0,
-        parkingFee: "",
-        expiration_hours: 1,
-        expiration_minutes: 0
-    });
+    const name = useRef<any>(null);
+    const address = useRef<any>(null);
+    const parkingFee = useRef<any>(null);
+    const expiration_hours = useRef<any>(null);
+    const expiration_minutes = useRef<any>(null);
 
     const userId = localStorage.getItem(GlobalConstants.USER_ID) as string;
     const routerUtils = useRouter();
 
     const postParking = async (event: any) => {
         event.preventDefault();
-        addParkingRequest.lng = location.lng;
-        addParkingRequest.lat = location.lat;
         const url = GlobalConstants.PARKING_LINK + "?userId=" + userId;
         const response = await fetch(url, {
             method: GlobalConstants.POST_REQUEST,
@@ -34,7 +28,15 @@ export const AddParkingForm = () => {
                 "Origin": GlobalConstants.FRONTEND_API_LINK,
                 "Authorization": "Bearer " + localStorage.getItem(GlobalConstants.TOKEN)
             },
-            body: JSON.stringify(addParkingRequest)
+            body: JSON.stringify({
+                name: name.current?.getData(),
+                address: address.current?.getData(),
+                lat: location.lat,
+                lng: location.lng,
+                parkingFee: parkingFee.current?.getData(),
+                expiration_hours: expiration_hours.current?.getData(),
+                expiration_minutes: expiration_minutes.current?.getData()
+            })
         });
 
         if (response.ok) {
@@ -42,16 +44,11 @@ export const AddParkingForm = () => {
         }
     }
 
-    function handleChange(event: ChangeEvent<HTMLInputElement>): void {
-        const value = event.target.value;
-        setParking({ ...addParkingRequest, [event.target.name]: value });
-    }
-
     const libraries = useMemo(() => ['places'], []);
     const [mapCenter, setMapCenter] = React.useState({ lat: 44.4251541, lng: 26.1078153 });
-    const [mapref, setMapRef] = React.useState();
+    const [mapref, setMapRef] = React.useState<google.maps.Map>();
     const [location, setLocation] = React.useState({ lat: 44.4251541, lng: 26.1078153 });
-    const handleOnLoad = map => {
+    const handleOnLoad = (map: any) => {
         setMapRef(map);
     };
 
@@ -71,7 +68,6 @@ export const AddParkingForm = () => {
         return <p>Loading...</p>;
     }
 
-
     return (
         <div>
             <div className={styles.titleBox}>Add a new parking</div>
@@ -82,40 +78,35 @@ export const AddParkingForm = () => {
                     type={InputConstants.TEXT_TYPE}
                     name={InputConstants.PARKING_NAME}
                     placeholder={InputConstants.PARKING_NAME_PLACEHOLDER}
-                    value={addParkingRequest.name}
-                    handleOnchange={handleChange}
+                    ref={name}
                 />
 
                 <TextBoxDivForm
                     type={InputConstants.TEXT_TYPE}
                     name={InputConstants.PARKING_ADDRESS}
                     placeholder={InputConstants.PARKING_ADDRESS_PLACEHOLDER}
-                    value={addParkingRequest.address}
-                    handleOnchange={handleChange}
+                    ref={address}
                 />
 
                 <TextBoxDivForm
                     type={InputConstants.TEXT_TYPE}
                     name={InputConstants.PARKING_FEE}
                     placeholder={InputConstants.PARKING_FEE_PLACEHOLDER}
-                    value={addParkingRequest.parkingFee}
-                    handleOnchange={handleChange}
+                    ref={parkingFee}
                 />
 
                 <TextBoxDivForm
                     type={InputConstants.TEXT_TYPE}
                     name={InputConstants.PARKING_EXPIRATION_HOURS}
                     placeholder={InputConstants.PARKING_EXPIRATION_HOURS_PLACEHOLDER}
-                    value={addParkingRequest.expiration_hours}
-                    handleOnchange={handleChange}
+                    ref={expiration_hours}
                 />
 
                 <TextBoxDivForm
                     type={InputConstants.TEXT_TYPE}
                     name={InputConstants.PARKING_EXPIRATION_MINUTES}
                     placeholder={InputConstants.PARKING_EXPIRATION_MINUTES_PLACEHOLDER}
-                    value={addParkingRequest.expiration_minutes}
-                    handleOnchange={handleChange}
+                    ref={expiration_minutes}
                 />
 
                 <div className={styles.mapTitle}> Please mark the position on the map:</div>
