@@ -21,7 +21,7 @@ export const CarsForm = () => {
             headers: {
                 "Content-Type": GlobalConstants.APPLICATION_JSON,
                 "Access-Control-Allow-Origin": GlobalConstants.STAR,
-                "Authorization": "Bearer " + localStorage.getItem(GlobalConstants.TOKEN),
+                "Authorization": "Bearer " + sessionStorage.getItem(GlobalConstants.TOKEN),
                 "Origin": GlobalConstants.FRONTEND_API_LINK,
             }
         });

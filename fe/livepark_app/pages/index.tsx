@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { Utils } from '@/components/utils/utils'
 import { GlobalConstants } from '@/components/globalc_namespace/global-constants'
 import { useRouter } from 'next/router'
+import { NavigationBar } from '@/components/navigation_bar/navigation-bar'
 
 const Home: NextPage = () => {
 
@@ -22,6 +23,9 @@ const Home: NextPage = () => {
 
       </Head>
       <main>
+
+        <NavigationBar />
+
         <div>
           <button onClick={(e) => routeToPage(e, GlobalConstants.LOGIN_FRONTEND_APP_LINK)}> Sign In </button>
         </div>
