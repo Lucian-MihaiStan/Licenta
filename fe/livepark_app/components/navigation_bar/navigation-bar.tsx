@@ -5,7 +5,7 @@ import { BsCarFrontFill } from 'react-icons/bs'
 import Head from 'next/head';
 import { use, useRef, useState } from 'react';
 
-export const NavigationBar = () => {
+export const NavigationBar = (): JSX.Element => {
 
     const routerUtils = useRouter();
     const routeToPage = async (event: any, path: string) => {
@@ -21,12 +21,13 @@ export const NavigationBar = () => {
 
     const sidebar_ref = useRef<any>();
     const close_button_ref = useRef<any>();
-    
 
-    const userId = "1";
+    const userId = localStorage.getItem(GlobalConstants.USER_ID);
+    if (userId == null)
+        routerUtils.push(GlobalConstants.LOGIN);
 
     return (
-        <div>
+        <>
 
         <Head>
             <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
@@ -97,6 +98,6 @@ export const NavigationBar = () => {
 
         </main>
 
-        </div>
+        </>
     );
 }

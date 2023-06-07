@@ -3,6 +3,8 @@ import { CarsForm } from "../../components/cars/cars_form";
 import { NextPage } from "next";
 import { NavigationBar } from "../../components/navigation_bar/navigation-bar";
 import { useRouter } from "next/router";
+import navigationBarStyle from '../../components/navigation_bar/navigation-bar.module.css'
+
 
 const Cars : NextPage = () => {
 
@@ -18,7 +20,9 @@ const Cars : NextPage = () => {
             <h1> {userId} </h1>
 
             <NavigationBar/>
-            <CarsForm/>
+            <section className={navigationBarStyle.home_section}>
+                <CarsForm/>
+            </section>
         </div>
     )
 }

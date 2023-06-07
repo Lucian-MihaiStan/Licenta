@@ -24,8 +24,6 @@ const Home: NextPage = () => {
       </Head>
       <main>
 
-        <NavigationBar />
-
         <div>
           <button onClick={(e) => routeToPage(e, GlobalConstants.LOGIN_FRONTEND_APP_LINK)}> Sign In </button>
         </div>
