@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ro.license.livepark.entities.user.User;
 import ro.license.livepark.entities.user.UserDTO;
 import ro.license.livepark.entities.user.UserDTOMapper;
+import ro.license.livepark.entities.user.UserRole;
 import ro.license.livepark.repository.user.UserRepository;
 
 @Service
@@ -38,5 +39,10 @@ public class UserService implements UserDetailsService {
     public UserDTO getUserInfo(Long userId) {
         User user = userRepository.findById(userId).orElseThrow();
         return userDTOMapper.apply(user);
+    }
+
+    public boolean hasRole(Long userId, UserRole role) {
+        User user = userRepository.findById(userId).orElseThrow();
+        return user.getRole() == role;
     }
 }

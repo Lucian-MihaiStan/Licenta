@@ -61,6 +61,9 @@ export const NavigationBar = (): JSX.Element => {
                         </a>
                         <span className={navigationBarStyle.tooltip}>Profile</span>
                     </li>
+                  
+                    <div> <button onClick={(e) => routeToPage(e, GlobalConstants.PARKING_AREAS_PAGE)}> Parking areas </button> </div>
+
 
                     <li>
                         <a onClick={(e) => routeToPage(e, GlobalConstants.CARS + "/" + userId)}>
