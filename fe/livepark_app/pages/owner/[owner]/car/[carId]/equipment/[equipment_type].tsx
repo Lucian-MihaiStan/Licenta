@@ -1,9 +1,11 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { NavigationBar } from "../../../../../../components/navigation_bar/navigation-bar";
+import { NavigationBar } from "@/components/navigation_bar/navigation-bar";
 import { GlobalConstants } from "@/components/globalc_namespace/global-constants";
 import { CarBackendConnectUtils } from "@/components/cars/car_get";
+import navigationBarStyle from '@/components/navigation_bar/navigation-bar.module.css'
+
 
 const EquipmentType: NextPage = () => {
     
@@ -61,6 +63,8 @@ const EquipmentType: NextPage = () => {
 
         <div>
             <NavigationBar/>
+
+            <section className={navigationBarStyle.home_section}>
             {equipment_type}
 
             {
@@ -77,7 +81,7 @@ const EquipmentType: NextPage = () => {
             </div>
 
             <button onClick={(e) => postEquipment(e)}> Update Equipment Expiration Date </button>
-
+            </section>
         </div>   
     )
 }

@@ -1,13 +1,20 @@
 import { DashboardForm } from "@/components/dashboard_page/dashboard-form";
 import { NavigationBar } from "@/components/navigation_bar/navigation-bar";
 import { NextPage } from "next";
+import navigationBarStyle from '../components/navigation_bar/navigation-bar.module.css'
+import Head from "next/head";
+
 
 const Dashboard:  NextPage = () => {
     return (
+        <>
         <div>
             <NavigationBar/>
-            <DashboardForm/>
+            <section className={navigationBarStyle.home_section}>
+                <DashboardForm/>
+            </section>
         </div>
+        </>
     )
 }
 

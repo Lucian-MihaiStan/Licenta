@@ -13,6 +13,7 @@ export namespace GlobalConstants {
 
     export const API = "/api";
     export const USER_INFO = "/userInfo";
+    export const LOGIN = "/login";
     
     export const PROFILE = "/profile";
     export const CARS = "/cars";
