@@ -2,25 +2,32 @@
     position: relative;
     left: 100px;
     border: 2px dashed black;
-    background: lightblue;
+    background: lightgreen;
 }
 .slot{
     position: relative;
-    width: 35px;
-    height: 70px;
+    width: 34px;
+    height: 72px;
     border: 2px solid black;
     background: lightgray;
-    margin-bottom: 0px;
-    margin-top: 0px;
-    display: table-cell;
+    display: inline-flex;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    margin-top: 5px;
 }
+
+.rotatedFirstSlot{
+    transform: translateY(-19px) translateX(24px) rotate(90deg);
+    margin-top: 5px;
+}
+.rotatedSecondSlot{
+    transform: translateY(19px) translateX(24px) rotate(90deg);
+    margin-bottom: 5px;
+}
+
 .deletedSlot{
-    position: relative;
-    width: 35px;
-    height: 70px;
-    border: thin solid lightgray;
+    border: thin dashed black;
     background: transparent;
-    display: table-cell;
 }
 .rotated {
     rotate: 90deg;
@@ -29,9 +36,7 @@
     rotate: -90deg;
 }
 .line{
-    -webkit-border-horizontal-spacing: 40px;
-    -webkit-border-vertical-spacing: 12px;
-    border-collapse: separate;
+    display: flex;
 }
 .deleteButton {
     position: relative;
@@ -73,7 +78,7 @@
     position: relative;
     bottom: 1px;
     right: 6px;
-    fill: lightgray;
+    fill: gray;
     width: 20px;
     height: 20px;
 }
@@ -107,4 +112,10 @@
     margin-right: 20px;
     border: 3px solid black;
     margin-bottom: 20px;
+}
+.autocreatedButton {
+    left: 9px;
+}
+.autocreatedSlot {
+    right: 48px;
 }

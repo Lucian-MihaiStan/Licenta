@@ -7,6 +7,7 @@ export namespace Models {
         key: number,
         number: string,
         isRotated: boolean,
+        isAutoCreated: boolean,
         isDeleted: boolean,
         position: Position
     }

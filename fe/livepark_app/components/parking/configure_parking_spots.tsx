@@ -14,6 +14,7 @@ export const ParkingSpotsForm = () => {
             key: 0,
             number: "",
             isRotated: false,
+            isAutoCreated: false,
             isDeleted: false,
             position: {i: 0, j: 0}
         },
@@ -21,73 +22,106 @@ export const ParkingSpotsForm = () => {
             key: 1,
             number: "",
             isRotated: false,
+            isAutoCreated: false,
             isDeleted: false,
             position: {i: 0, j: 1}
         }
     ]]);
-    const [rotationArr, setRotationArr] = React.useState<boolean[][]>([[false, false]]);
-    const [deletionArr, setDeletionArr] = React.useState<boolean[][]>([[false, false]]);
+    const [renderSwitch, setRenderSwitch] = React.useState<boolean>(false);
 
-    function createNewPropArr(old_arr: boolean[][], setOldArr: React.Dispatch<any>, h: number, w: number, old_h: number, old_w: number): void {
-        const arr: boolean[][] = [];
-        const h_max = h > old_h ? h : old_h;
-        const w_max = w > old_w ? w : old_w;
-        for (let i: number = 0; i < h_max; i++) {
-            arr[i] = [];
-            for (let j: number = 0; j < w_max; j++) {
-                if (i < old_h && j < old_w)
-                    arr[i][j] = old_arr[i][j];
-                else
-                    arr[i][j] = false;
+    function resetSlotsKeys(i: number): void {
+        for (let j = 0; j < slots[i].length; j++)
+            slots[i][j].key = i * j + j;
+    }
+
+    function resetPositions(): void {
+        for (let i = 0; i < slots.length; i++)
+            for (let j = 0; j < slots[i].length; j++) {
+                slots[i][j].position.i = i;
+                slots[i][j].position.j = j;
             }
-        }
-        setOldArr(arr);
     }
 
     function handleChange(e: ChangeEvent<HTMLInputElement>): void {
-        let h = height;
-        let w = width;
+        let new_h = height;
+        let new_w = width;
         if (+e.target.value > 100)
             return;
         if (e.target.name === "height") {
-            createNewPropArr(rotationArr, setRotationArr, +e.target.value, w, h, w);
-            createNewPropArr(deletionArr, setDeletionArr, +e.target.value, w, h, w);
-            h = +e.target.value;
-            setHeight(h);
+            new_h = +e.target.value;
         } else {
-            createNewPropArr(rotationArr, setRotationArr, h, +e.target.value, h, w);
-            createNewPropArr(deletionArr, setDeletionArr, h, +e.target.value, h, w);
-            w = +e.target.value;
-            setWidth(w);
+            new_w = +e.target.value;
         }
         const arr: ParkingSpotModel[][] = [];
-        for (let i: number = 0; i < h; i++) {
+        for (let i = 0; i < new_h; i++) {
             arr[i] = [];
-            for (let j: number = 0; j < w; j++) {
-                arr[i][j] = {
-                    key: i * j + j,
-                    number: "",
-                    isRotated: false,
-                    isDeleted: false,
-                    position: {i: i, j: j}
-                };
+            for (let j = 0; j < new_w; j++) {
+                if (i < height && j < width)
+                    arr[i][j] = slots[i][j];
+                else
+                    arr[i][j] = {
+                        key: i * j + j,
+                        number: "",
+                        isRotated: false,
+                        isAutoCreated: false,
+                        isDeleted: false,
+                        position: {i: i, j: j}
+                    };
             }
         }
+        setHeight(new_h);
+        setWidth(new_w);
         setSlots(arr);
     }
 
     function handleRotation(p: ParkingSpotModel): void {
+        if (!p.isRotated) {
+            let newSlot : ParkingSpotModel = {
+                key: 0,
+                number: "",
+                isRotated: true,
+                isAutoCreated: true,
+                isDeleted: false,
+                position: {i: p.position.i, j: p.position.j + 1}
+            };
+            slots[p.position.i].splice(p.position.j + 1, 0, newSlot);
+            for (let i = 0; i < slots.length; i++) {
+                if (i == p.position.i)
+                    continue;
+                let fillSlot: ParkingSpotModel = {
+                    key: (width - 1) * i + (width - 1),
+                    number: "",
+                    isRotated: false,
+                    isAutoCreated: false,
+                    isDeleted: true,
+                    position: {i: p.position.i, j: width}
+                };
+                slots[i].push(fillSlot);
+            }
+            setWidth(width + 1);
+            resetSlotsKeys(p.position.i);
+        } else {
+            slots[p.position.i].splice(p.position.j + 1, 1);
+            for (let i = 0; i < slots.length; i++) {
+                if (i == p.position.i)
+                    continue;
+                slots[i].splice(width - 1, 1);
+            }
+            setWidth(width - 1);
+        }
+        resetPositions();
         p.isRotated = !p.isRotated;
-        let new_arr = [...rotationArr];
-        new_arr[p.position.i][p.position.j] = !new_arr[p.position.i][p.position.j];
-        setRotationArr(new_arr);
+        setRenderSwitch(!renderSwitch);
     }
 
     function handleDeletion(p: ParkingSpotModel): void {
         p.isDeleted = !p.isDeleted;
-        let new_arr = [...deletionArr];
-        new_arr[p.position.i][p.position.j] = !new_arr[p.position.i][p.position.j];
-        setDeletionArr(new_arr);
+        setRenderSwitch(!renderSwitch);
+    }
+
+    function print(b: boolean): boolean {
+        console.log(b);
+        return b;
     }
 
     function applyMap(arr: ParkingSpotModel[]): any {
@@ -98,21 +132,30 @@ export const ParkingSpotsForm = () => {
                         ? arr.map((s) => {
                             return (
                                 <div key={s.key}
-                                     className={deletionArr[s.position.i][s.position.j] ? styles.deletedSlot :
-                                                rotationArr[s.position.i][s.position.j] ? `${styles.slot} ${styles.rotated} ` : styles.slot}>
+                                     className={`${styles.slot} ${s.isRotated && !s.isAutoCreated && styles.rotatedFirstSlot} ${s.isRotated && s.isAutoCreated && styles.rotatedSecondSlot} ${s.isDeleted && styles.deletedSlot} ${s.isAutoCreated && styles.autocreatedSlot}`}>
                                     {
-                                        !deletionArr[s.position.i][s.position.j] ?
+                                        !s.isDeleted ?
                                             <div>
-                                            <button className={`${styles.rotationButton} ${rotationArr[s.position.i][s.position.j] &&  styles.rotatedBackwards}`} onClick={() => {
-                                                handleRotation(s)
-                                            }}>
-                                                <RotationIcon/>
-                                            </button>
-                                            <button className={`${styles.deleteButton} ${rotationArr[s.position.i][s.position.j] &&  styles.rotatedBackwards}`} onClick={() => {
-                                                handleDeletion(s)
-                                            }}>
-                                                <DeleteIcon/>
-                                            </button>
+                                            {
+                                                !s.isAutoCreated ?
+                                                    <div>
+                                                        <button className={`${s.isRotated &&  styles.rotatedBackwards} ${styles.rotationButton}`} onClick={() => {
+                                                            handleRotation(s)
+                                                        }}>
+                                                            <RotationIcon/>
+                                                        </button>
+                                                        <button className={`${s.isRotated &&  styles.rotatedBackwards} ${styles.deleteButton}`} onClick={() => {
+                                                            handleDeletion(s)
+                                                        }}>
+                                                            <DeleteIcon/>
+                                                        </button>
+                                                    </div>
+                                                : <button className={`${s.isRotated &&  styles.rotatedBackwards} ${styles.deleteButton} ${styles.autocreatedButton}`} onClick={() => {
+                                                        handleDeletion(s)
+                                                    }}>
+                                                        <DeleteIcon/>
+                                                </button>
+                                            }
                                             </div> :
                                             <div>
                                                 <button className={styles.plusButton} onClick={() => {
@@ -156,7 +199,7 @@ export const ParkingSpotsForm = () => {
                     onChange={handleChange}
                 />
             </div>
-            <div className={styles.grid} style={{width: (30 + width * 80) + 'px', height: (height * 95) + 'px'}}>
+            <div className={styles.grid} style={{width: (10 + width * 48) + 'px', height: (5 + height * 86) + 'px'}}>
                 {
                     slots.map(applyMap)
                 }
