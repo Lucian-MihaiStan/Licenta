@@ -41,6 +41,7 @@ export namespace GlobalConstants {
     export const USERNAME = "username";
     export const EMAIL = "email";
 
+
     const API_AUTH_ALLUSERS = "/api/auth/allusers";
 
     // register
@@ -86,6 +87,7 @@ export namespace GlobalConstants {
     export const CASCO = "casco";
 
     export const EQUIPMENT = "/equipment";
+    export const SEND = "/send";
 
     // add car
     const ADD_CAR = "/addcar";
@@ -101,7 +103,7 @@ export namespace GlobalConstants {
 
     export const POST_LICENSE_CARD_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + OWNER + POST_LICENSE_CARD;
     export const NOTIFICATIONS_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + NOTIFICATIONS + NOTIFICATION;
-
+    export const SUPPORT_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + SUPPORT + SEND;
     
     export const EQUIPMENT_LINK = CAR_LINK + EQUIPMENT;
     export const DOCUMENT_LINK = CAR_LINK + DOCUMENT;
