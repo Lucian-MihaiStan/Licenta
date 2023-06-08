@@ -1,9 +1,10 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { NavigationBar } from "../../components/navigation_bar/navigation-bar";
+import { NavigationBar } from "@/components/navigation_bar/navigation-bar";
 import { GlobalConstants } from "@/components/globalc_namespace/global-constants";
 import { Models } from "@/components/cars/car";
+import navigationBarStyle from '@/components/navigation_bar/navigation-bar.module.css'
 
 const Notifications: NextPage = () => {
     const router = useRouter();
@@ -40,10 +41,9 @@ const Notifications: NextPage = () => {
         return <div> Loading... </div>
     return (
         <div>
-            <h1> {userId} </h1>
-            
             <NavigationBar/>
 
+            <section className={navigationBarStyle.home_section}>
 
             {
                 Array.isArray(notifications)
@@ -57,6 +57,8 @@ const Notifications: NextPage = () => {
                     )
                 }) : "Loading..."
             }
+
+            </section>
 
         </div>
     )

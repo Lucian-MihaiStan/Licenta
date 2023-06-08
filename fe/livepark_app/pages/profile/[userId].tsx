@@ -17,7 +17,6 @@ const Profile: NextPage = () => {
 
     return (
         <div>
-            <h1> {userId} </h1>
             <NavigationBar/>
             <section className={navigationBarStyle.home_section}>
                 <ProfileForm/>

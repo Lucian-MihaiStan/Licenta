@@ -1,10 +1,11 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { NavigationBar } from "../../../../../../components/navigation_bar/navigation-bar";
-import { UploadDocumentForm } from "../../../../../../components/upload_document-form";
-import { GlobalConstants } from "../../../../../../components/globalc_namespace/global-constants";
+import { NavigationBar } from "@/components/navigation_bar/navigation-bar";
+import { UploadDocumentForm } from "@/components/upload_document-form";
+import { GlobalConstants } from "@/components/globalc_namespace/global-constants";
 import { CarBackendConnectUtils } from "@/components/cars/car_get";
+import navigationBarStyle from '@/components/navigation_bar/navigation-bar.module.css'
 
 const DocumentType: NextPage = () => {
     
@@ -128,43 +129,47 @@ const DocumentType: NextPage = () => {
         <div>
             <NavigationBar/>
 
-            {
-                oldCarDocumentId != null && oldCarDocumentId != '' && oldCarDocumentId != 'no data' ?
-                    <div> {document_type}: {oldCarDocumentId} </div> :
-                    <div>
-                        No {document_type} added. Please load the document.
-                    </div>
-            }
+            <section className={navigationBarStyle.home_section}>
 
-            {
-                oldDocumentBase64Encode != null && oldDocumentBase64Encode != "" ?
-                    <div>
-                        <embed src={oldDocumentBase64Encode} />
-                    </div> :
-                    <div>
-                        No document added. Please load the document.
-                    </div>
-            }
+                {
+                    oldCarDocumentId != null && oldCarDocumentId != '' && oldCarDocumentId != 'no data' ?
+                        <div> {document_type}: {oldCarDocumentId} </div> :
+                        <div>
+                            No {document_type} added. Please load the document.
+                        </div>
+                }
 
-            <UploadDocumentForm
-            entityId={userId}
-            document_name={document_type}
-            url={GlobalConstants.DOCUMENT_LINK}/>
+                {
+                    oldDocumentBase64Encode != null && oldDocumentBase64Encode != "" ?
+                        <div>
+                            <embed src={oldDocumentBase64Encode} />
+                        </div> :
+                        <div>
+                            No document added. Please load the document.
+                        </div>
+                }
 
-            {
-                oldDocumentExpirationdate != "" ?
-                    <div> Expiration date: {oldDocumentExpirationdate} </div> :
-                    <div> No expiration date set </div>
-            }
+                <UploadDocumentForm
+                entityId={userId}
+                document_name={document_type}
+                url={GlobalConstants.DOCUMENT_LINK}/>
 
-            <div> Expiration date: 
-                <input
-                    type="date"
-                    value={newDocumentExpirationDate}
-                    onChange={e => { setDocumentExpirationDate(e.currentTarget.value); }}/> 
-            </div>
+                {
+                    oldDocumentExpirationdate != "" ?
+                        <div> Expiration date: {oldDocumentExpirationdate} </div> :
+                        <div> No expiration date set </div>
+                }
 
-            <button onClick={(e) => postDocument(e)}> Update Document Expiration Date </button>
+                <div> Expiration date: 
+                    <input
+                        type="date"
+                        value={newDocumentExpirationDate}
+                        onChange={e => { setDocumentExpirationDate(e.currentTarget.value); }}/> 
+                </div>
+
+                <button onClick={(e) => postDocument(e)}> Update Document Expiration Date </button>
+
+            </section>
 
         </div>   
     )
