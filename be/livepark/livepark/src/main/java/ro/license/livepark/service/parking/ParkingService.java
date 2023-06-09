@@ -67,11 +67,12 @@ public class ParkingService {
         p.setEXPIRATION_MINUTES(dto.getExpiration_minutes());
     }
 
-    public void addParking(ParkingDTO dto, Long adminId) {
+    public int addParking(ParkingDTO dto, Long adminId) {
         Parking p = new Parking();
         initParkingFromDTO(p, dto);
         p.setAdminId(adminId);
         parkingRepository.save(p);
+        return p.getId();
     }
 
     public boolean modifyParking(int id, ParkingDTO dto) {

@@ -28,8 +28,12 @@ public class ParkingSpotService {
     public ParkingSpotDTO convertParkingSpotToDTO(ParkingSpot p) {
         ParkingSpotDTO dto = new ParkingSpotDTO();
         dto.setId(p.getId());
+        dto.setKey(p.getKey());
         dto.setNumber(p.getNumber());
-        dto.setParking_id(p.getParking().getId());
+        dto.setRotated(p.isRotated());
+        dto.setAutoCreated(p.isAutoCreated());
+        dto.setDeleted(p.isDeleted());
+        dto.setPosition(p.getPosition());
         dto.setStatus(p.getStatus());
         return dto;
     }
@@ -50,25 +54,46 @@ public class ParkingSpotService {
         return parkingSpots.stream().map(this::convertParkingSpotToDTO).toList();
     }
 
-    public boolean addParkingSpot(ParkingSpotDTO dto) {
-        if (parkingRepository.findById(dto.getParking_id()).isEmpty())
+    public boolean addParkingSpots(List<ParkingSpotDTO> dtos, int parking_id) {
+        if (parkingRepository.findById(parking_id).isEmpty())
             return false;
-        ParkingSpot p = new ParkingSpot();
-        p.setNumber(dto.getNumber());
-        p.setParking(parkingRepository.findById(dto.getParking_id()).get());
-        parkingSpotRepository.save(p);
+        Parking parking = parkingRepository.findById(parking_id).get();
+        for (ParkingSpotDTO dto : dtos) {
+            ParkingSpot p = new ParkingSpot();
+            p.setNumber(dto.getNumber());
+            p.setKey(dto.getKey());
+            p.setRotated(dto.isRotated());
+            p.setAutoCreated(dto.isAutoCreated());
+            p.setDeleted(dto.isDeleted());
+            p.setPosition(dto.getPosition());
+            p.setParking(parking);
+            parkingSpotRepository.save(p);
+        }
         return true;
     }
 
-    public boolean modifyParkingSpot(int id, ParkingSpotDTO dto) {
-        if (parkingSpotRepository.findById(id).isEmpty())
+    public boolean updateParkingSpots(List<ParkingSpotDTO> dtos, int parking_id) {
+        if (parkingRepository.findById(parking_id).isEmpty())
             return false;
-        if (parkingRepository.findById(dto.getParking_id()).isEmpty())
-            return false;
-        ParkingSpot p = parkingSpotRepository.findById(id).get();
-        p.setNumber(dto.getNumber());
-        p.setParking(parkingRepository.findById(dto.getParking_id()).get());
-        parkingSpotRepository.save(p);
+        Parking parking = parkingRepository.findById(parking_id).get();
+        for (ParkingSpotDTO dto : dtos) {
+            ParkingSpot p;
+            if (parkingSpotRepository.findById(dto.getId()).isEmpty())
+                p = new ParkingSpot();
+            else
+                p = parkingSpotRepository.findById(dto.getId()).get();
+            p.setNumber(dto.getNumber());
+            p.setKey(dto.getKey());
+            p.setRotated(dto.isRotated());
+            p.setAutoCreated(dto.isAutoCreated());
+            p.setDeleted(dto.isDeleted());
+            p.setPosition(dto.getPosition());
+            p.setParking(parking);
+            parkingSpotRepository.save(p);
+        }
+        for (ParkingSpotDTO p : getAllParkingSpotsFromParking(parking_id))
+            if (dtos.stream().noneMatch(d -> d.getId() == p.getId()))
+                deleteParkingSpot(p.getId());
         return true;
     }
 

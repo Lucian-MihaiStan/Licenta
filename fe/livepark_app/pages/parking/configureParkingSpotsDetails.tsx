@@ -1,20 +1,21 @@
 import { NextPage } from "next"
 import React from "react";
 import { NavigationBar } from "../../components/navigation_bar/navigation-bar";
-import {ParkingSpotsForm} from "@/components/parking/configure_parking_spots";
 import {BrowserRouter} from "react-router-dom";
+import {ConfigureParkingSpotsDetails} from "@/components/parking/parkingSpotsDetails";
 
 
-const ConfigureParkingScheme: NextPage = () => {
+const ParkingSpotsDetails: NextPage = () => {
 
     return (
         <div>
             <NavigationBar/>
             <BrowserRouter>
-                <ParkingSpotsForm/>
+                <ConfigureParkingSpotsDetails/>
             </BrowserRouter>
+
         </div>
     )
 }
 
-export default ConfigureParkingScheme;
+export default ParkingSpotsDetails;

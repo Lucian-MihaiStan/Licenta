@@ -27,8 +27,8 @@ public class ParkingController {
 
     @PostMapping
     public ResponseEntity<?> addParking(@RequestBody ParkingDTO parkingDTO, @RequestParam("userId") Long adminId) {
-        parkingService.addParking(parkingDTO, adminId);
-        return new ResponseEntity<>(null, HttpStatus.CREATED);
+        int id = parkingService.addParking(parkingDTO, adminId);
+        return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

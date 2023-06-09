@@ -5,6 +5,7 @@ import { TextBoxDivForm } from '../html_components/textbox/textbox-register-logi
 import styles from '../parking/add_parking_form.module.css'
 import { useRouter } from "next/router";
 import {GoogleMap, MarkerF, useLoadScript} from '@react-google-maps/api';
+import {useNavigate} from 'react-router-dom';
 
 export const AddParkingForm = () => {
 
@@ -16,6 +17,7 @@ export const AddParkingForm = () => {
 
     const userId = localStorage.getItem(GlobalConstants.USER_ID) as string;
     const routerUtils = useRouter();
+    const navigate = useNavigate();
 
     const postParking = async (event: any) => {
         event.preventDefault();
@@ -42,6 +44,20 @@ export const AddParkingForm = () => {
         if (response.ok) {
             routerUtils.push(GlobalConstants.PARKING_AREAS_PAGE);
         }
+    }
+
+    const toNextPage = () => {
+        const data = {
+            name: name.current?.getData(),
+            address: address.current?.getData(),
+            lat: location.lat,
+            lng: location.lng,
+            parkingFee: parkingFee.current?.getData(),
+            expiration_hours: expiration_hours.current?.getData(),
+            expiration_minutes: expiration_minutes.current?.getData(),
+        };
+        navigate('/parking/configureParkingScheme', { state: data});
+        routerUtils.push(GlobalConstants.CONFIGURE_PARKING_SCHEME);
     }
 
     const libraries = useMemo(() => ['places'], []);
@@ -129,7 +145,7 @@ export const AddParkingForm = () => {
                 </GoogleMap>
             </div>
 
-                <button className={styles.button} onClick={(e) => postParking(e)}> Add parking </button>
+                <button className={styles.button} onClick={() => toNextPage()}> Add parking </button>
             </div>
         </div>
 

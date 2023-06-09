@@ -2,6 +2,7 @@ package ro.license.livepark.entities.parking;
 
 import jakarta.persistence.*;
 import lombok.*;
+import ro.license.livepark.dto.parking.Position;
 
 import java.util.List;
 
@@ -36,4 +37,19 @@ public class ParkingSpot {
 
     @OneToMany(mappedBy = "parkingSpot", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Reservation> reservationList;
+
+    @Transient
+    private Integer key;
+
+    @Transient
+    private boolean isRotated;
+
+    @Transient
+    private  boolean isAutoCreated;
+
+    @Transient
+    private boolean isDeleted;
+
+    @Transient
+    private Position position;
 }

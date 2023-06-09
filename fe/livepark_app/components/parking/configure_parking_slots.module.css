@@ -1,8 +1,8 @@
 .grid {
     position: relative;
-    left: 100px;
+    left: 200px;
     border: 2px dashed black;
-    background: lightgreen;
+    background: darkgray;
 }
 .slot{
     position: relative;
@@ -118,4 +118,21 @@
 }
 .autocreatedSlot {
     right: 48px;
+}
+.nextButton {
+    position: relative;
+    left: 100px;
+    width: 70px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    'Liberation Sans', sans-serif;
+    background-color: #2d55ff;
+    color: white;
+    border: thin solid black;
+}
+.nextButton:hover {
+    cursor: pointer;
+    box-shadow: 0 6px 6px 0 rgba(0,0,0,0.24),0 0 rgba(0,0,0,0.19);
 }

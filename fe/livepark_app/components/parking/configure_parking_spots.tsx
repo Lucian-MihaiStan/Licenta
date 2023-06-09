@@ -5,6 +5,9 @@ import ParkingSpotModel = Models.ParkingSpotModel;
 import {DeleteIcon} from "@/components/parking/images/delete-icon";
 import {RotationIcon} from "@/components/parking/images/rotation-icon";
 import {PlusIcon} from "@/components/parking/images/plus-icon";
+import {GlobalConstants} from "@/components/globalc_namespace/global-constants";
+import {useRouter} from "next/router";
+import {useLocation, useNavigate} from "react-router-dom";
 
 export const ParkingSpotsForm = () => {
     const [width, setWidth] = React.useState<number>(2);
@@ -28,10 +31,15 @@ export const ParkingSpotsForm = () => {
         }
     ]]);
     const [renderSwitch, setRenderSwitch] = React.useState<boolean>(false);
+    const router = useRouter();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const parking_data = location.state;
 
-    function resetSlotsKeys(i: number): void {
-        for (let j = 0; j < slots[i].length; j++)
-            slots[i][j].key = i * j + j;
+    function resetSlotsKeys(): void {
+        for (let i = 0; i < slots.length; i++)
+            for (let j = 0; j < slots[i].length; j++)
+            slots[i][j].key = i * slots[i].length + j;
     }
 
     function resetPositions(): void {
@@ -60,7 +68,7 @@ export const ParkingSpotsForm = () => {
                     arr[i][j] = slots[i][j];
                 else
                     arr[i][j] = {
-                        key: i * j + j,
+                        key: i * new_w + j,
                         number: "",
                         isRotated: false,
                         isAutoCreated: false,
@@ -81,7 +89,7 @@ export const ParkingSpotsForm = () => {
                 number: "",
                 isRotated: true,
                 isAutoCreated: true,
-                isDeleted: false,
+                isDeleted: true,
                 position: {i: p.position.i, j: p.position.j + 1}
             };
             slots[p.position.i].splice(p.position.j + 1, 0, newSlot);
@@ -89,7 +97,7 @@ export const ParkingSpotsForm = () => {
                 if (i == p.position.i)
                     continue;
                 let fillSlot: ParkingSpotModel = {
-                    key: (width - 1) * i + (width - 1),
+                    key: 0,
                     number: "",
                     isRotated: false,
                     isAutoCreated: false,
@@ -99,7 +107,7 @@ export const ParkingSpotsForm = () => {
                 slots[i].push(fillSlot);
             }
             setWidth(width + 1);
-            resetSlotsKeys(p.position.i);
+            resetSlotsKeys();
         } else {
             slots[p.position.i].splice(p.position.j + 1, 1);
             for (let i = 0; i < slots.length; i++) {
@@ -124,8 +132,20 @@ export const ParkingSpotsForm = () => {
         return b;
     }
 
+    const goToNextPage = async (event: any) => {
+        const data = {
+            parking_data: parking_data,
+            slots: slots,
+            width: width,
+            height: height
+        };
+        navigate(GlobalConstants.CONFIGURE_PARKING_SPOTS_DETAILS, { state: data});
+        router.push(GlobalConstants.CONFIGURE_PARKING_SPOTS_DETAILS);
+    }
+
     function applyMap(arr: ParkingSpotModel[]): any {
         return (
+            <>
             <div className={styles.line} style={{width: (70 + width * 80) + 'px'}}>
                 {
                     Array.isArray(arr)
@@ -170,6 +190,7 @@ export const ParkingSpotsForm = () => {
                         }) : <div className={styles.slot}></div>
                 }
             </div>
+            </>
         )
     }
 
@@ -198,6 +219,7 @@ export const ParkingSpotsForm = () => {
                     max="100"
                     onChange={handleChange}
                 />
+            <button className={styles.nextButton} onClick={(e) => goToNextPage(e)}> Next </button>
             </div>
             <div className={styles.grid} style={{width: (10 + width * 48) + 'px', height: (5 + height * 86) + 'px'}}>
                 {
