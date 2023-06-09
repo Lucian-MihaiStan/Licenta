@@ -6,6 +6,7 @@ import styles from '../parking/add_parking_form.module.css'
 import { useRouter } from "next/router";
 import {GoogleMap, MarkerF, useLoadScript} from '@react-google-maps/api';
 import {useNavigate} from 'react-router-dom';
+import LatLng = google.maps.LatLng;
 
 export const AddParkingForm = () => {
 
@@ -50,8 +51,8 @@ export const AddParkingForm = () => {
         const data = {
             name: name.current?.getData(),
             address: address.current?.getData(),
-            lat: location.lat,
-            lng: location.lng,
+            lat: location!.lat,
+            lng: location!.lng,
             parkingFee: parkingFee.current?.getData(),
             expiration_hours: expiration_hours.current?.getData(),
             expiration_minutes: expiration_minutes.current?.getData(),
@@ -62,7 +63,7 @@ export const AddParkingForm = () => {
 
     const libraries = useMemo(() => ['places'], []);
     const [mapCenter, setMapCenter] = React.useState({ lat: 44.4251541, lng: 26.1078153 });
-    const [mapref, setMapRef] = React.useState<google.maps.Map>();
+    const [mapRef, setMapRef] = React.useState<google.maps.Map>();
     const [location, setLocation] = React.useState({ lat: 44.4251541, lng: 26.1078153 });
     const handleOnLoad = (map: any) => {
         setMapRef(map);
@@ -133,15 +134,18 @@ export const AddParkingForm = () => {
                     mapTypeId={google.maps.MapTypeId.ROADMAP}
                     mapContainerStyle={{ width: '400px', height: '400px', position: 'absolute', left: '350px', top: '35px', outline: 'transparent 1px', borderRadius: '25px'}}
                     onClick={ev => {
-                        setLocation({lat: ev.latLng.lat(), lng: ev.latLng.lng()});
-                        if (mapref) {
-                            setMapCenter(mapref.getCenter());
+                        setLocation({lat: ev.latLng!.lat(), lng: ev.latLng!.lng()});
+                        if (mapRef) {
+                            setMapCenter(mapRef.getCenter());
                         }
                         console.log(location);
                     }}
                     onLoad={handleOnLoad}
                 >
-                    <MarkerF position={location}/>
+                    {
+                        location !== null ?
+                        <MarkerF position={location}/> : null
+                    }
                 </GoogleMap>
             </div>
 

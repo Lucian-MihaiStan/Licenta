@@ -3,17 +3,15 @@ import {Models} from "@/components/parking/parkingSpot";
 import ParkingSpotModel = Models.ParkingSpotModel;
 import {GlobalConstants} from "@/components/globalc_namespace/global-constants";
 import {useRouter} from "next/router";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import styles from '../parking/configure_parking_slots.module.css'
 import styles2 from '../parking/parkingSpotsDetails.module.css'
 import {EditIcon} from "@/components/parking/images/edit-icon";
 
 export const ConfigureParkingSpotsDetails = () => {
-    const userId = localStorage.getItem(GlobalConstants.USER_ID) as string;
     const [renderSwitch, setRenderSwitch] = React.useState<boolean>(false);
     const router = useRouter();
     const location = useLocation();
-    const navigate = useNavigate();
     const parking_data = location.state.parking_data;
     let slots = location.state.slots;
     const width = location.state.width;
@@ -23,14 +21,9 @@ export const ConfigureParkingSpotsDetails = () => {
         sensorLinks.push("");
     }
 
-    function print(b: boolean): boolean {
-        console.log(b);
-        return b;
-    }
-
     const goToNextPage = async () => {
         // add the parking
-        let url = GlobalConstants.PARKING_LINK + "?userId=" + userId;
+        let url = GlobalConstants.PARKING_LINK;
         let response = await fetch(url, {
             method: GlobalConstants.POST_REQUEST,
             headers: {
@@ -126,7 +119,7 @@ export const ConfigureParkingSpotsDetails = () => {
                     slots.map(applyMap)
                 }
             </div>
-            <button className={styles2.nextButton} onClick={(e) => goToNextPage(e)}> Create parking </button>
+            <button className={styles2.nextButton} onClick={goToNextPage}> Create parking </button>
         </div>
     );
 }

@@ -50,6 +50,7 @@ public class LoginRegisterService {
                         .builder()
                         .token((tokenizer.generateJwtToken(authentication)))
                         .userId(user.getUserId())
+                        .userRole(user.getRole())
                         .build()
         );
     }

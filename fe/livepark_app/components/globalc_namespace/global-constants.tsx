@@ -56,7 +56,7 @@ export namespace GlobalConstants {
     export const GET_REQUEST = "GET";
     export const POST_REQUEST = "POST";
     export const DELETE_REQUEST = "DELETE";
-    export const PUT_REQUESRT = "PUT";
+    export const PUT_REQUEST = "PUT";
 
     export const APPLICATION_JSON = "application/json";
     export const STAR = "*";
@@ -68,6 +68,7 @@ export namespace GlobalConstants {
     // login response fields
     export const TOKEN = "token";
     export const USER_ID = "userId";
+    export const USER_ROLE = "userRole";
 
     export const INSERT_DOCUMENT = "/insert_document";
     export const FIND_DOCUMENT = "/find_document";
@@ -107,6 +108,9 @@ export namespace GlobalConstants {
 
 
     export const PARKING_LINK = BACKEND_API_LINK + API + "/parkings";
+    export const PARKING_SPOTS_LINK = BACKEND_API_LINK + API + "/parkingSpots";
     export const ADD_PARKING_PAGE = "addParking";
     export const PARKING_AREAS_PAGE = "/parking/parkingAreas";
+    export const CONFIGURE_PARKING_SCHEME = "/parking/configureParkingScheme"
+    export const CONFIGURE_PARKING_SPOTS_DETAILS = "/parking/configureParkingSpotsDetails"
 }

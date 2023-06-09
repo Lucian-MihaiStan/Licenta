@@ -41,7 +41,7 @@ public class ParkingService {
         return parkings.stream().map(this::convertParkingToDTO).toList();
     }
 
-    public ParkingDTO getParking(int id) {
+    public ParkingDTO getParkingDTO(int id) {
         if (parkingRepository.findById(id).isEmpty())
             return null;
         Parking p = parkingRepository.findById(id).get();
@@ -55,6 +55,12 @@ public class ParkingService {
         dto.setExpiration_hours(p.getEXPIRATION_HOURS());
         dto.setExpiration_minutes(p.getEXPIRATION_MINUTES());
         return dto;
+    }
+
+    public Parking getParking(Integer id) {
+        if (parkingRepository.findById(id).isEmpty())
+            return null;
+        return parkingRepository.findById(id).get();
     }
 
     private void initParkingFromDTO(Parking p, ParkingDTO dto) {

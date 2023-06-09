@@ -127,12 +127,7 @@ export const ParkingSpotsForm = () => {
         setRenderSwitch(!renderSwitch);
     }
 
-    function print(b: boolean): boolean {
-        console.log(b);
-        return b;
-    }
-
-    const goToNextPage = async (event: any) => {
+    const goToNextPage = async () => {
         const data = {
             parking_data: parking_data,
             slots: slots,
@@ -219,7 +214,7 @@ export const ParkingSpotsForm = () => {
                     max="100"
                     onChange={handleChange}
                 />
-            <button className={styles.nextButton} onClick={(e) => goToNextPage(e)}> Next </button>
+            <button className={styles.nextButton} onClick={goToNextPage}> Next </button>
             </div>
             <div className={styles.grid} style={{width: (10 + width * 48) + 'px', height: (5 + height * 86) + 'px'}}>
                 {

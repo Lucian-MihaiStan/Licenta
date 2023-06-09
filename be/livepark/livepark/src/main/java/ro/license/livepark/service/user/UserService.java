@@ -1,6 +1,7 @@
 package ro.license.livepark.service.user;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -44,5 +45,9 @@ public class UserService implements UserDetailsService {
     public boolean hasRole(Long userId, UserRole role) {
         User user = userRepository.findById(userId).orElseThrow();
         return user.getRole() == role;
+    }
+
+    public User getAuthenticatedUser() {
+        return  (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }
