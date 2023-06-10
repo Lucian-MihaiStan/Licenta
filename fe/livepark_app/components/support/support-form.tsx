@@ -18,10 +18,10 @@ export const SupportForm = (): JSX.Element => {
     const sendMessage = async (event: any) => {
         event.preventDefault();
 
-        const fname = fFirstName.current?.value;
-        const lname = fLastName.current?.value;
-        const email = fEmail.current?.value;
-        const subject = fSubject.current?.value;
+        const fname = fFirstName.current?.getData();
+        const lname = fLastName.current?.getData();
+        const email = fEmail.current?.getData();
+        const subject = fSubject.current?.getData();
         const message = fMessage.current?.value;
 
         const send_data = await fetch(GlobalConstants.SUPPORT_LINK, {
@@ -41,9 +41,7 @@ export const SupportForm = (): JSX.Element => {
             }),
         });
 
-        const result = await send_data.json();
-
-        if (result.ok) {
+        if (send_data.ok) {
             alert("Message sent successfully!");
             router.push(GlobalConstants.DASHBOARD);
         } else {

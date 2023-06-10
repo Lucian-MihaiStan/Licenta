@@ -25,7 +25,8 @@ public class SupportEmailService implements AbstractEmailService {
         helper.setFrom(from);
         helper.setTo("livepark08@gmail.com");
         helper.setSubject(subject);
-        helper.setText(text, true);
+        helper.setText(text + "" +
+                "\n sent by " + from, true);
 
         mailSender.send(message);
     }
