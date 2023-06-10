@@ -2,22 +2,25 @@ package ro.license.livepark.controller.owner;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import ro.license.livepark.config.web.SecurityConfig;
 import ro.license.livepark.controller.GlobalConstants;
 import ro.license.livepark.http.packages.received.DocumentIdEntityPkg;
+import ro.license.livepark.http.packages.received.PasswordUpdatePkg;
 import ro.license.livepark.service.driver.DriverService;
 import ro.license.livepark.service.user.UserService;
+
+import java.security.SecureRandom;
 
 @CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
 @RestController
 @RequestMapping("/api/owner")
 @RequiredArgsConstructor
 public class OwnerController {
-
     private final UserService userService;
-
     private final DriverService driverService;
-
     @GetMapping("/userInfo")
     public ResponseEntity<?> getUserInfo(@RequestParam("userId") Long userId) {
         return ResponseEntity.ok(
@@ -40,6 +43,11 @@ public class OwnerController {
     public ResponseEntity<?> postDriverLicenseCard(@RequestBody DocumentIdEntityPkg documentPkg) {
         driverService.updateOrCreateDriverLicenseId(documentPkg.getEntityId(), documentPkg.getDocumentId());
         return ResponseEntity.ok(GlobalConstants.OK_STATUS);
+    }
+
+    @PostMapping("/updatePassword")
+    public ResponseEntity<?> updatePassword(@RequestBody PasswordUpdatePkg passwordUpdatePkg) {
+        return userService.updatePassword(passwordUpdatePkg.getUsername(), SecurityConfig.encode(passwordUpdatePkg.getNewPassword()));
     }
 
 }

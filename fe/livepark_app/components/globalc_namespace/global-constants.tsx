@@ -88,7 +88,8 @@ export namespace GlobalConstants {
     export const FIRE_EXTINGUISHER = "fireExtinguisher";
     export const FIRST_AID_KIT = "firstAidKit";
     export const CASCO = "casco";
-
+    export const USERS = "/users";
+ 
     export const EQUIPMENT = "/equipment";
     export const SEND = "/send";
 
@@ -111,6 +112,8 @@ export namespace GlobalConstants {
     export const EQUIPMENT_LINK = CAR_LINK + EQUIPMENT;
     export const DOCUMENT_LINK = CAR_LINK + DOCUMENT;
 
+    export const UPDATE_PASSWORD = "/updatePassword";
+    export const UPDATE_PASSWORD_LINK = BACKEND_API_LINK + API + OWNER + UPDATE_PASSWORD;
 
     export const PARKING_LINK = BACKEND_API_LINK + API + "/parkings";
     export const ADD_PARKING_PAGE = "addParking";
