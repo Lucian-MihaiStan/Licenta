@@ -27,6 +27,8 @@ const Validation: NextPage = () => {
     }
 
     useEffect(() => {
+        if (token == null || token == 'no data' || token == 'undefined')
+            return;
         postValidation();    
     }, [token]);
 
