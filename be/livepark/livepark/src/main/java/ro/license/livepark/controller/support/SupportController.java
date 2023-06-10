@@ -3,6 +3,7 @@ package ro.license.livepark.controller.support;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ro.license.livepark.email.SupportEmailService;
 import ro.license.livepark.http.packages.received.SendMailPkg;
 
 @CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)

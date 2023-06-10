@@ -6,13 +6,13 @@ export const DashboardForm = () => {
     const [username, setUsername] = useState<string>("Loading...");
 
     const handleUsername = async () => {
-        const url = `${GlobalConstants.DASHBOARD_LINK}?userId=${sessionStorage.getItem(GlobalConstants.USER_ID)}`;
+        const url = `${GlobalConstants.DASHBOARD_LINK}?userId=${localStorage.getItem(GlobalConstants.USER_ID)}`;
         const _usernameinfo = await fetch(url, {
             method: 'GET',
             headers: {
                 "Content-Type": GlobalConstants.APPLICATION_JSON,
                 "Access-Control-Allow-Origin": GlobalConstants.STAR,
-                "Authorization": "Bearer " + sessionStorage.getItem(GlobalConstants.TOKEN),
+                "Authorization": "Bearer " + localStorage.getItem(GlobalConstants.TOKEN),
                 "Origin": GlobalConstants.FRONTEND_API_LINK,
             }
         });

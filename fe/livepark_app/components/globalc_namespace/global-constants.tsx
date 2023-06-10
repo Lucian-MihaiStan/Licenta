@@ -10,6 +10,7 @@ export namespace GlobalConstants {
 
     export const FRONTEND_API_LINK = LOCAL_HOST + COLON + FRONTEND_PORT;
     export const BACKEND_API_LINK = LOCAL_HOST + COLON + BACKEND_PORT;
+    export const TERMS_CONS = "/termscons";
 
     export const API = "/api";
     export const USER_INFO = "/userInfo";
@@ -26,6 +27,7 @@ export namespace GlobalConstants {
     export const CAR = "/car";
     export const DOCUMENT = "/document";
     export const DOCUMENT_EXPIRATION_DATE = "/documentExpirationDate";
+    export const VALIDATION = "/validate_email";
 
     export const USER_DTO = "userDTO";
     export const DRIVER_DTO = "driverDTO";
@@ -40,6 +42,7 @@ export namespace GlobalConstants {
     export const LAST_NAME = "lastName";
     export const USERNAME = "username";
     export const EMAIL = "email";
+    export const AUTH = "/auth";
 
 
     const API_AUTH_ALLUSERS = "/api/auth/allusers";
@@ -112,4 +115,5 @@ export namespace GlobalConstants {
     export const PARKING_LINK = BACKEND_API_LINK + API + "/parkings";
     export const ADD_PARKING_PAGE = "addParking";
     export const PARKING_AREAS_PAGE = "/parking/parkingAreas";
+    export const VALIDATION_LINK = BACKEND_API_LINK + API + AUTH + VALIDATION;
 }

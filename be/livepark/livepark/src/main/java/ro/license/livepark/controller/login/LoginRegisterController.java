@@ -25,4 +25,9 @@ public class LoginRegisterController {
         return loginRegisterService.signUp(requestPkg);
     }
 
+    @GetMapping(LoginRegisterControllerConstants.VALIDATE_EMAIL)
+    public ResponseEntity<?> validateEmail(@RequestParam("token") String token) {
+        return loginRegisterService.validateEmail(token);
+    }
+
 }
