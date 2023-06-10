@@ -45,4 +45,14 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findById(userId).orElseThrow();
         return user.getRole() == role;
     }
+
+    public UserDTO findByEmail(String email) {
+        return userDTOMapper.apply(userRepository.findByEmail(email).orElse(null));
+    }
+
+    public void validateEmail(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow();
+        user.setEnabled(true);
+        userRepository.save(user);
+    }
 }

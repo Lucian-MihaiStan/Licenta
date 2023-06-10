@@ -1,5 +1,6 @@
 package ro.license.livepark.controller.car;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.license.livepark.entities.car.Car;
@@ -21,15 +22,11 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
 @RequestMapping("/api/car")
 @RestController
+@RequiredArgsConstructor
 public class CarController {
 
     private final CarService carService;
     private final DriverService driverService;
-
-    public CarController(CarService carService, DriverService driverService) {
-        this.carService = carService;
-        this.driverService = driverService;
-    }
 
     @PostMapping("/addcar")
     public ResponseEntity<?> addCar(@RequestBody HttpCarPkg carRequestPkg) {

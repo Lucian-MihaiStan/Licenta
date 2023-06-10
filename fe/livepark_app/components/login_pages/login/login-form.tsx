@@ -32,7 +32,6 @@ export const LoginForm = () => {
             const token_data = _user[GlobalConstants.TOKEN];
             const userId_data = _user[GlobalConstants.USER_ID];
 
-
             localStorage.setItem(GlobalConstants.TOKEN, token_data);
             localStorage.setItem(GlobalConstants.USER_ID, userId_data);
 

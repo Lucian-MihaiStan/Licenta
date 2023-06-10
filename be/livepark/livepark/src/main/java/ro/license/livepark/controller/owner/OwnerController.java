@@ -1,5 +1,6 @@
 package ro.license.livepark.controller.owner;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.license.livepark.controller.GlobalConstants;
@@ -10,16 +11,12 @@ import ro.license.livepark.service.user.UserService;
 @CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
 @RestController
 @RequestMapping("/api/owner")
+@RequiredArgsConstructor
 public class OwnerController {
 
     private final UserService userService;
 
     private final DriverService driverService;
-
-    public OwnerController(UserService userService, DriverService driverService) {
-        this.userService = userService;
-        this.driverService = driverService;
-    }
 
     @GetMapping("/userInfo")
     public ResponseEntity<?> getUserInfo(@RequestParam("userId") Long userId) {

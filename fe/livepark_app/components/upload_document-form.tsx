@@ -67,7 +67,7 @@ export const UploadDocumentForm = (props: FormProps) => {
                     "Content-Type": GlobalConstants.APPLICATION_JSON,
                     "Access-Control-Allow-Origin": GlobalConstants.STAR,
                     "Origin": GlobalConstants.FRONTEND_API_LINK,
-                    "Authorization": "Bearer " + sessionStorage.getItem(GlobalConstants.TOKEN),
+                    "Authorization": "Bearer " + localStorage.getItem(GlobalConstants.TOKEN),
                 },
                 body: JSON.stringify(documentJson),
             });
