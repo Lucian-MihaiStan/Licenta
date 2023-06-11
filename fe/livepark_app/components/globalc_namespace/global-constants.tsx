@@ -31,6 +31,8 @@ export namespace GlobalConstants {
 
     export const USER_DTO = "userDTO";
     export const DRIVER_DTO = "driverDTO";
+    export const FORGOT_PASSWORD = "/forgotpassword";
+    export const RESET_PASSWORD = "/resetpassword";
 
     export const LICENSE_ID = "licenseId";
     export const IDENTITY_CARD_ID = "identityCardId";
@@ -88,7 +90,8 @@ export namespace GlobalConstants {
     export const FIRE_EXTINGUISHER = "fireExtinguisher";
     export const FIRST_AID_KIT = "firstAidKit";
     export const CASCO = "casco";
-
+    export const USERS = "/users";
+ 
     export const EQUIPMENT = "/equipment";
     export const SEND = "/send";
 
@@ -107,10 +110,14 @@ export namespace GlobalConstants {
     export const POST_LICENSE_CARD_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + OWNER + POST_LICENSE_CARD;
     export const NOTIFICATIONS_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + NOTIFICATIONS + NOTIFICATION;
     export const SUPPORT_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + SUPPORT + SEND;
-    
+    export const FORGOT_PASSWORD_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + AUTH + FORGOT_PASSWORD;
+    export const RESET_PASSWORD_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + AUTH + RESET_PASSWORD;
+
     export const EQUIPMENT_LINK = CAR_LINK + EQUIPMENT;
     export const DOCUMENT_LINK = CAR_LINK + DOCUMENT;
 
+    export const UPDATE_PASSWORD = "/updatePassword";
+    export const UPDATE_PASSWORD_LINK = BACKEND_API_LINK + API + OWNER + UPDATE_PASSWORD;
 
     export const PARKING_LINK = BACKEND_API_LINK + API + "/parkings";
     export const ADD_PARKING_PAGE = "addParking";

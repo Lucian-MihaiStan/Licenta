@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ValidationEmailService implements AbstractEmailService {
+public class ValidationEmailService implements IEmailService {
 
     private final JavaMailSender mailSender;
 

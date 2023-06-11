@@ -1,5 +1,6 @@
 package ro.license.livepark.service.user;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,16 +13,10 @@ import ro.license.livepark.entities.user.UserRole;
 import ro.license.livepark.repository.user.UserRepository;
 
 @Service
+@RequiredArgsConstructor
 public class UserService implements UserDetailsService {
-
     private final UserRepository userRepository;
-
     private final UserDTOMapper userDTOMapper;
-
-    public UserService(UserRepository userRepository, UserDTOMapper userDTOMapper) {
-        this.userRepository = userRepository;
-        this.userDTOMapper = userDTOMapper;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -46,13 +41,25 @@ public class UserService implements UserDetailsService {
         return user.getRole() == role;
     }
 
-    public UserDTO findByEmail(String email) {
-        return userDTOMapper.apply(userRepository.findByEmail(email).orElse(null));
-    }
-
     public void validateEmail(String username) {
         User user = userRepository.findByUsername(username).orElseThrow();
         user.setEnabled(true);
+        userRepository.save(user);
+    }
+
+    public ResponseEntity<?> updatePassword(String username, String newPasswordEncoded) {
+        User user = userRepository.findByUsername(username).orElseThrow();
+        user.setPassword(newPasswordEncoded);
+        userRepository.save(user);
+        return ResponseEntity.ok("Password updated successfully!");
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
+    }
+
+    public void resetPassword(User user, String encode) {
+        user.setPassword(encode);
         userRepository.save(user);
     }
 }

@@ -24,6 +24,8 @@ const Validation: NextPage = () => {
         
         if (response.ok) 
             routerUtils.push(GlobalConstants.LOGIN_FRONTEND_APP_LINK);
+        else
+            alert("Failed");
     }
 
     useEffect(() => {

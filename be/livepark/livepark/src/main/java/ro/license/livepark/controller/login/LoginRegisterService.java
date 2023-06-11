@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ro.license.livepark.email.ValidationEmailService;
+import ro.license.livepark.entities.password.ResetPassword;
 import ro.license.livepark.http.packages.sent.LoginRegisterResponsePkg;
 import ro.license.livepark.http.packages.sent.MessageWrapper;
 import ro.license.livepark.auth.JWToken;
@@ -18,8 +19,10 @@ import ro.license.livepark.entities.user.UserDTO;
 import ro.license.livepark.entities.user.UserRole;
 import ro.license.livepark.http.packages.received.LoginUserRequestPkg;
 import ro.license.livepark.http.packages.received.RegisterUserRequestPkg;
+import ro.license.livepark.service.password.ResetPasswordService;
 import ro.license.livepark.service.user.UserService;
 
+import java.sql.Date;
 import java.util.regex.Pattern;
 
 @Service
@@ -31,6 +34,7 @@ public class LoginRegisterService {
     private final PasswordEncoder passwordEncoder;
     private final JWToken tokenizer;
     private final ValidationEmailService validationEmailService;
+    private final ResetPasswordService resetPasswordService;
 
     public ResponseEntity<?> signIn(LoginUserRequestPkg requestPkg) {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(requestPkg.getUsername(), requestPkg.getPassword());
@@ -112,5 +116,35 @@ public class LoginRegisterService {
         userService.validateEmail(username);
 
         return ResponseEntity.ok(MessageWrapper.builder().message("Successfully validated!").build());
+    }
+
+    public ResponseEntity<?> forgotPassword(String email) {
+        User user = userService.findByEmail(email);
+        if (user == null)
+            return ResponseEntity.badRequest().body(MessageWrapper.builder().message("Email not found!").build());
+
+        resetPasswordService.createResetPasswordLink(user);
+
+        return ResponseEntity.ok(MessageWrapper.builder().message("An email had been sent validated!").build());
+    }
+
+    public ResponseEntity<?> resetPassword(String token, String email, String password) {
+        User user = userService.findByEmail(email);
+        if (user == null)
+            return ResponseEntity.badRequest().body(MessageWrapper.builder().message("Email not found!").build());
+
+//        if (!Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", password))
+        ResetPassword resetPassword = resetPasswordService.findByToken(token);
+        if (resetPassword == null)
+            return ResponseEntity.badRequest().body(MessageWrapper.builder().message("Token not found!").build());
+
+        // TODO Lucian - check if token expired
+//        if (resetPassword.getExpirationDate().compareTo(new Date(System.currentTimeMillis())) < 0)
+//            return ResponseEntity.badRequest().body(MessageWrapper.builder().message("Token expired!").build());
+
+        resetPasswordService.delete(resetPassword);
+        userService.resetPassword(user, passwordEncoder.encode(password));
+
+        return ResponseEntity.ok(MessageWrapper.builder().message("Password reset successfully!").build());
     }
 }

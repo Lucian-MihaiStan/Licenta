@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import navigationBarStyle from './navigation-bar.module.css'
 import { BsCarFrontFill } from 'react-icons/bs'
 import Head from 'next/head';
-import { use, useRef, useState } from 'react';
+import { MouseEvent, use, useRef, useState } from 'react';
 
 export const NavigationBar = (): JSX.Element => {
 
@@ -25,6 +25,13 @@ export const NavigationBar = (): JSX.Element => {
     const userId = localStorage.getItem(GlobalConstants.USER_ID);
     if (userId == null)
         routerUtils.push(GlobalConstants.LOGIN);
+
+    function logout(e: any, LOGIN: string): void {
+        e.preventDefault();
+        localStorage.removeItem(GlobalConstants.USER_ID);
+        localStorage.removeItem(GlobalConstants.TOKEN);
+        routerUtils.push(LOGIN);
+    }
 
     return (
         <>
@@ -95,7 +102,7 @@ export const NavigationBar = (): JSX.Element => {
                     </li>
 
                     <li>
-                        <a onClick={(e) => routeToPage(e, GlobalConstants.LOGOUT)}>
+                        <a onClick={(e) => logout(e, GlobalConstants.LOGIN)}>
                             <i className='bx bx-log-out'></i>
                             <span className={navigationBarStyle.links_name}>Logout</span>
                         </a>
