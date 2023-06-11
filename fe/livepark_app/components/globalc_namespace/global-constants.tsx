@@ -31,6 +31,7 @@ export namespace GlobalConstants {
 
     export const USER_DTO = "userDTO";
     export const DRIVER_DTO = "driverDTO";
+    export const FORGOT_PASSWORD = "/forgotpassword";
 
     export const LICENSE_ID = "licenseId";
     export const IDENTITY_CARD_ID = "identityCardId";
@@ -108,7 +109,8 @@ export namespace GlobalConstants {
     export const POST_LICENSE_CARD_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + OWNER + POST_LICENSE_CARD;
     export const NOTIFICATIONS_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + NOTIFICATIONS + NOTIFICATION;
     export const SUPPORT_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + SUPPORT + SEND;
-    
+    export const FORGOT_PASSWORD_LINK = LOCAL_HOST + COLON + BACKEND_PORT + API + AUTH + FORGOT_PASSWORD;
+
     export const EQUIPMENT_LINK = CAR_LINK + EQUIPMENT;
     export const DOCUMENT_LINK = CAR_LINK + DOCUMENT;
 

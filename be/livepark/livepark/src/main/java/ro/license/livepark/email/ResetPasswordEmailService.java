@@ -10,23 +10,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class SupportEmailService implements IEmailService {
+public class ResetPasswordEmailService implements IEmailService {
 
     private final JavaMailSender mailSender;
 
-    @SneakyThrows
     @Async
+    @SneakyThrows
     @Override
-    public void send(String from, String subject, String text) {
+    public void send(String to, String subject, String text) {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper;
         helper = new MimeMessageHelper(message);
 
-        helper.setFrom(from);
-        helper.setTo("livepark08@gmail.com");
+        helper.setFrom("livepark08@gmail.com");
+        helper.setTo(to);
         helper.setSubject(subject);
-        helper.setText(text + "" +
-                "\n sent by " + from, true);
+        helper.setText(text, true);
 
         mailSender.send(message);
     }

@@ -18,6 +18,7 @@ import ro.license.livepark.entities.user.UserDTO;
 import ro.license.livepark.entities.user.UserRole;
 import ro.license.livepark.http.packages.received.LoginUserRequestPkg;
 import ro.license.livepark.http.packages.received.RegisterUserRequestPkg;
+import ro.license.livepark.service.password.ResetPasswordService;
 import ro.license.livepark.service.user.UserService;
 
 import java.util.regex.Pattern;
@@ -31,6 +32,7 @@ public class LoginRegisterService {
     private final PasswordEncoder passwordEncoder;
     private final JWToken tokenizer;
     private final ValidationEmailService validationEmailService;
+    private final ResetPasswordService resetPasswordService;
 
     public ResponseEntity<?> signIn(LoginUserRequestPkg requestPkg) {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(requestPkg.getUsername(), requestPkg.getPassword());
@@ -112,5 +114,15 @@ public class LoginRegisterService {
         userService.validateEmail(username);
 
         return ResponseEntity.ok(MessageWrapper.builder().message("Successfully validated!").build());
+    }
+
+    public ResponseEntity<?> forgotPassword(String email) {
+        User user = userService.findByEmail(email);
+        if (user == null)
+            return ResponseEntity.badRequest().body(MessageWrapper.builder().message("Email not found!").build());
+
+        resetPasswordService.createResetPasswordLink(user);
+
+        return ResponseEntity.ok(MessageWrapper.builder().message("An email had been sent validated!").build());
     }
 }

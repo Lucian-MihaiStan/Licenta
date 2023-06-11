@@ -53,4 +53,8 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
         return ResponseEntity.ok("Password updated successfully!");
     }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
+    }
 }

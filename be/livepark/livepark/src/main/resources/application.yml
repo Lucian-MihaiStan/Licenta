@@ -46,3 +46,4 @@ live:
     app:
       jwtSecret: liveParkSecretKeyliveParkSecretKeyliveParkSecretKeyliveParkSecretKeyliveParkSecretKeylive
       jwtExpirationMs: '86400000'
+      resetPasswordTokenExpirationMs: '3600000'

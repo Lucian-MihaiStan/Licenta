@@ -30,4 +30,9 @@ public class LoginRegisterController {
         return loginRegisterService.validateEmail(token);
     }
 
+    @PostMapping(LoginRegisterControllerConstants.FORGOT_PASSWORD)
+    public ResponseEntity<?> forgotPassword(@RequestParam("email") String email) {
+        return loginRegisterService.forgotPassword(email);
+    }
+
 }
