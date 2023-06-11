@@ -57,4 +57,9 @@ public class UserService implements UserDetailsService {
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElse(null);
     }
+
+    public void resetPassword(User user, String encode) {
+        user.setPassword(encode);
+        userRepository.save(user);
+    }
 }

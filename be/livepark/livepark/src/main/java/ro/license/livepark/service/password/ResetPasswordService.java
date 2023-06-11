@@ -31,8 +31,30 @@ public class ResetPasswordService {
                 .expirationDate(ResetPassword.computeExpirationDate())
                 .build();
 
-        resetPasswordEmailService.send();
+        String content = "Dear [[name]],<br>\n"
+                + "Please click the link below to change your password:<br>"
+                + "<h3><a href=\"[[URL]]\" target=\"_blank\">RESET PASSWORD</a></h3>"
+                + "Thank you,<br>"
+                + "Your company name.";
+
+        content = content.replace("[[name]]", user.getFullName());
+        content = content.replace("[[URL]]", "http://localhost:3000/resetpassword?token=" + token + "&email=" + user.getEmail());
+
+        resetPasswordEmailService.send(
+                user.getEmail(),
+                "Reset password",
+                "Click on the link below to reset your password:\n\n" +
+                content
+        );
 
         resetPasswordRepository.save(resetPassword);
+    }
+
+    public ResetPassword findByToken(String token) {
+        return resetPasswordRepository.findByExpirationToken(token).orElse(null);
+    }
+
+    public void delete(ResetPassword resetPassword) {
+        resetPasswordRepository.delete(resetPassword);
     }
 }

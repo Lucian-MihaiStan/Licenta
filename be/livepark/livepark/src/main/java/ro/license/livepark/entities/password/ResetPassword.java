@@ -32,7 +32,7 @@ public class ResetPassword {
     @Column(name = "expiration_token", nullable = false)
     private String expirationToken;
 
-    @Column("expiration_date")
+    @Column(name = "expiration_date", nullable = false)
     private Date expirationDate;
 
     public static Date computeExpirationDate() {

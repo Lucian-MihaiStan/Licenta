@@ -4,10 +4,12 @@ import { InputConstants } from "@/components/globalc_namespace/inputc/input-cons
 import { TextBoxDivForm } from "@/components/html_components/textbox/textbox-register-login";
 import { NextPage } from "next";
 import { GlobalConstants } from "@/components/globalc_namespace/global-constants";
+import { useRouter } from "next/router";
 
 const ForgotPassword: NextPage = () => {
 
     const emailRef = React.useRef<any>(null);
+    const router = useRouter();
 
     const forgotPassword = async (event: any) => {
         event.preventDefault();
@@ -22,9 +24,12 @@ const ForgotPassword: NextPage = () => {
         });
 
         if (!response.ok) {
+            alert("Failed");
             console.log("Failed");
             return;
         }
+
+        router.push(GlobalConstants.LOGIN);
     }
 
     return (
