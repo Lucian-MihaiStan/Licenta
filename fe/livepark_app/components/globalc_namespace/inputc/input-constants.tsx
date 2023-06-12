@@ -2,6 +2,7 @@ export namespace InputConstants {
 
     export const TEXT_TYPE = "text";
     export const PASSWORD_TYPE = "password";
+    export const NUMBER_TYPE = "number";
 
     export const USERNAME = "username";
     export const EMAIL = "email";

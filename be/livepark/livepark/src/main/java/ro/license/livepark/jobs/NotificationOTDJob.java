@@ -28,7 +28,7 @@ public class NotificationOTDJob {
     private final NotificationEmailService emailService;
     private final NotificationService notificationService;
 
-    @Scheduled(fixedDelay = 60000) // Run every 60 seconds
+    @Scheduled(fixedDelay = 6000000) // Run every 60 seconds
     public void runJob() {
         System.out.println("Scheduled NotificationOTD job is running...");
 

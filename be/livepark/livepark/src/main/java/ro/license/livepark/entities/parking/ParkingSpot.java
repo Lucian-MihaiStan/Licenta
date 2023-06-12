@@ -19,7 +19,7 @@ public class ParkingSpot {
     @Column(name = "number")
     private String number;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "sensor_id")
     private Sensor sensor;
 
@@ -28,6 +28,7 @@ public class ParkingSpot {
         UNKNOWN, OCCUPIED, EMPTY, RESERVED
     }
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private ParkingSpotStatus status = ParkingSpotStatus.UNKNOWN;
 
@@ -35,21 +36,39 @@ public class ParkingSpot {
     @JoinColumn(name = "parking_id", nullable = false)
     private Parking parking;
 
-    @OneToMany(mappedBy = "parkingSpot", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parkingSpot", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Reservation> reservationList;
 
-    @Transient
+    @Column(name = "key")
     private Integer key;
 
-    @Transient
+    @Column(name = "isRotated")
     private boolean isRotated;
 
-    @Transient
-    private  boolean isAutoCreated;
+    @Column(name = "isAutoCreated")
+    private boolean isAutoCreated;
 
-    @Transient
+    @Column(name = "isDeleted")
     private boolean isDeleted;
 
-    @Transient
-    private Position position;
+    @Column(name = "position_i")
+    private int posI;
+
+    @Column(name = "position_j")
+    private int posJ;
+
+    public void setStatus(ParkingSpotStatus status) {
+        System.out.println("ParkingSpot with sensor deviceId " + getSensor().getDeviceName() + " changed the status from " + this.status + " to " + status);
+        this.status = status;
+        // TODO notify frontend to refresh
+    }
+
+    public void setPosition(Position p) {
+        posI = p.getI();
+        posJ = p.getJ();
+    }
+
+    public Position getPosition() {
+        return new Position(posI, posJ);
+    }
 }

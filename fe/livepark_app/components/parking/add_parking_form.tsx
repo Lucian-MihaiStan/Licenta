@@ -1,4 +1,4 @@
-import React, {useMemo, useRef} from "react";
+import React, {useMemo, useRef, useState} from "react";
 import { GlobalConstants } from "../globalc_namespace/global-constants";
 import { InputConstants } from '../globalc_namespace/inputc/input-constants';
 import { TextBoxDivForm } from '../html_components/textbox/textbox-register-login';
@@ -6,7 +6,6 @@ import styles from '../parking/add_parking_form.module.css'
 import { useRouter } from "next/router";
 import {GoogleMap, MarkerF, useLoadScript} from '@react-google-maps/api';
 import {useNavigate} from 'react-router-dom';
-import LatLng = google.maps.LatLng;
 
 export const AddParkingForm = () => {
 
@@ -15,39 +14,26 @@ export const AddParkingForm = () => {
     const parkingFee = useRef<any>(null);
     const expiration_hours = useRef<any>(null);
     const expiration_minutes = useRef<any>(null);
+    const [usingSensors, setUsingSensors] = useState<boolean>(true);
+    const host = useRef<any>(null);
+    const port = useRef<any>(null);
+    const username = useRef<any>(null);
+    const password = useRef<any>(null);
+    const topic = useRef<any>(null);
+    const [withTLS, setWithTLS] = useState<boolean>(true);
 
-    const userId = localStorage.getItem(GlobalConstants.USER_ID) as string;
     const routerUtils = useRouter();
     const navigate = useNavigate();
 
-    const postParking = async (event: any) => {
-        event.preventDefault();
-        const url = GlobalConstants.PARKING_LINK + "?userId=" + userId;
-        const response = await fetch(url, {
-            method: GlobalConstants.POST_REQUEST,
-            headers: {
-                "Content-Type": GlobalConstants.APPLICATION_JSON,
-                "Access-Control-Allow-Origin": GlobalConstants.STAR,
-                "Origin": GlobalConstants.FRONTEND_API_LINK,
-                "Authorization": "Bearer " + localStorage.getItem(GlobalConstants.TOKEN)
-            },
-            body: JSON.stringify({
-                name: name.current?.getData(),
-                address: address.current?.getData(),
-                lat: location.lat,
-                lng: location.lng,
-                parkingFee: parkingFee.current?.getData(),
-                expiration_hours: expiration_hours.current?.getData(),
-                expiration_minutes: expiration_minutes.current?.getData()
-            })
-        });
-
-        if (response.ok) {
-            routerUtils.push(GlobalConstants.PARKING_AREAS_PAGE);
-        }
-    }
-
     const toNextPage = () => {
+        const sensorConfig = usingSensors ? {
+            host: host.current?.getData(),
+            port: port.current?.getData(),
+            withTLS: withTLS,
+            username: username.current?.getData(),
+            password: password.current?.getData(),
+            topic: topic.current?.getData()
+        } : null;
         const data = {
             name: name.current?.getData(),
             address: address.current?.getData(),
@@ -56,8 +42,9 @@ export const AddParkingForm = () => {
             parkingFee: parkingFee.current?.getData(),
             expiration_hours: expiration_hours.current?.getData(),
             expiration_minutes: expiration_minutes.current?.getData(),
+            sensorConfig: sensorConfig
         };
-        navigate('/parking/configureParkingScheme', { state: data});
+        navigate(GlobalConstants.CONFIGURE_PARKING_SCHEME, { state: data});
         routerUtils.push(GlobalConstants.CONFIGURE_PARKING_SCHEME);
     }
 
@@ -125,6 +112,67 @@ export const AddParkingForm = () => {
                     placeholder={InputConstants.PARKING_EXPIRATION_MINUTES_PLACEHOLDER}
                     ref={expiration_minutes}
                 />
+
+                <div className={styles.text}> Sensors
+                    <label className={styles.switch}>
+                        <input type="checkbox" onChange={() => setUsingSensors(!usingSensors)} checked={usingSensors}/>
+                        <span className={styles.slider}></span>
+                    </label>
+                </div>
+                {
+                    usingSensors &&
+                    <TextBoxDivForm
+                        type={InputConstants.TEXT_TYPE}
+                        name="host"
+                        placeholder="Host"
+                        ref={host}
+                    />
+                }
+                {
+                    usingSensors &&
+                    <TextBoxDivForm
+                    type="number"
+                    name="port"
+                    placeholder="Port"
+                    ref={port}
+                    />
+                }
+                {
+                    usingSensors &&
+                    <TextBoxDivForm
+                        type={InputConstants.TEXT_TYPE}
+                        name="username"
+                        placeholder="Username"
+                        ref={username}
+                    />
+                }
+                {
+                    usingSensors &&
+                    <TextBoxDivForm
+                        type={InputConstants.PASSWORD_TYPE}
+                        name="password"
+                        placeholder="Password"
+                        ref={password}
+                    />
+                }
+                {
+                    usingSensors &&
+                    <TextBoxDivForm
+                        type={InputConstants.TEXT_TYPE}
+                        name="topic"
+                        placeholder="Topic"
+                        ref={topic}
+                    />
+                }
+                {
+                    usingSensors &&
+                    <div className={styles.text}> TLS
+                        <label className={styles.switch}>
+                            <input type="checkbox" onChange={() => setWithTLS(!withTLS)} checked={withTLS}/>
+                            <span className={styles.slider}></span>
+                        </label>
+                    </div>
+                }
 
                 <div className={styles.mapTitle}> Please mark the position on the map:</div>
                 <GoogleMap

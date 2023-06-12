@@ -1,13 +1,14 @@
 import React, {ChangeEvent, useState} from "react";
 import styles from "@/components/parking/configure_parking_slots.module.css";
 import {Models} from "@/components/parking/parkingSpot";
-import ParkingSpotModel = Models.ParkingSpotModel;
 import {DeleteIcon} from "@/components/parking/images/delete-icon";
 import {RotationIcon} from "@/components/parking/images/rotation-icon";
 import {PlusIcon} from "@/components/parking/images/plus-icon";
 import {GlobalConstants} from "@/components/globalc_namespace/global-constants";
 import {useRouter} from "next/router";
 import {useLocation, useNavigate} from "react-router-dom";
+import ParkingSpotModel = Models.ParkingSpotModel;
+import ParkingSpotStatus = Models.ParkingSpotStatus;
 
 export const ParkingSpotsForm = () => {
     const [width, setWidth] = React.useState<number>(2);
@@ -19,7 +20,9 @@ export const ParkingSpotsForm = () => {
             isRotated: false,
             isAutoCreated: false,
             isDeleted: false,
-            position: {i: 0, j: 0}
+            position: {i: 0, j: 0},
+            sensorDeviceName: "",
+            status: ParkingSpotStatus.UNKNOWN
         },
         {
             key: 1,
@@ -27,7 +30,9 @@ export const ParkingSpotsForm = () => {
             isRotated: false,
             isAutoCreated: false,
             isDeleted: false,
-            position: {i: 0, j: 1}
+            position: {i: 0, j: 1},
+            sensorDeviceName: "",
+            status: ParkingSpotStatus.UNKNOWN
         }
     ]]);
     const [renderSwitch, setRenderSwitch] = React.useState<boolean>(false);
@@ -73,7 +78,9 @@ export const ParkingSpotsForm = () => {
                         isRotated: false,
                         isAutoCreated: false,
                         isDeleted: false,
-                        position: {i: i, j: j}
+                        position: {i: i, j: j},
+                        sensorDeviceName: "",
+                        status: ParkingSpotStatus.UNKNOWN
                     };
             }
         }
@@ -90,7 +97,9 @@ export const ParkingSpotsForm = () => {
                 isRotated: true,
                 isAutoCreated: true,
                 isDeleted: true,
-                position: {i: p.position.i, j: p.position.j + 1}
+                position: {i: p.position.i, j: p.position.j + 1},
+                sensorDeviceName: "",
+                status: ParkingSpotStatus.UNKNOWN
             };
             slots[p.position.i].splice(p.position.j + 1, 0, newSlot);
             for (let i = 0; i < slots.length; i++) {
@@ -102,7 +111,9 @@ export const ParkingSpotsForm = () => {
                     isRotated: false,
                     isAutoCreated: false,
                     isDeleted: true,
-                    position: {i: p.position.i, j: width}
+                    position: {i: p.position.i, j: width},
+                    sensorDeviceName: "",
+                    status: ParkingSpotStatus.UNKNOWN
                 };
                 slots[i].push(fillSlot);
             }

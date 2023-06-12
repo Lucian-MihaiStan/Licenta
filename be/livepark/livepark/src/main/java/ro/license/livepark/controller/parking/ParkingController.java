@@ -37,12 +37,15 @@ public class ParkingController {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 
         int id = parkingService.addParking(parkingDTO, authenticatedUser.getUserId());
+        if (id == -1)
+            return new ResponseEntity<>("Could not add the parking: please check the MQTT connection details.",
+                    HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getParking(@PathVariable("id") int id) {
-       ParkingDTO p = parkingService.getParkingDTO(id);
+       ParkingInfoDTO p = parkingService.getParkingDTO(id);
        if (p == null)
            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
        return new ResponseEntity<>(p, HttpStatus.OK);

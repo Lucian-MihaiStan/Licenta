@@ -5,18 +5,14 @@ import { Models } from "../../components/parking/parking";
 import styles from "./parking_areas.module.css"
 import {GoogleMap, MarkerF, useLoadScript} from '@react-google-maps/api';
 import ParkingModel = Models.ParkingModel;
+import {useNavigate} from "react-router-dom";
 
 
 export const ParkingPage = () => {
 
     const routerUtils = useRouter();
-    const userId = routerUtils.query.userId;
+    const navigate = useNavigate();
     const [parkings, setParkings] = useState<Models.ParkingModel[]>([]);
-
-    function routeToPage(e: any, path: string): void {
-        e.preventDefault();
-        routerUtils.push(path);
-    }
 
     const handleParkings = async () => {
         const url = `${GlobalConstants.PARKING_LINK}`;
@@ -33,10 +29,14 @@ export const ParkingPage = () => {
         const _parkings = await _parkings_info.json();
         setParkings(_parkings);
     }
-
     useEffect(() => {
         handleParkings();
     }, []);
+
+    const [userRole, setUserRole] = useState<any>(null);
+    useEffect(() => {
+        setUserRole(localStorage.getItem(GlobalConstants.USER_ROLE));
+    }, [])
 
     const libraries = useMemo(() => ['places'], []);
     const [mapCenter, setMapCenter] = useState({ lat: 44.46, lng: 26.17 });
@@ -54,16 +54,25 @@ export const ParkingPage = () => {
         googleMapsApiKey: "AIzaSyCmrP0BzhEJfj3LH8o2DwwCm2GfujyRcUs",
         libraries: libraries as any,
     });
-    if (!isLoaded) {
-        return <p>Loading...</p>;
+
+    function routeToPage(e: any, path: string): void {
+        e.preventDefault();
+        routerUtils.push(path);
     }
+
 
     function handleHover(p : ParkingModel): void {
         if (typeof window !== 'undefined')
             setMapCenter({ lat: p.lat, lng: p.lng });
     }
 
+    function handleClick(p : ParkingModel): void {
+        navigate(GlobalConstants.VIEW_PARKING_PAGE, { state: p});
+        routerUtils.push(GlobalConstants.VIEW_PARKING_PAGE);
+    }
+
     return (
+        userRole == null || !isLoaded ? <div> Loading... </div> :
         <div>
             <div className={styles.titleBox}>Parking areas</div>
 
@@ -75,12 +84,12 @@ export const ParkingPage = () => {
                         ? parkings.map((p) => {
                             return (
                                 <div key={p.id} className={styles.parkingSlot}
-                                     onMouseEnter={() => handleHover(p)}>
+                                     onMouseEnter={() => handleHover(p)} onClick={() => handleClick(p)}>
                                     <div>
                                         <div className={styles.parkingName}>{p.name}</div>
                                         <div className={styles.parkingAddress}>{p.address}</div>
                                         <span className={styles.parkingSpots}>{p.hasSensors ?
-                                            <span><span className={styles.emptySpotsText}>{p.emptySpots} empty</span><span className={styles.totalSpotsText}> | {p.totalSpots}</span></span> :
+                                            <span><span className={styles.emptySpotsText}>{p.emptySpots} empty</span><span className={styles.totalSpotsText}> | {p.totalSpots} parking spots</span></span> :
                                             <span className={styles.totalSpotsText}>{p.totalSpots} parking spots</span>}
                                         </span>
                                         <span className={styles.parkingFee}>{p.parkingFee}</span>
@@ -99,18 +108,14 @@ export const ParkingPage = () => {
                 mapContainerStyle={{ width: '600px', height: '600px', position: 'absolute', right: '150px', top: '25px', outline: 'transparent 1px', borderRadius: '25px'}}
                 onLoad={() => console.log('Map Component Loaded...')}
             >
-                {/*{*/}
-                {/*    Array.isArray(parkings)*/}
-                {/*        ? parkings.map((p) => {*/}
-                {/*            return (*/}
-                {/*                <MarkerF key={p.id} position={{lat: p.lat, lng: p.lng}} ></MarkerF>*/}
-                {/*            )}) : null*/}
-                {/*}*/}
                 <MarkerF position={mapCenter}/>
             </GoogleMap>
             </div>
 
-            <button onClick={(e) => routeToPage(e, GlobalConstants.ADD_PARKING_PAGE)}> Add a new parking area </button>
+            {
+                userRole == GlobalConstants.USER_ROLE_MASTER || userRole == GlobalConstants.USER_ROLE_ADMIN ?
+                <button onClick={(e) => routeToPage(e, GlobalConstants.ADD_PARKING_PAGE)}> Add a new parking area </button> : null
+            }
 
         </div>
     );

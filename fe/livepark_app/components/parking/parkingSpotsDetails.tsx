@@ -16,10 +16,6 @@ export const ConfigureParkingSpotsDetails = () => {
     let slots = location.state.slots;
     const width = location.state.width;
     const height = location.state.height;
-    let sensorLinks : string[] = [];
-    for (let i = 0; i < slots[slots.length - 1].length; i++) {
-        sensorLinks.push("");
-    }
 
     const goToNextPage = async () => {
         // add the parking
@@ -59,15 +55,13 @@ export const ConfigureParkingSpotsDetails = () => {
             return;
         }
 
-        // TODO add the sensors
-
         alert("The parking was added successfully.");
         router.push(GlobalConstants.PARKING_AREAS_PAGE);
     }
 
     const handleSave = (s : ParkingSpotModel) => {
         s.number = (document.getElementById('number' + s.key) as HTMLInputElement).value;
-        sensorLinks[s.key] = (document.getElementById('sensorLink' + s.key) as HTMLInputElement).value;
+        slots[s.position.i][s.position.j].sensorDeviceName = (document.getElementById('deviceName' + s.key) as HTMLInputElement).value;
         document.getElementById('modal' + s.key)!.style.display = "none";
         setRenderSwitch(!renderSwitch);
     }
@@ -80,7 +74,7 @@ export const ConfigureParkingSpotsDetails = () => {
                             ? arr.map((s) => {
                                 return (
                                     <div key={s.key}
-                                         className={`${styles.slot} ${s.isRotated && !s.isAutoCreated && styles.rotatedFirstSlot} ${s.isRotated && s.isAutoCreated && styles.rotatedSecondSlot} ${s.isDeleted && styles2.deletedSlot} ${s.isAutoCreated && styles.autocreatedSlot} ${(s.number || sensorLinks[s.key]) && styles2.configuredSlot}`}>
+                                         className={`${styles.slot} ${s.isRotated && !s.isAutoCreated && styles.rotatedFirstSlot} ${s.isRotated && s.isAutoCreated && styles.rotatedSecondSlot} ${s.isDeleted && styles2.deletedSlot} ${s.isAutoCreated && styles.autocreatedSlot} ${(s.number && slots[s.position.i][s.position.j].sensorDeviceName) && styles2.configuredSlot}`}>
                                         {
                                             !s.isDeleted ?
                                             <button className={`${styles2.editButton}`} onClick={() => document.getElementById('modal' + s.key)!.style.display = "block"}>
@@ -97,7 +91,7 @@ export const ConfigureParkingSpotsDetails = () => {
                                                     <label className={styles2.label}>Identifying number: <input id={"number" + s.key} type="text" className={styles2.spotNumber} defaultValue={s.number}/> </label>
                                                 </div>
                                                 <div>
-                                                    <label className={styles2.sensorLabel}>Sensor access link: </label><textarea id={"sensorLink" + s.key} className={styles2.sensorLink} defaultValue={sensorLinks[s.key]}/>
+                                                    <label className={styles2.sensorLabel}>Sensor device name: </label><textarea id={"deviceName" + s.key} className={styles2.deviceName} defaultValue={slots[s.position.i][s.position.j].sensorDeviceName}/>
                                                 </div>
                                                 <button className={styles2.saveButton} onClick={() => handleSave(s)}>Save</button>
                                             </div>
@@ -113,7 +107,7 @@ export const ConfigureParkingSpotsDetails = () => {
 
     return (
         <div>
-            <div className={styles2.title}>Configure the identifying number and the sensor access link for each parking spot:</div>
+            <div className={styles2.title}>Configure the identifying number and the sensor device name for each parking spot:</div>
             <div className={styles.grid} style={{width: (10 + width * 48) + 'px', height: (5 + height * 86) + 'px'}}>
                 {
                     slots.map(applyMap)

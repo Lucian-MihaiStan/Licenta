@@ -2,16 +2,14 @@ package ro.license.livepark.service.parking;
 
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-import ro.license.livepark.dto.parking.ParkingDTO;
-import ro.license.livepark.dto.parking.ParkingInfoDTO;
 import ro.license.livepark.dto.parking.ParkingSpotDTO;
 import ro.license.livepark.entities.parking.Parking;
 import ro.license.livepark.entities.parking.ParkingSpot;
+import ro.license.livepark.entities.parking.Sensor;
 import ro.license.livepark.repository.parking.ParkingRepository;
 import ro.license.livepark.repository.parking.ParkingSpotRepository;
 import ro.license.livepark.repository.parking.SensorRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,11 +33,11 @@ public class ParkingSpotService {
         dto.setDeleted(p.isDeleted());
         dto.setPosition(p.getPosition());
         dto.setStatus(p.getStatus());
+        dto.setSensorDeviceName(p.getSensor() != null ? p.getSensor().getDeviceName() : null);
         return dto;
     }
 
     public ParkingSpotDTO getParkingSpot(int id) {
-        // TODO Update the status by accessing the sensor endpoint
         if (parkingSpotRepository.findById(id).isEmpty())
             return null;
         ParkingSpot p = parkingSpotRepository.findById(id).get();
@@ -50,7 +48,7 @@ public class ParkingSpotService {
         if (parkingRepository.findById(id).isEmpty())
             return null;
         Parking p = parkingRepository.findById(id).get();
-        List<ParkingSpot> parkingSpots = parkingSpotRepository.findAllByParking(p);
+        List<ParkingSpot> parkingSpots = parkingSpotRepository.findAllByParkingOrderByPosIAscPosJAsc(p);
         return parkingSpots.stream().map(this::convertParkingSpotToDTO).toList();
     }
 
@@ -67,6 +65,12 @@ public class ParkingSpotService {
             p.setDeleted(dto.isDeleted());
             p.setPosition(dto.getPosition());
             p.setParking(parking);
+            if (!dto.getSensorDeviceName().equals("")) {
+                Sensor s = new Sensor();
+                s.setParkingSpot(p);
+                s.setDeviceName(dto.getSensorDeviceName());
+                p.setSensor(s);
+            }
             parkingSpotRepository.save(p);
         }
         return true;
@@ -89,6 +93,21 @@ public class ParkingSpotService {
             p.setDeleted(dto.isDeleted());
             p.setPosition(dto.getPosition());
             p.setParking(parking);
+
+            Sensor s = p.getSensor();
+            String deviceName = dto.getSensorDeviceName();
+            if (deviceName.isBlank() && s != null) {
+                p.setSensor(null);
+                sensorRepository.delete(s);
+            } else if (!deviceName.isBlank() && s == null) {
+                s = new Sensor();
+                s.setParkingSpot(p);
+                s.setDeviceName(dto.getSensorDeviceName());
+                p.setSensor(s);
+            } else if (!deviceName.isBlank() && s != null && !s.getDeviceName().equals(deviceName)) {
+                s.setDeviceName(deviceName);
+                p.setSensor(s);
+            }
             parkingSpotRepository.save(p);
         }
         for (ParkingSpotDTO p : getAllParkingSpotsFromParking(parking_id))

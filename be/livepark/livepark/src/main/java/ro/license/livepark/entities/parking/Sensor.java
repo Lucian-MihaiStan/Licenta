@@ -13,8 +13,8 @@ public class Sensor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "accessUrl")
-    private String accessUrl;
+    @Column(name = "deviceName")
+    private String deviceName;
 
     @OneToOne(mappedBy = "sensor")
     private ParkingSpot parkingSpot;

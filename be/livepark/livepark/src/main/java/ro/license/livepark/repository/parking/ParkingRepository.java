@@ -12,4 +12,5 @@ import java.util.List;
 public interface ParkingRepository extends JpaRepository<Parking, Integer> {
     @Query(value = "SELECT * FROM Parkings WHERE   name  LIKE BINARY BINARY CONCAT('%',:word,'%')", nativeQuery = true)
     List<Parking> findAllByWordInName(@Param("word") String word);
+    List<Parking> findAllByAdminId(Long adminId);
 }

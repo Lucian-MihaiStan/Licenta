@@ -12,6 +12,8 @@ import ro.license.livepark.entities.user.UserDTOMapper;
 import ro.license.livepark.entities.user.UserRole;
 import ro.license.livepark.repository.user.UserRepository;
 
+import java.util.List;
+
 @Service
 public class UserService implements UserDetailsService {
 
@@ -42,9 +44,18 @@ public class UserService implements UserDetailsService {
         return userDTOMapper.apply(user);
     }
 
-    public boolean hasRole(Long userId, UserRole role) {
-        User user = userRepository.findById(userId).orElseThrow();
-        return user.getRole() == role;
+    public List<UserDTO> getAllUsersInfo() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(userDTOMapper).toList();
+    }
+
+    public boolean modifyUserRole(Long userId, UserRole role) {
+        if (userRepository.findById(userId).isEmpty() || role == UserRole.MASTER)
+            return false;
+        User user = userRepository.findById(userId).get();
+        user.setRole(role);
+        userRepository.save(user);
+        return true;
     }
 
     public User getAuthenticatedUser() {

@@ -1,5 +1,6 @@
 import { GlobalConstants } from '../globalc_namespace/global-constants';
 import { useRouter } from 'next/router';
+import {useEffect, useState} from "react";
 
 export const NavigationBar = () => {
 
@@ -9,12 +10,13 @@ export const NavigationBar = () => {
         routerUtils.push(path);
     }
 
-    const userId = localStorage.getItem(GlobalConstants.USER_ID);
-    if (userId == null) {
-        return <div> Loading... </div>
-    }
+    const [userId, setUserId] = useState<any>(null);
+    useEffect(() => {
+        setUserId(localStorage.getItem(GlobalConstants.USER_ID));
+    }, [])
 
     return (
+        userId == null ? <div> Loading... </div> :
         <div>
             <div> <button onClick={(e) => routeToPage(e, GlobalConstants.DASHBOARD)}> Dashboard </button> </div>
             <div> <button onClick={(e) => routeToPage(e, GlobalConstants.PROFILE + "/" + userId)}> Profile </button> </div>

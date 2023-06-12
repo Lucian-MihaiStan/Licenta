@@ -20,7 +20,7 @@ public class SensorService {
             return null;
         Sensor s = sensorRepository.findById(id).get();
         SensorDTO dto = new SensorDTO();
-        dto.setAccessUrl(s.getAccessUrl());
+        dto.setDeviceName(s.getDeviceName());
         dto.setParkingSpot_id(s.getParkingSpot().getId());
         return dto;
     }
@@ -30,7 +30,7 @@ public class SensorService {
         if (parkingSpotRepository.findById(dto.getParkingSpot_id()).isEmpty())
             return false;
         Sensor s = new Sensor();
-        s.setAccessUrl(dto.getAccessUrl());
+        s.setDeviceName(dto.getDeviceName());
         s.setParkingSpot(parkingSpotRepository.findById(dto.getParkingSpot_id()).get());
         sensorRepository.save(s);
         return true;
@@ -42,7 +42,7 @@ public class SensorService {
         if (parkingSpotRepository.findById(dto.getParkingSpot_id()).isEmpty())
             return false;
         Sensor s = sensorRepository.findById(id).get();
-        s.setAccessUrl(dto.getAccessUrl());
+        s.setDeviceName(dto.getDeviceName());
         s.setParkingSpot(parkingSpotRepository.findById(dto.getParkingSpot_id()).get());
         sensorRepository.save(s);
         return true;

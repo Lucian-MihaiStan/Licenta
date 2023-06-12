@@ -4,9 +4,6 @@ import jakarta.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ro.license.livepark.dto.parking.ParkingSpotDTO;
-import ro.license.livepark.dto.parking.ReservationDTO;
-import ro.license.livepark.dto.parking.ReservationInfoDTO;
 import ro.license.livepark.dto.parking.SensorDTO;
 import ro.license.livepark.service.parking.SensorService;
 

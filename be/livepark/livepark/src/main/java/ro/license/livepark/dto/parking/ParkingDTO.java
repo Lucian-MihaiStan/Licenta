@@ -1,6 +1,7 @@
 package ro.license.livepark.dto.parking;
 
 import lombok.Data;
+import ro.license.livepark.config.parkingUtils.SensorConfiguration;
 
 @Data
 public class ParkingDTO {
@@ -17,4 +18,6 @@ public class ParkingDTO {
     private Integer expiration_hours;
 
     private Integer expiration_minutes;
+
+    private SensorConfiguration sensorConfig;
 }

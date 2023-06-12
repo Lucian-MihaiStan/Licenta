@@ -30,7 +30,7 @@ public class NotificationLocalCacheJob {
 
     private final Map<String, Map<String, Notification>> localCache = new HashMap<>();
 
-    @Scheduled(fixedDelay = 20000) // Run every 20 seconds
+    @Scheduled(fixedDelay = 200000000) // Run every 20 seconds
     public void runJob() {
         try {
             System.out.println("Scheduled NotificationLocalCache job is running...");
