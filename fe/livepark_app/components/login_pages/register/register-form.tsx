@@ -16,9 +16,14 @@ export const RegisterForm = () => {
     const lastNameRef = useRef<any>(null);
     const usernameRef = useRef<any>(null);
     const emailRef = useRef<any>(null);
-    const passwordRef = useRef<any>(null);
+    const passwordRef = useRef<any>(null); 
+    const [isChecked, setChecked] = useState(true);
 
     const registerUser = async (event: any) => {
+
+        if (!isChecked)
+            return;
+
         event.preventDefault();
         if (!EmailValidator.validate(emailRef.current?.getData()))
             return;
@@ -104,8 +109,19 @@ export const RegisterForm = () => {
                 />
             </div>
 
-            
-            <input type="submit" title='Sign Up '/> 
+            <div>
+                <input
+                    type="checkbox"
+                    id="readTCons"
+                    checked={isChecked}
+                    onChange={(event) => setChecked(event.target.checked)}
+                />
+                <label htmlFor="readTCons">Agree with our <a onClick={(event) => routeToPage(event, GlobalConstants.TERMS_CONS)}> Terms and Conditions </a> </label>
+            </div>
+
+            <div>
+                <input type="submit" title='Sign Up '/> 
+            </div>
             
         </form>
         <div>

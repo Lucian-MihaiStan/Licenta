@@ -1,5 +1,6 @@
 package ro.license.livepark.config.web;
 
+import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +17,8 @@ import ro.license.livepark.auth.AuthEntryPointJWT;
 import ro.license.livepark.auth.AuthTokenFilter;
 import ro.license.livepark.service.user.UserService;
 
+import java.security.SecureRandom;
+
 @Configuration
 @EnableGlobalMethodSecurity(
         // securedEnabled = true,
@@ -27,9 +30,15 @@ public class SecurityConfig {
 
     private final UserService userService;
 
+    private static PasswordEncoder passwordEncoder;
+
     public SecurityConfig(AuthEntryPointJWT unauthorizedHandler, UserService userService) {
         this.unauthorizedHandler = unauthorizedHandler;
         this.userService = userService;
+    }
+
+    public static String encode(String password) {
+        return passwordEncoder.encode(password);
     }
 
 
@@ -64,9 +73,11 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
+    @Bean(name = "passwordEncoder")
+    @Resource(name = "passwordEncoder")
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder;
     }
 
     @Bean

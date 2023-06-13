@@ -9,9 +9,11 @@ export namespace InputConstants {
     export const PASSWORD = "password";
     export const FIRST_NAME = "firstName";
     export const LAST_NAME = "lastName";
-    
+    export const SUBJECT = "Subject";
+
     export const USERNAME_PLACEHOLDER = "Username";
     export const PASSWORD_PLACEHOLDER = "Password";
+    export const CONFIRM_PASSWORD_PLACEHOLDER = "Confirm Password";
 
     export const EMAIL_PLACEHOLDER = "Email";
 

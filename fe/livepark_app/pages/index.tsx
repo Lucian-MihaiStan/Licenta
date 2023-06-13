@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { Utils } from '@/components/utils/utils'
 import { GlobalConstants } from '@/components/globalc_namespace/global-constants'
 import { useRouter } from 'next/router'
+import { NavigationBar } from '@/components/navigation_bar/navigation-bar'
 
 const Home: NextPage = () => {
 
@@ -19,8 +20,9 @@ const Home: NextPage = () => {
         <title>Login Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+
       </Head>
-      <main className="vh-100 d-flex justify-content-center align-items-center">
+      <main>
 
         <div>
           <button onClick={(e) => routeToPage(e, GlobalConstants.LOGIN_FRONTEND_APP_LINK)}> Sign In </button>

@@ -22,8 +22,11 @@ import java.util.Objects;
         entityManagerFactoryRef = "userEntityManager",
         transactionManagerRef = "userTransactionManager",
         basePackages = {
-            "ro.license.livepark.repository.user",
-            "ro.license.livepark.entities.user"
+                "ro.license.livepark.repository.user",
+                "ro.license.livepark.entities.user",
+
+                "ro.license.livepark.repository.password",
+                "ro.license.livepark.entities.password"
         }
 )
 public class PersistenceConfigUserDB {
@@ -41,7 +44,9 @@ public class PersistenceConfigUserDB {
         em.setDataSource(userDataSource());
         em.setPackagesToScan(
                 "ro.license.livepark.repository.user",
-                "ro.license.livepark.entities.user"
+                "ro.license.livepark.entities.user",
+                "ro.license.livepark.repository.password",
+                "ro.license.livepark.entities.password"
         );
 
         HibernateJpaVendorAdapter vendorAdapter

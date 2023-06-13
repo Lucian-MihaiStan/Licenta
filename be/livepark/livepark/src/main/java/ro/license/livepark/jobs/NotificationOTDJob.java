@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import ro.license.livepark.email.NotificationEmailService;
 import ro.license.livepark.entities.car.CarDTO;
 import ro.license.livepark.entities.driver.DriverDTO;
 import ro.license.livepark.entities.notification.Notification;

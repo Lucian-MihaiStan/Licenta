@@ -1,11 +1,11 @@
 import common_login_styles from '../common_login_modules/common-login.module.css'
 
-import { GlobalConstants } from '../../globalc_namespace/global-constants';
-import { TextBoxDivForm } from "../../html_components/textbox/textbox-register-login";
-import { InputConstants } from "../../globalc_namespace/inputc/input-constants";
-import { useRef, useState } from "react";
+import { GlobalConstants } from '@/components/globalc_namespace/global-constants';
+import { TextBoxDivForm } from "@/components/html_components/textbox/textbox-register-login";
+import { InputConstants } from "@/components/globalc_namespace/inputc/input-constants";
+import { useRef } from "react";
 import { useRouter } from "next/router";
-
+import Head from 'next/head';
 
 export const LoginForm = () => {
 
@@ -14,9 +14,6 @@ export const LoginForm = () => {
 
     const loginUser = async (event: any) => {
         event.preventDefault();
-
-        console.log(usernameRef.current?.getData());
-        console.log(passwordRef.current?.getData());
 
         const response = await fetch(GlobalConstants.USER_SIGN_IN_LINK, {
             method: GlobalConstants.POST_REQUEST,
@@ -33,8 +30,6 @@ export const LoginForm = () => {
 
         const _user = await response.json();
         if (authentificationSuccesfully(_user)) {
-            console.log("Successfully");
-            
             const token_data = _user[GlobalConstants.TOKEN];
             const userId_data = _user[GlobalConstants.USER_ID];
             const userRole_data = _user[GlobalConstants.USER_ROLE];
@@ -64,7 +59,19 @@ export const LoginForm = () => {
         routerUtils.push(path);
     }
 
+    function forgotPassword(event: any): void {
+        event.preventDefault();
+        routerUtils.push(GlobalConstants.FORGOT_PASSWORD);
+    }
+
     return (
+        <>
+        <Head>
+            <title> Login: LivePark </title>
+            <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+	        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        </Head>
+        <main>
         <div className={common_login_styles.loginmaindiv}>
           <h1 className="display-6 mb-3">Login to Your Account</h1>
 
@@ -84,7 +91,8 @@ export const LoginForm = () => {
             />
 
             <div>
-                <button onClick={loginUser}> Sign In </button>            
+                <button className='btn btn-primary' onClick={event => loginUser(event)}> Sign In </button>
+                <button className='btn btn-light' onClick={event => forgotPassword(event)} > Forgot Password </button>
             </div>
 
             <div>
@@ -97,6 +105,8 @@ export const LoginForm = () => {
                 <button onClick={(e) => routeToPage(e, GlobalConstants.REGISTER_FRONTEND_APP_LINK)}> Sign Up </button>
             </div>
         </div>
+        </main>
+        </>
       );
 }
 

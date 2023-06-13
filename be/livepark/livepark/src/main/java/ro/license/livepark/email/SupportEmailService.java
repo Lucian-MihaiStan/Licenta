@@ -1,8 +1,8 @@
-package ro.license.livepark.jobs;
+package ro.license.livepark.email;
 
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -10,27 +10,24 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class NotificationEmailService {
+public class SupportEmailService implements IEmailService {
 
     private final JavaMailSender mailSender;
 
+    @SneakyThrows
     @Async
-    public void send(String to, String subject, String text) {
+    @Override
+    public void send(String from, String subject, String text) {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper;
-        try {
-            helper = new MimeMessageHelper(message);
+        helper = new MimeMessageHelper(message);
 
-            helper.setFrom("cartradevalidate@gmail.com");
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(text, true);
-
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+        helper.setFrom(from);
+        helper.setTo("livepark08@gmail.com");
+        helper.setSubject(subject);
+        helper.setText(text + "" +
+                "\n sent by " + from, true);
 
         mailSender.send(message);
     }
-
 }

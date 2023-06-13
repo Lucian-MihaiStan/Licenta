@@ -2,6 +2,7 @@ import { NextPage } from "next"
 import React, {useEffect, useState} from "react";
 import { NavigationBar } from "../../components/navigation_bar/navigation-bar";
 import {ParkingPage} from "@/components/parking/parking_areas";
+import navigationBarStyle from "@/components/navigation_bar/navigation-bar.module.css";
 import {BrowserRouter} from "react-router-dom";
 
 
@@ -12,9 +13,11 @@ const ParkingAreas: NextPage = () => {
         !render ? <div> Loading... </div> :
         <div>
             <NavigationBar/>
-            <BrowserRouter>
-                <ParkingPage/>
-            </BrowserRouter>
+            <section className={navigationBarStyle.home_section}>
+                <BrowserRouter>
+                    <ParkingPage/>
+                </BrowserRouter>
+            </section>
         </div>
     )
 }
