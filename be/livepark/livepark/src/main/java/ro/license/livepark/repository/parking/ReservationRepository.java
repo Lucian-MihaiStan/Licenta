@@ -10,7 +10,6 @@ import java.util.List;
 @Repository("ReservationRepository")
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
     public List<Reservation> findAllByUserIdOrderByCreatedTimeDesc(Long userId);
-
     public List<Reservation> findAllByExpirationTimeAfterOrderByExpirationTimeDesc(Date d);
     public List<Reservation> findAllByCarPlateAndExpirationTimeAfter(String carPlate, Date d);
 }

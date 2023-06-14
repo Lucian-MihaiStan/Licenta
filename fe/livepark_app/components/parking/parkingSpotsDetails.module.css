@@ -1,3 +1,5 @@
+/*@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css');*/
+
 .title {
     position: relative;
     left: 250px;
@@ -236,9 +238,20 @@
     text-align: center;
 }
 
+
+.titleBox {
+    position: relative;
+    width: 500px;
+    height: 150px;
+    top: 40px;
+    left: 100px;
+    align-items: center;
+    text-align: center;
+}
 .parkingTitle {
     position: relative;
-    left: 200px;
+    height: auto;
+    overflow: hidden;
     font-size: 28px;
     font-weight: bold;
     font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
@@ -246,7 +259,6 @@
 }
 .parkingAddress {
     position: relative;
-    left: 200px;
     font-size: 16px;
     font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
     'Liberation Sans', sans-serif;
@@ -254,7 +266,7 @@
 }
 .parkingFee {
     position: relative;
-    left: 210px;
+    left: 10px;
     font-size: 16px;
     font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
     'Liberation Sans', sans-serif;
@@ -262,16 +274,68 @@
 }
 .descriptionText {
     position: relative;
-    left: 200px;
+    left: 100px;
+    top: -200px;
+    width: 600px;
     font-size: 16px;
     font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
     'Liberation Sans', sans-serif;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 .grid {
     position: relative;
-    top: -400px;
-    left: 800px;
+    top: -200px;
+    left: 80px;
     border: 2px dashed black;
     background: darkgray;
+}
+.backButton {
+    position: relative;
+    width: 80px;
+    height: 35px;
+    left: 50px;
+    top: 20px;
+    background: #2d55ff;
+    text-align: center;
+    border: transparent;
+    color: #f2f2f2;
+    margin-bottom: 50px;
+}
+.backButton:hover {
+    box-shadow: 0 0 10px #888888;
+}
+
+.mapsButton {
+    position: relative;
+    top: -200px;
+    left: 840px;
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: auto;
+    width: 180px;
+    height: 25px;
+    text-align: center;
+    background: #2d55ff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    'Liberation Sans', sans-serif;
+}
+.mapsButton:hover {
+    text-decoration: none!important;
+    box-shadow: 0 0 10px #888888;
+}
+
+.a {
+    fill: #ffffff;
+}
+.b {
+    fill:#211715;
+}
+.c {
+    fill:#d9d9d9;
+}
+.d {
+    fill:#3d8dcc;
 }

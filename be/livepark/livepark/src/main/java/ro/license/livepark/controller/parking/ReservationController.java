@@ -64,10 +64,12 @@ public class ReservationController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteReservation(@PathVariable("id") int id) {
         User authenticatedUser = userService.getAuthenticatedUser();
-        if (reservationService.deleteReservation(id))
+        if (reservationService.getReservation(id) == null)
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         if (!Objects.equals(authenticatedUser.getUserId(), reservationService.getReservation(id).getUserId()))
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        boolean b = reservationService.deleteReservation(id);
+        System.out.println(b);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 

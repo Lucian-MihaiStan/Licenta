@@ -2,6 +2,7 @@ package ro.license.livepark.service.parking;
 
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ro.license.livepark.dto.parking.ReservationDTO;
 import ro.license.livepark.dto.parking.ReservationInfoDTO;
 import ro.license.livepark.entities.parking.Parking;
@@ -56,7 +57,7 @@ public class ReservationService {
         if (parkingSpotRepository.findById(dto.getParkingSpot_id()).isEmpty())
             return false;
         ParkingSpot p = parkingSpotRepository.findById(dto.getParkingSpot_id()).get();
-        if (!p.getStatus().equals(ParkingSpot.ParkingSpotStatus.EMPTY))
+        if (!p.getStatus().equals(ParkingSpot.ParkingSpotStatus.EMPTY) || p.getParking().getEXPIRATION_HOURS() == null)
             return false;
         if (reservationRepository.findAllByCarPlateAndExpirationTimeAfter(dto.getCarPlate(), new Date()).size() != 0)
             return false;
@@ -78,8 +79,7 @@ public class ReservationService {
     public boolean deleteReservation(int id) {
         if (reservationRepository.findById(id).isEmpty())
             return false;
-        Reservation r = reservationRepository.findById(id).get();
-        reservationRepository.delete(r);
+        reservationRepository.deleteById(id);
         return true;
     }
 }

@@ -8,7 +8,8 @@ export namespace Models {
         parkingFee: string,
         hasSensors: boolean,
         totalSpots: number,
-        emptySpots: number
+        emptySpots: number,
+        adminId: number
     }
 }
 

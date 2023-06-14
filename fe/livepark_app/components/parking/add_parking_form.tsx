@@ -21,11 +21,18 @@ export const AddParkingForm = () => {
     const password = useRef<any>(null);
     const topic = useRef<any>(null);
     const [withTLS, setWithTLS] = useState<boolean>(true);
-
     const routerUtils = useRouter();
     const navigate = useNavigate();
+    const libraries = useMemo(() => ['places'], []);
+    const [mapCenter, setMapCenter] = React.useState({ lat: 44.4251541, lng: 26.1078153 });
+    const [mapRef, setMapRef] = React.useState<google.maps.Map>();
+    const [location, setLocation] = React.useState<any>(null);
 
     const toNextPage = () => {
+        if (location == null) {
+            alert("Please mark the parking location on the map.");
+            return;
+        }
         const sensorConfig = usingSensors ? {
             host: host.current?.getData(),
             port: port.current?.getData(),
@@ -47,11 +54,6 @@ export const AddParkingForm = () => {
         navigate(GlobalConstants.CONFIGURE_PARKING_SCHEME, { state: data});
         routerUtils.push(GlobalConstants.CONFIGURE_PARKING_SCHEME);
     }
-
-    const libraries = useMemo(() => ['places'], []);
-    const [mapCenter, setMapCenter] = React.useState({ lat: 44.4251541, lng: 26.1078153 });
-    const [mapRef, setMapRef] = React.useState<google.maps.Map>();
-    const [location, setLocation] = React.useState({ lat: 44.4251541, lng: 26.1078153 });
     const handleOnLoad = (map: any) => {
         setMapRef(map);
     };
@@ -74,8 +76,7 @@ export const AddParkingForm = () => {
 
     return (
         <div>
-            <div className={styles.titleBox}>Add a new parking</div>
-            <div className={styles.content}>
+            <div className={styles.title}>Add a new parking</div>
             <div className={styles.form}>
 
                 <TextBoxDivForm
@@ -99,19 +100,6 @@ export const AddParkingForm = () => {
                     ref={parkingFee}
                 />
 
-                <TextBoxDivForm
-                    type={InputConstants.TEXT_TYPE}
-                    name={InputConstants.PARKING_EXPIRATION_HOURS}
-                    placeholder={InputConstants.PARKING_EXPIRATION_HOURS_PLACEHOLDER}
-                    ref={expiration_hours}
-                />
-
-                <TextBoxDivForm
-                    type={InputConstants.TEXT_TYPE}
-                    name={InputConstants.PARKING_EXPIRATION_MINUTES}
-                    placeholder={InputConstants.PARKING_EXPIRATION_MINUTES_PLACEHOLDER}
-                    ref={expiration_minutes}
-                />
 
                 <div className={styles.text}> Sensors
                     <label className={styles.switch}>
@@ -121,66 +109,75 @@ export const AddParkingForm = () => {
                 </div>
                 {
                     usingSensors &&
+                    <>
+                    <TextBoxDivForm
+                        type={InputConstants.TEXT_TYPE}
+                        name={InputConstants.PARKING_EXPIRATION_HOURS}
+                        placeholder={InputConstants.PARKING_EXPIRATION_HOURS_PLACEHOLDER}
+                        ref={expiration_hours}
+                    />
+
+                    <TextBoxDivForm
+                        type={InputConstants.TEXT_TYPE}
+                        name={InputConstants.PARKING_EXPIRATION_MINUTES}
+                        placeholder={InputConstants.PARKING_EXPIRATION_MINUTES_PLACEHOLDER}
+                        ref={expiration_minutes}
+                    />
+                    </>
+                }
+                <button className={styles.nextButton} onClick={() => toNextPage()}> Next </button>
+            </div>
+            <div className={styles.form2}>
+                {
+                    usingSensors &&
+                    <>
+                    <div className={styles.mqttText}> MQTT Connection details:</div>
                     <TextBoxDivForm
                         type={InputConstants.TEXT_TYPE}
                         name="host"
                         placeholder="Host"
                         ref={host}
                     />
-                }
-                {
-                    usingSensors &&
                     <TextBoxDivForm
                     type="number"
                     name="port"
                     placeholder="Port"
                     ref={port}
                     />
-                }
-                {
-                    usingSensors &&
                     <TextBoxDivForm
                         type={InputConstants.TEXT_TYPE}
                         name="username"
                         placeholder="Username"
                         ref={username}
                     />
-                }
-                {
-                    usingSensors &&
                     <TextBoxDivForm
                         type={InputConstants.PASSWORD_TYPE}
                         name="password"
                         placeholder="Password"
                         ref={password}
                     />
-                }
-                {
-                    usingSensors &&
                     <TextBoxDivForm
                         type={InputConstants.TEXT_TYPE}
                         name="topic"
                         placeholder="Topic"
                         ref={topic}
                     />
-                }
-                {
-                    usingSensors &&
                     <div className={styles.text}> TLS
                         <label className={styles.switch}>
                             <input type="checkbox" onChange={() => setWithTLS(!withTLS)} checked={withTLS}/>
                             <span className={styles.slider}></span>
                         </label>
                     </div>
+                    </>
                 }
 
-                <div className={styles.mapTitle}> Please mark the position on the map:</div>
+                <div className={styles.mapTitle}> Please mark the location of the parking on the map:</div>
                 <GoogleMap
                     options={mapOptions}
                     zoom={13}
                     center={mapCenter}
                     mapTypeId={google.maps.MapTypeId.ROADMAP}
-                    mapContainerStyle={{ width: '400px', height: '400px', position: 'absolute', left: '350px', top: '35px', outline: 'transparent 1px', borderRadius: '25px'}}
+                    mapContainerStyle={{ width: '400px', height: '400px', position: 'absolute', left: '350px', top: '25px', outline: 'transparent 1px', borderRadius: '25px'}}
                     onClick={ev => {
                         setLocation({lat: ev.latLng!.lat(), lng: ev.latLng!.lng()});
                         if (mapRef) {
@@ -195,9 +192,6 @@ export const AddParkingForm = () => {
                         <MarkerF position={location}/> : null
                     }
                 </GoogleMap>
-            </div>
-
-                <button className={styles.button} onClick={() => toNextPage()}> Add parking </button>
             </div>
         </div>
 

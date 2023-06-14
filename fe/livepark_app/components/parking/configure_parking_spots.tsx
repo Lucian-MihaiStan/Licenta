@@ -22,7 +22,8 @@ export const ParkingSpotsForm = () => {
             isDeleted: false,
             position: {i: 0, j: 0},
             sensorDeviceName: "",
-            status: ParkingSpotStatus.UNKNOWN
+            status: ParkingSpotStatus.UNKNOWN,
+            id: 0
         },
         {
             key: 1,
@@ -32,7 +33,8 @@ export const ParkingSpotsForm = () => {
             isDeleted: false,
             position: {i: 0, j: 1},
             sensorDeviceName: "",
-            status: ParkingSpotStatus.UNKNOWN
+            status: ParkingSpotStatus.UNKNOWN,
+            id: 0
         }
     ]]);
     const [renderSwitch, setRenderSwitch] = React.useState<boolean>(false);
@@ -80,7 +82,8 @@ export const ParkingSpotsForm = () => {
                         isDeleted: false,
                         position: {i: i, j: j},
                         sensorDeviceName: "",
-                        status: ParkingSpotStatus.UNKNOWN
+                        status: ParkingSpotStatus.UNKNOWN,
+                        id: 0
                     };
             }
         }
@@ -99,7 +102,8 @@ export const ParkingSpotsForm = () => {
                 isDeleted: true,
                 position: {i: p.position.i, j: p.position.j + 1},
                 sensorDeviceName: "",
-                status: ParkingSpotStatus.UNKNOWN
+                status: ParkingSpotStatus.UNKNOWN,
+                id: 0
             };
             slots[p.position.i].splice(p.position.j + 1, 0, newSlot);
             for (let i = 0; i < slots.length; i++) {
@@ -113,7 +117,8 @@ export const ParkingSpotsForm = () => {
                     isDeleted: true,
                     position: {i: p.position.i, j: width},
                     sensorDeviceName: "",
-                    status: ParkingSpotStatus.UNKNOWN
+                    status: ParkingSpotStatus.UNKNOWN,
+                    id: 0
                 };
                 slots[i].push(fillSlot);
             }

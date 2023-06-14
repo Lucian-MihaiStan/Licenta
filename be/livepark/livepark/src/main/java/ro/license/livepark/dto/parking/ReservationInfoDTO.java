@@ -7,6 +7,8 @@ import java.util.Date;
 
 @Data
 public class ReservationInfoDTO {
+    private int id;
+
     private String parking_name;
 
     private String parking_address;
@@ -20,6 +22,7 @@ public class ReservationInfoDTO {
     private Date expirationTime;
 
     public ReservationInfoDTO(Reservation r) {
+        id = r.getId();
         parking_name = r.getParkingSpot().getParking().getName();
         parking_address = r.getParkingSpot().getParking().getAddress();
         parkingSpot_number = r.getParkingSpot().getNumber();

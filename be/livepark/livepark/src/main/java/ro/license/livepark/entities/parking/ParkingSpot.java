@@ -36,7 +36,7 @@ public class ParkingSpot {
     @JoinColumn(name = "parking_id", nullable = false)
     private Parking parking;
 
-    @OneToMany(mappedBy = "parkingSpot", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parkingSpot", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Reservation> reservationList;
 
     @Column(name = "key")

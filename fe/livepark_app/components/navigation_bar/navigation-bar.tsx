@@ -1,7 +1,6 @@
 import { GlobalConstants } from '../globalc_namespace/global-constants';
 import { useRouter } from 'next/router';
 import navigationBarStyle from './navigation-bar.module.css'
-import { BsCarFrontFill } from 'react-icons/bs'
 import Head from 'next/head';
 import { MouseEvent, use, useRef, useState, useEffect } from 'react';
 
@@ -23,13 +22,16 @@ export const NavigationBar = (): JSX.Element => {
     const close_button_ref = useRef<any>();
 
     const [userId, setUserId] = useState<any>(null);
+    const [userRole, setUserRole] = useState<any>(null);
     useEffect(() => {
         setUserId(localStorage.getItem(GlobalConstants.USER_ID));
+        setUserRole(localStorage.getItem(GlobalConstants.USER_ROLE));
     }, [])
 
     function logout(e: any, LOGIN: string): void {
         e.preventDefault();
         localStorage.removeItem(GlobalConstants.USER_ID);
+        localStorage.removeItem(GlobalConstants.USER_ROLE);
         localStorage.removeItem(GlobalConstants.TOKEN);
         routerUtils.push(LOGIN);
     }
@@ -79,6 +81,14 @@ export const NavigationBar = (): JSX.Element => {
                     </li>
 
                     <li>
+                        <a onClick={(e) => routeToPage(e, GlobalConstants.USER_RESERVATIONS_PAGE)}>
+                            <i className='bx bx-calendar-check'></i>
+                            <span className={navigationBarStyle.links_name}>Reservations</span>
+                        </a>
+                        <span className={navigationBarStyle.tooltip}>Reservations</span>
+                    </li>
+
+                    <li>
                         <a onClick={(e) => routeToPage(e, GlobalConstants.CARS + "/" + userId)}>
                             <i className='bx bx-car'></i>
                             <span className={navigationBarStyle.links_name}>Cars</span>
@@ -101,6 +111,16 @@ export const NavigationBar = (): JSX.Element => {
                         </a>
                         <span className={navigationBarStyle.tooltip}>Notifications</span>
                     </li>
+                    {
+                        userRole == GlobalConstants.USER_ROLE_MASTER &&
+                        <li>
+                            <a onClick={(e) => routeToPage(e, GlobalConstants.ALL_USERS_PAGE)}>
+                                <i className='bx bxs-user-account'></i>
+                                <span className={navigationBarStyle.links_name}>Users management</span>
+                            </a>
+                            <span className={navigationBarStyle.tooltip}>Users management</span>
+                        </li>
+                    }
 
                     <li>
                         <a onClick={(e) => logout(e, GlobalConstants.LOGIN)}>

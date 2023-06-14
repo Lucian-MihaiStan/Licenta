@@ -51,7 +51,7 @@ public class ParkingSpotController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteParkingSpot(@PathVariable("id") int id) {
-        if (parkingSpotService.deleteParkingSpot(id))
+        if (!parkingSpotService.deleteParkingSpot(id))
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }

@@ -59,8 +59,8 @@ export const ViewParking = () => {
         handleParkingSpots();
     }, []);
 
-    const goToNextPage = async () => {
-        router.push(GlobalConstants.CONFIGURE_PARKING_SPOTS_DETAILS);
+    const goToPreviousPage = async () => {
+        await router.push(GlobalConstants.PARKING_AREAS_PAGE);
     }
 
     const handleSave = async (s : ParkingSpotModel) => {
@@ -134,24 +134,31 @@ export const ViewParking = () => {
 
     return (
         <div>
+        <div>
+            <button className={styles2.backButton} onClick={goToPreviousPage}>Back</button>
+        </div>
+        <div className={styles2.titleBox}>
             <div className={styles2.parkingTitle}>{parking_data?.name}</div>
             <span className={styles2.parkingAddress}>{parking_data?.address} &#9679;</span>
             <span className={styles2.parkingFee}>{parking_data?.parkingFee}</span>
-            <GoogleMap
-                options={mapOptions}
-                zoom={14}
-                center={mapCenter}
-                mapTypeId={google.maps.MapTypeId.ROADMAP}
-                mapContainerStyle={{ width: '200px', height: '200px', position: 'relative', left: '600px', top: '-100px', outline: 'transparent 1px', borderRadius: '25px'}}
-                onLoad={() => console.log('Map Component Loaded...')}
-            >
-                <MarkerF position={mapCenter}/>
-            </GoogleMap>
-            <div className={styles2.grid} style={{width: (10 + width * 48) + 'px', height: (5 + height * 86) + 'px'}}>
-                {
-                    slots.map(applyMap)
-                }
-            </div>
         </div>
+        <GoogleMap
+            options={mapOptions}
+            zoom={14}
+            center={mapCenter}
+            mapTypeId={google.maps.MapTypeId.ROADMAP}
+            mapContainerStyle={{ width: '250px', height: '250px', position: 'relative', top: '-200px', left: '800px', outline: 'transparent 1px', borderRadius: '25px'}}
+            onLoad={() => console.log('Map Component Loaded...')}
+        >
+            <MarkerF position={mapCenter}/>
+        </GoogleMap>
+        <a href={"https://www.google.com/maps/dir//" + parking_data.lat + "," + parking_data.lng + "/@" + parking_data.lat + "," + parking_data.lng + ",14z"} target="_blank" className={styles2.mapsButton}>Open with Google Maps</a>
+        <div className={styles2.descriptionText}>If you want to make a reservation for a parking spot, click on an empty one:</div>
+        <div className={styles2.grid} style={{width: (width * 48 + 10) + 'px', height: (5 + height * 86) + 'px'}}>
+            {
+                slots.map(applyMap)
+            }
+        </div>
+    </div>
     );
 }

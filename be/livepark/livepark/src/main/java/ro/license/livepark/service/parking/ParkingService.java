@@ -68,8 +68,8 @@ public class ParkingService {
         p.setLat(dto.getLat());
         p.setLng(dto.getLng());
         p.setParkingFee(dto.getParkingFee());
-        p.setEXPIRATION_HOURS(dto.getExpiration_hours());
-        p.setEXPIRATION_MINUTES(dto.getExpiration_minutes());
+        p.setEXPIRATION_HOURS(dto.getExpiration_hours() != null ? dto.getExpiration_hours() : 0);
+        p.setEXPIRATION_MINUTES(dto.getExpiration_minutes() != null ? dto.getExpiration_minutes() : 0);
         p.setSensorConfig(dto.getSensorConfig());
     }
 
