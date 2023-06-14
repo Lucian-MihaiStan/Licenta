@@ -1,5 +1,6 @@
 package ro.license.livepark.dto.parking;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import ro.license.livepark.entities.parking.ParkingSpot;
 
@@ -7,9 +8,22 @@ import ro.license.livepark.entities.parking.ParkingSpot;
 public class ParkingSpotDTO {
     private int id;
 
+    private Integer key;
+
     private String number;
 
-    private Integer parking_id;
+    @JsonProperty("isRotated")
+    private boolean isRotated;
+
+    @JsonProperty("isAutoCreated")
+    private  boolean isAutoCreated;
+
+    @JsonProperty("isDeleted")
+    private boolean isDeleted;
+
+    private Position position;
 
     private ParkingSpot.ParkingSpotStatus status;
+
+    private String sensorDeviceName;
 }

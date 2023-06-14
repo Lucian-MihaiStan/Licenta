@@ -1,12 +1,17 @@
 package ro.license.livepark.service.parking;
 
 import jakarta.annotation.Resource;
+import org.eclipse.paho.client.mqttv3.*;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.springframework.stereotype.Service;
+import ro.license.livepark.config.parkingUtils.ParkingMqttCallback;
+import ro.license.livepark.config.parkingUtils.SensorConfiguration;
 import ro.license.livepark.dto.parking.ParkingDTO;
 import ro.license.livepark.entities.parking.Parking;
 import ro.license.livepark.entities.parking.ParkingSpot;
 import ro.license.livepark.dto.parking.ParkingInfoDTO;
 import ro.license.livepark.repository.parking.ParkingRepository;
+import ro.license.livepark.repository.parking.ParkingSpotRepository;
 
 import java.util.List;
 
@@ -14,6 +19,9 @@ import java.util.List;
 public class ParkingService {
     @Resource
     private ParkingRepository parkingRepository;
+
+    @Resource
+    private ParkingSpotRepository parkingSpotRepository;
 
     public ParkingInfoDTO convertParkingToDTO(Parking p) {
         ParkingInfoDTO dto = new ParkingInfoDTO();
@@ -41,20 +49,17 @@ public class ParkingService {
         return parkings.stream().map(this::convertParkingToDTO).toList();
     }
 
-    public ParkingDTO getParking(int id) {
+    public ParkingInfoDTO getParkingDTO(int id) {
         if (parkingRepository.findById(id).isEmpty())
             return null;
         Parking p = parkingRepository.findById(id).get();
+        return convertParkingToDTO(p);
+    }
 
-        ParkingDTO dto = new ParkingDTO();
-        dto.setName(p.getName());
-        dto.setAddress(p.getAddress());
-        dto.setLat(p.getLat());
-        dto.setLng(p.getLng());
-        dto.setParkingFee(p.getParkingFee());
-        dto.setExpiration_hours(p.getEXPIRATION_HOURS());
-        dto.setExpiration_minutes(p.getEXPIRATION_MINUTES());
-        return dto;
+    public Parking getParking(Integer id) {
+        if (parkingRepository.findById(id).isEmpty())
+            return null;
+        return parkingRepository.findById(id).get();
     }
 
     private void initParkingFromDTO(Parking p, ParkingDTO dto) {
@@ -63,15 +68,27 @@ public class ParkingService {
         p.setLat(dto.getLat());
         p.setLng(dto.getLng());
         p.setParkingFee(dto.getParkingFee());
-        p.setEXPIRATION_HOURS(dto.getExpiration_hours());
-        p.setEXPIRATION_MINUTES(dto.getExpiration_minutes());
+        p.setEXPIRATION_HOURS(dto.getExpiration_hours() != null ? dto.getExpiration_hours() : 0);
+        p.setEXPIRATION_MINUTES(dto.getExpiration_minutes() != null ? dto.getExpiration_minutes() : 0);
+        p.setSensorConfig(dto.getSensorConfig());
     }
 
-    public void addParking(ParkingDTO dto, Long adminId) {
+    public int addParking(ParkingDTO dto, Long adminId) {
         Parking p = new Parking();
         initParkingFromDTO(p, dto);
         p.setAdminId(adminId);
         parkingRepository.save(p);
+
+        SensorConfiguration config = dto.getSensorConfig();
+        if (config != null) {
+            if (!createMqttClient(p, config)) {
+                parkingRepository.delete(p);
+                return -1;
+            }
+            System.out.println("Created a new MqttClient with clientId: " + p.getMqttClient().getClientId());
+        }
+        parkingRepository.save(p);
+        return p.getId();
     }
 
     public boolean modifyParking(int id, ParkingDTO dto) {
@@ -79,6 +96,11 @@ public class ParkingService {
             return false;
         Parking p = parkingRepository.findById(id).get();
         initParkingFromDTO(p, dto);
+        SensorConfiguration config = dto.getSensorConfig();
+        if (config != null && !config.equals(p.getSensorConfig())) {
+            if (!createMqttClient(p, config))
+                return false;
+        }
         parkingRepository.save(p);
         return true;
     }
@@ -91,5 +113,33 @@ public class ParkingService {
         return true;
     }
 
-
+    private boolean createMqttClient(Parking p, SensorConfiguration config) {
+        String broker;
+        if (config.isWithTLS())
+            broker = "ssl://" + config.getHost() + ":" + config.getPort();
+        else
+            broker = "tcp://" + config.getHost() + ":" + config.getPort();
+        String clientId = MqttClient.generateClientId();
+        int qos = 2;
+        try {
+            MqttClient client = new MqttClient(broker, clientId, new MemoryPersistence());
+            MqttConnectOptions options = new MqttConnectOptions();
+            options.setUserName(config.getUsername());
+            options.setPassword(config.getPassword().toCharArray());
+            options.setConnectionTimeout(60);
+            options.setKeepAliveInterval(60);
+            options.setAutomaticReconnect(true);
+            options.setCleanSession(true);
+            options.setMqttVersion(MqttConnectOptions.MQTT_VERSION_3_1_1);
+            client.setCallback(new ParkingMqttCallback(p, parkingRepository, parkingSpotRepository));
+            client.connect(options);
+            client.subscribe(config.getTopic(), qos);
+            p.setSensorConfig(config);
+            p.setMqttClient(client);
+        } catch(MqttException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return true;
+    }
 }

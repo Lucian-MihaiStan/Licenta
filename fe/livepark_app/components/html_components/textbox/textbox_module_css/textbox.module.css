@@ -15,12 +15,11 @@
     appearance: none;
     background: #f2f2f2;
     padding: var(--field-padding);
-    border-radius: 3px;
     width: 250px;
     outline: none;
     font-size: 14px;
     background: none;
-    border: 2px solid #ddd;
+    border: 2px solid black;
     transition: border-color 0.3s ease;
     border-radius: 5px;
 }
@@ -36,7 +35,7 @@
     line-height: 100%;
     transform: translateY(-50%);
     color: #aaa;
-    transition: 
+    transition:
         top 0.3s ease,
         color 0.3s ease,
         font-size 0.3s ease;
@@ -49,17 +48,19 @@
 
 .custom_field input.dirty,
 .custom_field input:not(:placeholder-shown),
-.custom_field input:focus {
+.custom_field input:focus,
+.custom_field input:focus .placeholder:focus{
     border-color: #222;
     transition-delay: 0.1s
 }
 
 .custom_field input.dirty + .placeholder,
-.custom_field input:not(:placeholder-shown) + .placeholder,
+.custom_field input + .placeholder,
 .custom_field input:focus + .placeholder {
     top: 0;
     font-size: 10px;
-    color: #222;
-    background: #fff;
-    width: auto
+    color: black;
+    background: #E4E9F7;
+    width: auto;
+    border: thin solid black;
 }

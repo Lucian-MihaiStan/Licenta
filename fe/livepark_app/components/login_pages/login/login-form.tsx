@@ -32,9 +32,11 @@ export const LoginForm = () => {
         if (authentificationSuccesfully(_user)) {
             const token_data = _user[GlobalConstants.TOKEN];
             const userId_data = _user[GlobalConstants.USER_ID];
+            const userRole_data = _user[GlobalConstants.USER_ROLE];
 
             localStorage.setItem(GlobalConstants.TOKEN, token_data);
             localStorage.setItem(GlobalConstants.USER_ID, userId_data);
+            localStorage.setItem(GlobalConstants.USER_ROLE, userRole_data);
 
             routerUtils.push(GlobalConstants.DASHBOARD);
 

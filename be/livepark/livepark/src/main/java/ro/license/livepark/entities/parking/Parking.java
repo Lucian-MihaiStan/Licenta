@@ -2,6 +2,8 @@ package ro.license.livepark.entities.parking;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import ro.license.livepark.config.parkingUtils.SensorConfiguration;
 
 import java.util.List;
 
@@ -41,4 +43,10 @@ public class Parking {
 
     @Column(name = "admin_id")
     private Long adminId;
+
+    @Transient
+    private SensorConfiguration sensorConfig;
+
+    @Transient
+    private MqttClient mqttClient;
 }

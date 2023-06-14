@@ -6,5 +6,5 @@ import lombok.Data;
 public class SensorDTO {
     private Integer parkingSpot_id;
 
-    private String accessUrl;
+    private String deviceName;
 }

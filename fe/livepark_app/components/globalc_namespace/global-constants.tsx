@@ -15,7 +15,7 @@ export namespace GlobalConstants {
     export const API = "/api";
     export const USER_INFO = "/userInfo";
     export const LOGIN = "/login";
-    
+
     export const PROFILE = "/profile";
     export const CARS = "/cars";
     export const OWNER = "/owner";
@@ -63,7 +63,7 @@ export namespace GlobalConstants {
     export const GET_REQUEST = "GET";
     export const POST_REQUEST = "POST";
     export const DELETE_REQUEST = "DELETE";
-    export const PUT_REQUESRT = "PUT";
+    export const PUT_REQUEST = "PUT";
 
     export const APPLICATION_JSON = "application/json";
     export const STAR = "*";
@@ -75,6 +75,9 @@ export namespace GlobalConstants {
     // login response fields
     export const TOKEN = "token";
     export const USER_ID = "userId";
+    export const USER_ROLE = "userRole";
+    export const USER_ROLE_MASTER = "MASTER";
+    export const USER_ROLE_ADMIN = "ADMIN";
 
     export const INSERT_DOCUMENT = "/insert_document";
     export const FIND_DOCUMENT = "/find_document";
@@ -91,7 +94,7 @@ export namespace GlobalConstants {
     export const FIRST_AID_KIT = "firstAidKit";
     export const CASCO = "casco";
     export const USERS = "/users";
- 
+
     export const EQUIPMENT = "/equipment";
     export const SEND = "/send";
 
@@ -120,7 +123,16 @@ export namespace GlobalConstants {
     export const UPDATE_PASSWORD_LINK = BACKEND_API_LINK + API + OWNER + UPDATE_PASSWORD;
 
     export const PARKING_LINK = BACKEND_API_LINK + API + "/parkings";
+    export const PARKING_SPOTS_LINK = BACKEND_API_LINK + API + "/parkingSpots";
+    export const RESERVATIONS_LINK = BACKEND_API_LINK + API + "/reservations";
+    export const USERS_LINK = BACKEND_API_LINK + API + "/users";
     export const ADD_PARKING_PAGE = "addParking";
     export const PARKING_AREAS_PAGE = "/parking/parkingAreas";
     export const VALIDATION_LINK = BACKEND_API_LINK + API + AUTH + VALIDATION;
+    export const CONFIGURE_PARKING_SCHEME = "/parking/configureParkingScheme";
+    export const CONFIGURE_PARKING_SPOTS_DETAILS = "/parking/configureParkingSpotsDetails";
+    export const VIEW_PARKING_PAGE = "/parking/viewParking";
+    export const USER_RESERVATIONS_PAGE = "/parking/userReservations";
+    export const ALL_USERS_PAGE = "/usersManagement";
+
 }

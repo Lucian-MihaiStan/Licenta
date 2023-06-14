@@ -6,6 +6,7 @@ import ro.license.livepark.entities.driver.DriverDTO;
 import ro.license.livepark.entities.driver.Gender;
 import ro.license.livepark.entities.user.User;
 import ro.license.livepark.entities.user.UserDTO;
+import ro.license.livepark.entities.user.UserRole;
 
 import java.sql.Driver;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class UserInfo {
     public static final String DRIVER_DTO = "driverDTO";
     private UserDTO userDTO;
 
-    private static final UserDTO DUMMY_USER_DTO = new UserDTO(-1L, "", "", "", "");
+    private static final UserDTO DUMMY_USER_DTO = new UserDTO(-1L, "", "", "", "", UserRole.USER);
 
     private static final DriverDTO DUMMY_DRIVER_DTO = new DriverDTO(-1L, "", "", Gender.UNSPECIFIED);
     private DriverDTO driverDTO;

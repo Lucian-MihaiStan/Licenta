@@ -1,9 +1,8 @@
 import { GlobalConstants } from '../globalc_namespace/global-constants';
 import { useRouter } from 'next/router';
 import navigationBarStyle from './navigation-bar.module.css'
-import { BsCarFrontFill } from 'react-icons/bs'
 import Head from 'next/head';
-import { MouseEvent, use, useRef, useState } from 'react';
+import { MouseEvent, use, useRef, useState, useEffect } from 'react';
 
 export const NavigationBar = (): JSX.Element => {
 
@@ -17,18 +16,22 @@ export const NavigationBar = (): JSX.Element => {
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
-    }; 
+    };
 
     const sidebar_ref = useRef<any>();
     const close_button_ref = useRef<any>();
 
-    const userId = localStorage.getItem(GlobalConstants.USER_ID);
-    if (userId == null)
-        routerUtils.push(GlobalConstants.LOGIN);
+    const [userId, setUserId] = useState<any>(null);
+    const [userRole, setUserRole] = useState<any>(null);
+    useEffect(() => {
+        setUserId(localStorage.getItem(GlobalConstants.USER_ID));
+        setUserRole(localStorage.getItem(GlobalConstants.USER_ROLE));
+    }, [])
 
     function logout(e: any, LOGIN: string): void {
         e.preventDefault();
         localStorage.removeItem(GlobalConstants.USER_ID);
+        localStorage.removeItem(GlobalConstants.USER_ROLE);
         localStorage.removeItem(GlobalConstants.TOKEN);
         routerUtils.push(LOGIN);
     }
@@ -48,14 +51,14 @@ export const NavigationBar = (): JSX.Element => {
                         isSidebarOpen ? <i className="bx bxl-c-plus-plus icon"></i> : <></>
                     }
 
-                    <div className={navigationBarStyle.logo_name}><p>Parklive</p></div> 
+                    <div className={navigationBarStyle.logo_name}><p>Parklive</p></div>
                     <i className='bx bx-menu' id={navigationBarStyle.btn} ref={close_button_ref} onClick={toggleSidebar}></i>
                 </div>
                 <ul className={navigationBarStyle.nav_list}>
                     <li>
                         <a onClick={(e) => routeToPage(e, GlobalConstants.DASHBOARD)}>
                             <i className='bx bx-grid-alt'></i>
-                            
+
                             <span className={navigationBarStyle.links_name}>Dashboard</span>
                         </a>
                         <span className={navigationBarStyle.tooltip}>Dashboard</span>
@@ -76,7 +79,15 @@ export const NavigationBar = (): JSX.Element => {
                         </a>
                         <span className={navigationBarStyle.tooltip}>Parking areas</span>
                     </li>
-                  
+
+                    <li>
+                        <a onClick={(e) => routeToPage(e, GlobalConstants.USER_RESERVATIONS_PAGE)}>
+                            <i className='bx bx-calendar-check'></i>
+                            <span className={navigationBarStyle.links_name}>Reservations</span>
+                        </a>
+                        <span className={navigationBarStyle.tooltip}>Reservations</span>
+                    </li>
+
                     <li>
                         <a onClick={(e) => routeToPage(e, GlobalConstants.CARS + "/" + userId)}>
                             <i className='bx bx-car'></i>
@@ -100,6 +111,16 @@ export const NavigationBar = (): JSX.Element => {
                         </a>
                         <span className={navigationBarStyle.tooltip}>Notifications</span>
                     </li>
+                    {
+                        userRole == GlobalConstants.USER_ROLE_MASTER &&
+                        <li>
+                            <a onClick={(e) => routeToPage(e, GlobalConstants.ALL_USERS_PAGE)}>
+                                <i className='bx bxs-user-account'></i>
+                                <span className={navigationBarStyle.links_name}>Users management</span>
+                            </a>
+                            <span className={navigationBarStyle.tooltip}>Users management</span>
+                        </li>
+                    }
 
                     <li>
                         <a onClick={(e) => logout(e, GlobalConstants.LOGIN)}>

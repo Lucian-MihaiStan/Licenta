@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
 @RestController
 @RequestMapping("/api/parkingSpots")
 public class ParkingSpotController {
@@ -33,22 +34,24 @@ public class ParkingSpotController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addParkingSpot(@RequestBody ParkingSpotDTO parkingSpotDTO) {
-        if (parkingSpotService.addParkingSpot(parkingSpotDTO))
+    public ResponseEntity<?> addParkingSpots(@RequestBody List<ParkingSpotDTO> parkingSpotDTOs,
+                                             @RequestParam("parkingId") Integer parkingId) {
+        if (parkingSpotService.addParkingSpots(parkingSpotDTOs, parkingId))
             return new ResponseEntity<>(null, HttpStatus.CREATED);
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> modifyParkingSpot(@PathVariable("id") int id, @RequestBody ParkingSpotDTO parkingSpotDTO) {
-        if (parkingSpotService.modifyParkingSpot(id, parkingSpotDTO))
+    @PutMapping
+    public ResponseEntity<?> updateParkingSpots(@RequestBody List<ParkingSpotDTO> parkingSpotDTOs,
+                                                @RequestParam("parkingId") int parkingId) {
+        if (parkingSpotService.updateParkingSpots(parkingSpotDTOs, parkingId))
             return new ResponseEntity<>(null, HttpStatus.OK);
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteParkingSpot(@PathVariable("id") int id) {
-        if (parkingSpotService.deleteParkingSpot(id))
+        if (!parkingSpotService.deleteParkingSpot(id))
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }

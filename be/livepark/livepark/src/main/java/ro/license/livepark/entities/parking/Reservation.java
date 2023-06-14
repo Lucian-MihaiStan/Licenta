@@ -1,7 +1,7 @@
 package ro.license.livepark.entities.parking;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
+
 import java.util.Date;
 
 @Data
@@ -18,7 +18,6 @@ public class Reservation {
     @JoinColumn(name = "parkingSpot_id", nullable = false)
     private ParkingSpot parkingSpot;
 
-    @CreatedDate
     @Column(name = "created_time")
     private Date createdTime;
 
@@ -28,5 +27,9 @@ public class Reservation {
     @Column(name = "used")
     private boolean isUsed;
 
-    // private User user;
+    @Column(name = "user_id", nullable = false)
+     private Long userId;
+
+    @Column(name = "car_plate", nullable = false)
+    private String carPlate;
 }
