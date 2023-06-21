@@ -7,6 +7,8 @@ import { InputConstants } from '../../globalc_namespace/inputc/input-constants';
 import {TextBoxDivForm} from '../../html_components/textbox/textbox-register-login';
 import * as EmailValidator from 'email-validator';
 import { useRouter } from 'next/router';
+import classNames from 'classnames';
+import Head from 'next/head';
 
 export const RegisterForm = () => {
 
@@ -58,78 +60,85 @@ export const RegisterForm = () => {
     }
 
     return (
-        <div className={common_login_styles.loginmaindiv}>
-          <h1>Create Account</h1>
+        <>
+        <Head>
+            <title> Register: LivePark </title>
+            <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+	        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        </Head>
 
-        <form onSubmit={registerUser}>
+        <div className={classNames("container-fluid")}>
+            <div className={classNames("row")}>
+                <div className={classNames("col", common_login_styles.loginmaindiv, common_login_styles.left_div)}>
+                               
+                    <h3 className={common_login_styles.underline_title}>Create Account</h3>
 
-            <div>
-                <TextBoxDivForm 
-                    type={InputConstants.TEXT_TYPE} 
-                    name={InputConstants.FIRST_NAME} 
-                    placeholder={InputConstants.FIRST_NAME_PLACEHOLDER}
-                    ref={firstNameRef}
-                />
+                    <TextBoxDivForm 
+                        type={InputConstants.TEXT_TYPE} 
+                        name={InputConstants.FIRST_NAME} 
+                        placeholder={InputConstants.FIRST_NAME_PLACEHOLDER}
+                        ref={firstNameRef}
+                    />
+
+
+                    <TextBoxDivForm 
+                        type={InputConstants.TEXT_TYPE} 
+                        name={InputConstants.LAST_NAME}
+                        placeholder={InputConstants.LAST_NAME_PLACEHOLDER}
+                        ref={lastNameRef}
+                    />
+
+                    <TextBoxDivForm 
+                        type={InputConstants.TEXT_TYPE} 
+                        name={InputConstants.USERNAME}
+                        placeholder={InputConstants.USERNAME_PLACEHOLDER} 
+                        ref={usernameRef}
+                    />  
+
+                    <TextBoxDivForm 
+                        type={InputConstants.TEXT_TYPE} 
+                        name={InputConstants.EMAIL}
+                        placeholder={InputConstants.EMAIL_PLACEHOLDER} 
+                        ref={emailRef}
+                    />
+
+                    <TextBoxDivForm 
+                        type={InputConstants.PASSWORD_TYPE} 
+                        name={InputConstants.PASSWORD} 
+                        placeholder={InputConstants.PASSWORD_PLACEHOLDER}
+                        ref={passwordRef}
+                    />
+
+                    <div>
+                        <input
+                            type="checkbox"
+                            id="readTCons"
+                            checked={isChecked}
+                            onChange={(event) => setChecked(event.target.checked)}
+                        />
+                        <label className={common_login_styles.label_terms} htmlFor="readTCons">Agree with our <a className={common_login_styles.a_terms} onClick={(event) => routeToPage(event, GlobalConstants.TERMS_CONS)}> Terms and Conditions </a> </label>
+                    </div>
+
+                    <button className={classNames('btn btn-success', common_login_styles.button_parklive, common_login_styles.button_login_forgot, common_login_styles.signin)} onClick={event => registerUser(event)}> Sign Up </button> 
+
+
+                </div>
+
+                <div className={classNames("col", common_login_styles.loginmaindiv, common_login_styles.right_div)}>
+                    <div>
+                        <div>
+                            <div className={common_login_styles.title_parklive}> ParkLive </div>
+
+                            <div> Don't have an account? </div>
+                            <div> Login here </div>
+                        </div>
+                        <button className={classNames('btn btn-light btn-lg', common_login_styles.button_parklive)} onClick={(e) => routeToPage(e, GlobalConstants.LOGIN_FRONTEND_APP_LINK)}> Sign In</button>
+                    </div>
+                </div>
 
             </div>
 
-            <div>
-                <TextBoxDivForm 
-                    type={InputConstants.TEXT_TYPE} 
-                    name={InputConstants.LAST_NAME}
-                    placeholder={InputConstants.LAST_NAME_PLACEHOLDER}
-                    ref={lastNameRef}
-                />
-            </div>
-
-            <div>
-                <TextBoxDivForm 
-                    type={InputConstants.TEXT_TYPE} 
-                    name={InputConstants.USERNAME}
-                    placeholder={InputConstants.USERNAME_PLACEHOLDER} 
-                    ref={usernameRef}
-                />  
-            </div>
-
-            <div>
-                <TextBoxDivForm 
-                    type={InputConstants.TEXT_TYPE} 
-                    name={InputConstants.EMAIL}
-                    placeholder={InputConstants.EMAIL_PLACEHOLDER} 
-                    ref={emailRef}
-                />
-            </div>
-
-            <div>
-                <TextBoxDivForm 
-                    type={InputConstants.PASSWORD_TYPE} 
-                    name={InputConstants.PASSWORD} 
-                    placeholder={InputConstants.PASSWORD_PLACEHOLDER}
-                    ref={passwordRef}
-                />
-            </div>
-
-            <div>
-                <input
-                    type="checkbox"
-                    id="readTCons"
-                    checked={isChecked}
-                    onChange={(event) => setChecked(event.target.checked)}
-                />
-                <label htmlFor="readTCons">Agree with our <a onClick={(event) => routeToPage(event, GlobalConstants.TERMS_CONS)}> Terms and Conditions </a> </label>
-            </div>
-
-            <div>
-                <input type="submit" title='Sign Up '/> 
-            </div>
-            
-        </form>
-        <div>
-            <div>
-                <span> Don't have an account? </span>
-            </div>
-            <button onClick={(e) => routeToPage(e, GlobalConstants.LOGIN_FRONTEND_APP_LINK)}> Sign In</button>
         </div>
-        </div>
+        </>
       );
 }

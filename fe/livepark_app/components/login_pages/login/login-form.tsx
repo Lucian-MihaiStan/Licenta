@@ -6,6 +6,7 @@ import { InputConstants } from "@/components/globalc_namespace/inputc/input-cons
 import { useRef } from "react";
 import { useRouter } from "next/router";
 import Head from 'next/head';
+import classNames from 'classnames';
 
 export const LoginForm = () => {
 
@@ -71,41 +72,47 @@ export const LoginForm = () => {
             <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
 	        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
         </Head>
-        <main>
-        <div className={common_login_styles.loginmaindiv}>
-          <h1 className="display-6 mb-3">Login to Your Account</h1>
 
-            <TextBoxDivForm 
-                type={InputConstants.TEXT_TYPE} 
-                name={InputConstants.USERNAME} 
-                placeholder={InputConstants.USERNAME_PLACEHOLDER} 
-                ref={usernameRef}
-            />
-            
-            
-            <TextBoxDivForm 
-                type={InputConstants.PASSWORD_TYPE} 
-                name={InputConstants.PASSWORD} 
-                placeholder={InputConstants.PASSWORD_PLACEHOLDER}
-                ref={passwordRef}
-            />
+        <div className={classNames("container-fluid")}>
+            <div className={classNames("row")}>
+                <div className={classNames("col", common_login_styles.loginmaindiv, common_login_styles.left_div)}>
+                    <h3 className={common_login_styles.underline_title}>Login to Your Account</h3>
 
-            <div>
-                <button className='btn btn-primary' onClick={event => loginUser(event)}> Sign In </button>
-                <button className='btn btn-light' onClick={event => forgotPassword(event)} > Forgot Password </button>
-            </div>
+                    <TextBoxDivForm 
+                        type={InputConstants.TEXT_TYPE} 
+                        name={InputConstants.USERNAME} 
+                        placeholder={InputConstants.USERNAME_PLACEHOLDER} 
+                        ref={usernameRef}
+                    />
 
-            <div>
-                <div>
-                    <div> New here? </div>
-                    <div> Sign up and discover a great </div>
-                    <div> amount of opportunities to </div>
-                    <div> park you car </div>
+
+                    <TextBoxDivForm 
+                        type={InputConstants.PASSWORD_TYPE} 
+                        name={InputConstants.PASSWORD} 
+                        placeholder={InputConstants.PASSWORD_PLACEHOLDER}
+                        ref={passwordRef}
+                    />
+
+                    <div className="row">
+                        <button className={classNames('btn btn-success', common_login_styles.button_parklive, common_login_styles.button_login_forgot, common_login_styles.signin)} onClick={event => loginUser(event)}> Sign In </button> 
+                        <button className={classNames('btn btn-secondary', common_login_styles.button_parklive, common_login_styles.button_login_forgot)} onClick={event => forgotPassword(event)} > Forgot Password </button>
+                    </div>
                 </div>
-                <button onClick={(e) => routeToPage(e, GlobalConstants.REGISTER_FRONTEND_APP_LINK)}> Sign Up </button>
+                <div className={classNames("col", common_login_styles.loginmaindiv, common_login_styles.right_div)}>
+                        <div>
+                            <div className={common_login_styles.title_parklive}> ParkLive </div>
+
+                            <div> New here? </div>
+                            <div> Sign up and discover </div>
+                            <div> a great amount of opportunities to </div>
+                            <div> park you car and </div>
+                            <div> safely store your documents! </div>
+                        </div>
+                        <button className={classNames('btn btn-light btn-lg', common_login_styles.button_parklive)} onClick={(e) => routeToPage(e, GlobalConstants.REGISTER_FRONTEND_APP_LINK)}> Sign Up </button>
+                </div>
             </div>
-        </div>
-        </main>
+        </div> 
+
         </>
       );
 }

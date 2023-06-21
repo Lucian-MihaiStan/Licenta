@@ -8,7 +8,7 @@
   top: 0;
   height: 100%;
   width: 78px;
-  background: #00310c;
+  background: #254d32;
   padding: 6px 14px;
   z-index: 99;
   transition: all 0.5s ease;
@@ -196,7 +196,7 @@
 }
 .home_section{  
   position: relative;
-  background: #E4E9F7;
+  background: #f3f2f3;
   min-height: 100vh;
   top: 0;
   left: 78px;

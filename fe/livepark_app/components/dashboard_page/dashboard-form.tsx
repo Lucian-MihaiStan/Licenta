@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { GlobalConstants } from "../globalc_namespace/global-constants";
+import classNames from "classnames";
 
 export const DashboardForm = () => {
 
@@ -26,9 +27,12 @@ export const DashboardForm = () => {
     }, []);
 
     return (
-        <div>
-            Welcome, {username}
-        </div>
+
+        <main>
+            <div className={classNames("container-fluid")}>
+                Welcome, {username}
+            </div>
+        </main>
 
     );
 
