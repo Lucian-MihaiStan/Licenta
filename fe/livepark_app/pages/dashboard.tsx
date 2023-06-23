@@ -8,6 +8,7 @@ import { MouseEvent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { GlobalConstants } from "@/components/globalc_namespace/global-constants";
 import { eventNames } from "process";
+import { SupportForm } from "@/components/support/support-form";
 
 
 const Dashboard:  NextPage = () => {
@@ -15,7 +16,7 @@ const Dashboard:  NextPage = () => {
     const router = useRouter();
     const userId = localStorage.getItem(GlobalConstants.USER_ID);
 
-    function routToPage(event: any, path: string): void {
+    function routeToPage(event: any, path: string): void {
         event.preventDefault();
         router.push(path);
     }
@@ -55,7 +56,7 @@ const Dashboard:  NextPage = () => {
             <div className={classNames("row", )}>
                 <div className={classNames("col", dashboardStyle.top_bar)}>
                     <div className={classNames(dashboardStyle.profile_button_div)}>
-                        <button className={classNames("btn btn-light", dashboardStyle.profile_button)} onClick={event => routToPage(event, GlobalConstants.PROFILE + "/" + userId)}>
+                        <button className={classNames("btn btn-light", dashboardStyle.profile_button)} onClick={event => routeToPage(event, GlobalConstants.PROFILE + "/" + userId)}>
                             Profile
                         </button>
                     </div>
@@ -68,7 +69,7 @@ const Dashboard:  NextPage = () => {
                 <div className={classNames("col", dashboardStyle.center_dcontent, dashboardStyle.left_div)}>
                     <div className={classNames("bold", dashboardStyle.words_left)}>YOU WANT TO</div>
                     <div className={classNames("bold", dashboardStyle.words_left)}>FIND PARKING?</div>
-                    <button className={classNames("btn btn-light", dashboardStyle.show_button)} onClick={event => routToPage(event, GlobalConstants.PARKING_AREAS_PAGE)}>
+                    <button className={classNames("btn btn-light", dashboardStyle.show_button)} onClick={event => routeToPage(event, GlobalConstants.PARKING_AREAS_PAGE)}>
                         SHOW ME PARKING AREAS
                     </button>
                 </div>
@@ -76,10 +77,16 @@ const Dashboard:  NextPage = () => {
                 <div className={classNames("col", dashboardStyle.center_dcontent, dashboardStyle.right_div)}>
                     <div className={classNames("bold", dashboardStyle.words_right)}>YOU WANT TO</div>
                     <div className={classNames("bold", dashboardStyle.words_right)}>STORE DOCUMENTS?</div>
-                    <button className={classNames("btn btn-light", dashboardStyle.show_button)} onClick={event => routToPage(event, GlobalConstants.CARS + "/" + userId)}>
+                    <button className={classNames("btn btn-light", dashboardStyle.show_button)} onClick={event => routeToPage(event, GlobalConstants.CARS + "/" + userId)}>
                         SHOW ME MY CARS
                     </button>
                 </div>
+            </div>
+
+            <div className={classNames("row", dashboardStyle.form_support)}>
+
+                <SupportForm/>    
+        
             </div>
         </div>
         </>

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react"
 import { Models } from "./car";
 import { GlobalConstants } from "../globalc_namespace/global-constants";
 import { CarBackendConnectUtils } from "./car_get";
+import classNames from "classnames";
 
 export const CarForm = () => {
 
@@ -40,7 +41,7 @@ export const CarForm = () => {
         <div>
             <h1> Car Documents </h1>
 
-            <div>
+            <div className={classNames("container-fluid")}>
                 <div>{car.ownerId}</div>
                 <div>{car.brand}</div>
                 <div>{car.model}</div>

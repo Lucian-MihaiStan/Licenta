@@ -1,12 +1,11 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
-import { Utils } from '@/components/utils/utils'
 import { GlobalConstants } from '@/components/globalc_namespace/global-constants'
 import { useRouter } from 'next/router'
-import { NavigationBar } from '@/components/navigation_bar/navigation-bar'
-import { useEffect } from 'react'
+import dashboardStyle from '@/components/dashboard_page/dashboard_style/dashboard.module.css'
 import classNames from 'classnames'
+import { SupportForm } from '@/components/support/support-form'
 
 const Home: NextPage = () => {
 
@@ -24,26 +23,44 @@ const Home: NextPage = () => {
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     </Head>
 
-    <div>
-      
-      <div className={classNames("container-fluid")}>
+    <div className={classNames("container-fluid")}>
+        <div className={classNames("row", )}>
+            <div className={classNames("col", dashboardStyle.title_bar)}>
+                <div className={dashboardStyle.title_div}>
+                      ParkLive
+                </div>
+            </div>
+        </div>
         <div className={classNames("row")}>
+            <div className={classNames("col", dashboardStyle.center_dcontent, dashboardStyle.left_div)}>
+                <div className={classNames("bold", dashboardStyle.words_left)}>YOU WANT TO</div>
+                <div className={classNames("bold", dashboardStyle.words_left)}>FIND PARKING?</div>
+                <button className={classNames("btn btn-light", dashboardStyle.show_button)} onClick={event => routeToPage(event, GlobalConstants.LOGIN)}>
+                    SHOW ME PARKING AREAS
+                </button>
+            </div>
 
-          <h1>ParkLive</h1>
+            <div className={classNames("col", dashboardStyle.center_dcontent, dashboardStyle.right_div)}>
+                <div className={classNames("bold", dashboardStyle.words_right)}>YOU WANT TO</div>
+                <div className={classNames("bold", dashboardStyle.words_right)}>STORE DOCUMENTS?</div>
+                <button className={classNames("btn btn-light", dashboardStyle.show_button)} onClick={event => routeToPage(event, GlobalConstants.LOGIN)}>
+                    SHOW ME MY CARS
+                </button>
+            </div>
+        </div>
 
+        <div className={classNames("row", dashboardStyle.form_support)}>
+            <SupportForm/>
         </div>
 
         <div className={classNames("row")}>
-          <div className={classNames("col")}>
-            <button className="btn btn-primary" onClick={(e) => routeToPage(e, GlobalConstants.LOGIN)}>Login</button>
+          <div className={classNames("col", dashboardStyle.bottom_div)}>
+                Thanks for using ParkLive!
           </div>
-          <div className={classNames("col")}>
-            <button className="btn btn-primary" onClick={(e) => routeToPage(e, GlobalConstants.REGISTER_FRONTEND_APP_LINK)}>Register</button>
-          </div>
-        </div>
-      </div>
-
+        </div>  
     </div>
+
+    
     </>
   )
 }
