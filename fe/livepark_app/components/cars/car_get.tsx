@@ -15,4 +15,10 @@ export namespace CarBackendConnectUtils {
         
         return await _carinfo.json();
     }
+
+    export async function removeVehicle(carId: string) {
+        const url = `${GlobalConstants.CAR_LINK_DELETE}?carId=${carId}`;
+        
+        
+    }
 }

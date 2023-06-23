@@ -59,3 +59,12 @@
     text-decoration: solid;
     font-family: 'Courier New', Courier, monospace;
 }
+
+.back_to_cars_div {
+    padding-top: 2vh;
+}
+
+.max_width {
+    max-width: 18rem;
+    border-radius: 25px;
+}

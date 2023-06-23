@@ -2,10 +2,11 @@ import { MouseEvent, useEffect, useState } from "react";
 import { GlobalConstants } from "../globalc_namespace/global-constants";
 import { useRouter } from "next/router";
 import { Models } from "../../components/cars/car";
-import Image from "next/image";
 import Head from "next/head";
 import cars_style from "@/components/cars/cars_styles/cars_style.module.css";
 import classNames from "classnames";
+import { CarCard } from "./car_component";
+import Car from "@/pages/owner/[owner]/car/[carId]";
 
 export const CarsForm = () => {
 
@@ -63,35 +64,7 @@ export const CarsForm = () => {
                     Array.isArray(cars) 
                     ? cars.map((car) => {
                         return (
-                            <div className={classNames("row", cars_style.ul_list)}>
-                                <div className={classNames("card mb-3", cars_style.mwidth)}>
-                                    <div className={classNames("row no-gutters")}>
-                                        <div className={classNames("col-md-4", cars_style.wrapper_img)}>
-
-                                        <Image
-                                            src='/audi_ParkLive.png'
-                                            className={classNames(cars_style.img_position)}
-                                            alt={car.brand}
-                                            width={100}
-                                            height={100}
-                                        />
-
-                                        </div>
-
-                                        <div className={classNames("col-md-8")}>
-                                            <div className={classNames("card-body")}>
-                                                <h5 className={classNames("card-title")}>{car.plate}</h5>
-                                                <div className={classNames("card-text")}>{car.brand} {car.model}</div>
-                                                <div className={classNames("card-text")}>VIN: {car.vin}</div>
-                                                <div className={classNames("card-text")}>Fabrication Date: {car.fabricationDate.toString()}</div>
-                                                <div className={classNames("card-text", cars_style.last_text)}><small className={classNames("text-muted")}>Last updated 3 mins ago</small></div>
-                                            <button className={classNames("btn btn-secondary")} onClick={(e) => routeToPage(e, `${GlobalConstants.OWNER}/${userId}${GlobalConstants.CAR}/${car.carId}`)}> View Documents </button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
+                            <CarCard car={car} userId={userId} view_documents={true}/>
                         )
                     }) : null
                 }

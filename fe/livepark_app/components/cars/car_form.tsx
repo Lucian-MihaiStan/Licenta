@@ -4,6 +4,10 @@ import { Models } from "./car";
 import { GlobalConstants } from "../globalc_namespace/global-constants";
 import { CarBackendConnectUtils } from "./car_get";
 import classNames from "classnames";
+import { CarCard } from "./car_component";
+import Head from "next/head";
+import cars_style from "@/components/cars/cars_styles/cars_style.module.css";
+
 
 export const CarForm = () => {
 
@@ -25,58 +29,104 @@ export const CarForm = () => {
         return <div> Loading... </div>
 
     function removeVehicle(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
-        throw new Error("Function not implemented.");
+        e.preventDefault();
+        CarBackendConnectUtils.removeVehicle(carId as string);
+        router.push(GlobalConstants.CARS + "/" + userId);
     }
 
-    function routeToCarDocument(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, document_type: string): void {
+    function routeToCarDocument(e: any, document_type: string): void {
         e.preventDefault();
         router.push(`${GlobalConstants.OWNER}/${userId}${GlobalConstants.CAR}/${carId}${GlobalConstants.DOCUMENT}/${document_type}`);
     }
 
-    function routeToEquipment(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, equipment_type: any): void {
+    function routeToEquipment(e: any, equipment_type: any): void {
         router.push(`${GlobalConstants.OWNER}/${userId}${GlobalConstants.CAR}/${carId}${GlobalConstants.EQUIPMENT}/${equipment_type}`);
     }
 
+    function routeToPage(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, path: string): void {
+        e.preventDefault();
+        router.push(path);
+    }   
+
     return (
-        <div>
-            <h1> Car Documents </h1>
+        <>
+            <Head>
+                <title> Car: LivePark </title>
+                <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+            </Head>
+            <div className={classNames(cars_style.cars_div_position)}>
+                
+                <div className={classNames(cars_style.title, cars_style.individual_car_title)}>{car.plate}</div>
+                <div className={classNames(cars_style.back_to_cars_div)}>
+                    <button className={classNames("btn btn-dark", cars_style.add_button)} onClick={(e) => routeToPage(e, GlobalConstants.CARS + "/" + userId)}> Back to cars list</button>
+                </div>
 
-            <div className={classNames("container-fluid")}>
-                <div>{car.ownerId}</div>
-                <div>{car.brand}</div>
-                <div>{car.model}</div>
-                <div>{car.plate}</div>
-                <div>{car.vin}</div>
-                <div>{car.fabricationDate.toLocaleString()}</div>
+                <div className={classNames("container-fluid", cars_style.ul_list)}>
+                    <CarCard car={car} userId={userId as string} view_documents={false}/>
+                </div>
 
-                <div>
-                    <button onClick={(e) => routeToCarDocument(e, GlobalConstants.RCA)}> RCA </button>
+                <div className={classNames("row")}>
+                    <div className={classNames("col")}>
+                        <div className={classNames("card text-white bg-primary mb-3", cars_style.max_width)} onClick={(e) => routeToCarDocument(e, GlobalConstants.RCA)}>
+                            <div className={classNames("card-header")}>RCA</div>
+                            <div className={classNames("card-body")}>
+                                <h5 className={classNames("card-title")}>Răspundere Civilă Auto</h5>
+                                <p className={classNames("card-text")}>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={classNames("col")}>
+                        <div className={classNames("card text-white bg-secondary mb-3", cars_style.max_width)} onClick={(e) => routeToCarDocument(e, GlobalConstants.ITP)}>
+                            <div className={classNames("card-header")}>ITP</div>
+                            <div className={classNames("card-body")}>
+                                <h5 className={classNames("card-title")}>Inspecția Tehnică Periodică</h5>
+                                <p className={classNames("card-text")}>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={classNames("col")}>
+                        <div className={classNames("card text-white bg-success mb-3", cars_style.max_width)} onClick={(e) => routeToCarDocument(e, GlobalConstants.ROVINIETA)}>
+                            <div className={classNames("card-header")}>Rovinieta</div>
+                            <div className={classNames("card-body")}>
+                                <h5 className={classNames("card-title")}>Taxă de Circulație</h5>
+                                <p className={classNames("card-text")}>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div>
-                    <button onClick={(e) => routeToCarDocument(e, GlobalConstants.ITP)}> ITP </button>
-                </div>
-
-                <div>
-                    <button onClick={(e) => routeToCarDocument(e, GlobalConstants.ROVINIETA)}> Rovinieta </button>
-                </div>
-
-                <div>
-                    <button onClick={(e) => routeToCarDocument(e, GlobalConstants.CASCO)}> CASCO </button>
-                </div>
-
-                <div>
-                    <button onClick={(e) => routeToEquipment(e, GlobalConstants.FIRE_EXTINGUISHER)}> Fire Extinguisher </button>
-                </div>
-
-                <div>
-                    <button onClick={(e) => routeToEquipment(e, GlobalConstants.FIRST_AID_KIT)}> First Aid Kit </button>
+                <div className={classNames("row")}>
+                    <div className={classNames("card bg-light mb-3", cars_style.max_width)} onClick={(e) => routeToCarDocument(e, GlobalConstants.CASCO)}>
+                        <div className={classNames("card-header")}>Casco</div>
+                        <div className={classNames("card-body")}>
+                            <h5 className={classNames("card-title")}>Casualty and Collision</h5>
+                            <p className={classNames("card-text")}>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                    <div className={classNames("col")}>
+                        <div className={classNames("card text-white bg-dark mb-3", cars_style.max_width)} onClick={(e) => routeToEquipment(e, GlobalConstants.FIRE_EXTINGUISHER)}>
+                            <div className={classNames("card-header")}>Fire Extinguisher </div>
+                            <div className={classNames("card-body")}>
+                                <h5 className={classNames("card-title")}>Extintor</h5>
+                                <p className={classNames("card-text")}>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={classNames("col")}>
+                        <div className={classNames("card text-white bg-info mb-3", cars_style.max_width)} onClick={(e) => routeToEquipment(e, GlobalConstants.FIRST_AID_KIT)}>
+                            <div className={classNames("card-header")}>First Aid Kit</div>
+                            <div className={classNames("card-body")}>
+                                <h5 className={classNames("card-title")}>Trusa prim-ajutor</h5>
+                                <p className={classNames("card-text")}>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div> <button onClick={(e) => removeVehicle(e)}> Remove Vehicle </button> </div>
 
             </div>
-
-</div>
+        </>
     )
 }
