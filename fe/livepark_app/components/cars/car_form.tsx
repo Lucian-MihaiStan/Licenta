@@ -72,7 +72,6 @@ export const CarForm = () => {
                             <div className={classNames("card-header")}>RCA</div>
                             <div className={classNames("card-body")}>
                                 <h5 className={classNames("card-title")}>Răspundere Civilă Auto</h5>
-                                <p className={classNames("card-text")}>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                             </div>
                         </div>
                     </div>
@@ -81,7 +80,6 @@ export const CarForm = () => {
                             <div className={classNames("card-header")}>ITP</div>
                             <div className={classNames("card-body")}>
                                 <h5 className={classNames("card-title")}>Inspecția Tehnică Periodică</h5>
-                                <p className={classNames("card-text")}>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                             </div>
                         </div>
                     </div>
@@ -90,18 +88,18 @@ export const CarForm = () => {
                             <div className={classNames("card-header")}>Rovinieta</div>
                             <div className={classNames("card-body")}>
                                 <h5 className={classNames("card-title")}>Taxă de Circulație</h5>
-                                <p className={classNames("card-text")}>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <div className={classNames("row")}>
-                    <div className={classNames("card bg-light mb-3", cars_style.max_width)} onClick={(e) => routeToCarDocument(e, GlobalConstants.CASCO)}>
-                        <div className={classNames("card-header")}>Casco</div>
-                        <div className={classNames("card-body")}>
-                            <h5 className={classNames("card-title")}>Casualty and Collision</h5>
-                            <p className={classNames("card-text")}>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <div className={classNames("col")}>
+                        <div className={classNames("card bg-light mb-3", cars_style.max_width)} onClick={(e) => routeToCarDocument(e, GlobalConstants.CASCO)}>
+                            <div className={classNames("card-header")}>Casco</div>
+                            <div className={classNames("card-body")}>
+                                <h5 className={classNames("card-title")}>Casualty and Collision</h5>
+                            </div>
                         </div>
                     </div>
                     <div className={classNames("col")}>
@@ -109,7 +107,6 @@ export const CarForm = () => {
                             <div className={classNames("card-header")}>Fire Extinguisher </div>
                             <div className={classNames("card-body")}>
                                 <h5 className={classNames("card-title")}>Extintor</h5>
-                                <p className={classNames("card-text")}>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                             </div>
                         </div>
                     </div>
@@ -118,13 +115,12 @@ export const CarForm = () => {
                             <div className={classNames("card-header")}>First Aid Kit</div>
                             <div className={classNames("card-body")}>
                                 <h5 className={classNames("card-title")}>Trusa prim-ajutor</h5>
-                                <p className={classNames("card-text")}>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div> <button onClick={(e) => removeVehicle(e)}> Remove Vehicle </button> </div>
+                <div className={classNames("row", cars_style.button_remove_div)}> <button className={classNames("btn btn-danger", cars_style.remove_vehicle_btn)} onClick={(e) => removeVehicle(e)}> Remove Vehicle </button> </div>
 
             </div>
         </>

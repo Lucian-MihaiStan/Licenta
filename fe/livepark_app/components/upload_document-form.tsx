@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { FormProps } from "./html_components/props/Props";
 import { GlobalConstants } from "./globalc_namespace/global-constants";
+import documents_style from "@/components/cars/document_styles/document_style.module.css";
+
+import Head from "next/head";
+import classNames from "classnames";
+import { useRouter } from "next/router";
 
 export namespace UploadDocumentFormNamespace {
     export const DOCUMENT_ID = "documentId";
@@ -15,6 +20,7 @@ export const UploadDocumentForm = (props: FormProps) => {
     
     const [file_document, setDocument] = useState<File>(new File([], ""));
     const [fileBase64String, setFileBase64String] = useState(null);
+    const router = useRouter();
 
     function handleOnchange(e: React.ChangeEvent<HTMLInputElement>): void {
         e.preventDefault();
@@ -23,7 +29,7 @@ export const UploadDocumentForm = (props: FormProps) => {
         setDocument(e.target.files[0]);
     }
 
-    async function uploadFile() {
+    async function uploadFile(e: React.FormEvent<HTMLFormElement>) {
         try {
 
             var reader = new FileReader();
@@ -76,25 +82,54 @@ export const UploadDocumentForm = (props: FormProps) => {
                 alert("Document not posted");
                 return;
             }
+
+            router.push(GlobalConstants.CARS + "/" + props.entityId);
         } catch (error) {
             console.log(error);
         }
     }
 
-    function handleOnSubmit(e: React.FormEvent<HTMLFormElement>): void {
+    function handleOnSubmit(e: any): void {
         e.preventDefault();
-        uploadFile();
+        uploadFile(e);
+    }
+
+    function handleOnDownload(e: React.FormEvent<HTMLFormElement>): void {
+        e.preventDefault();
+    }
+
+    function handleOnDelete(e: React.FormEvent<HTMLFormElement>): void {
+        e.preventDefault();
     }
 
     return (
+        <>
+        <Head>
+            <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+	        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        </Head>
         <div>
-            <form action='form' onSubmit={(e) => handleOnSubmit(e)}>
-                <div>
-                    <h3> Upload {props.document_name} </h3>
-                    <input type="file" onChange={(e) => handleOnchange(e)} />
-                    <button> Upload </button>
+            <h5> Încarcă Document {(props.document_name as string).toUpperCase()} </h5>
+            <div className={classNames("row", documents_style.input_div)}>
+                <div className={classNames("col")}>
+                    <input className={classNames("form-control", documents_style.input_file)} type="file" onChange={(e) => handleOnchange(e)} id="formFile"/>
                 </div>
-            </form>
+            </div>
+
+            <div className={classNames("row", "col", documents_style.upload_download_div)}>
+                <div className={classNames(documents_style.upload_download)}>
+                    <button className={classNames("btn btn-primary", documents_style.button_upload)} onClick={(e) => handleOnSubmit(e)}> Upload </button>
+                </div>
+
+                <div className={classNames(documents_style.upload_download)}>
+                    <button className={classNames("btn btn-secondary", documents_style.button_upload)} onClick={() => handleOnDownload}> Download </button>
+                </div>
+
+                <div className={classNames(documents_style.upload_download)}>
+                    <button className={classNames("btn btn-danger", documents_style.button_upload)} onClick={() => handleOnDelete}> Delete </button>
+                </div>
+            </div>
         </div>
+        </>
     )
 }

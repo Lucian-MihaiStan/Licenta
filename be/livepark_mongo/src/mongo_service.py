@@ -17,6 +17,7 @@ def insert_document():
         posted_info = request.get_json(silent=True)
         if (isinstance(posted_info, list)):
             posted_info = posted_info[0]
+        print(posted_info)
         print(posted_info['file'])
         return jsonify({'document_id': str(mongo_collection.insert_one(posted_info).inserted_id)}), 200
     except Exception as e:
@@ -27,7 +28,9 @@ def insert_document():
 @app.route('/find_document/<document_id>', methods=['GET'])
 def find_document(document_id):
     try:
+        print(document_id)
         entry = mongo_collection.find_one({"_id": ObjectId(document_id)})
+        print(entry)
         print(entry['file'])
         return jsonify({'file': entry['file']}), 200 
     except Exception as e:
