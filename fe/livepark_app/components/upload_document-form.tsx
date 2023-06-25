@@ -19,8 +19,8 @@ export namespace UploadDocumentFormNamespace {
 export const UploadDocumentForm = (props: FormProps) => {
     
     const [file_document, setDocument] = useState<File>(new File([], ""));
-    const [fileBase64String, setFileBase64String] = useState(null);
     const router = useRouter();
+    const userId = props.entityId;
 
     function handleOnchange(e: React.ChangeEvent<HTMLInputElement>): void {
         e.preventDefault();
@@ -29,19 +29,28 @@ export const UploadDocumentForm = (props: FormProps) => {
         setDocument(e.target.files[0]);
     }
 
+    const readUploadedFileAsText = (inputFile: any) => {
+        const temporaryFileReader = new FileReader();
+        
+        return new Promise((resolve, reject) => {
+            temporaryFileReader.onerror = () => {
+                temporaryFileReader.abort();
+                reject(new DOMException("Problem parsing input file."));
+            };
+        
+            temporaryFileReader.onload = () => {
+                resolve(temporaryFileReader.result);
+            };
+
+            temporaryFileReader.readAsDataURL(inputFile);
+        });
+    };
+      
+
     async function uploadFile(e: React.FormEvent<HTMLFormElement>) {
         try {
 
-            var reader = new FileReader();
-            reader.readAsDataURL(file_document);
-            reader.onload = () => {
-              setFileBase64String(reader.result);
-            };
-
-            reader.onerror = (error) => {
-              console.log("error: ", error);
-            };
-
+            const fileBase64String = await readUploadedFileAsText(file_document);
             const response = await fetch(GlobalConstants.ADD_DOCUMENT_LINK, {
                 method: GlobalConstants.POST_REQUEST,
                 headers: {
@@ -62,10 +71,13 @@ export const UploadDocumentForm = (props: FormProps) => {
             
             const document_id = result['document_id'];
             const documentJson = {
-                entityId: props.entityId,
+                entityId: userId,
                 documentId: document_id,
                 documentType: props.document_name,
             }
+
+            console.log(documentJson);
+            console.log(userId);
 
             const responsePost = await fetch(props.url, {
                 method: GlobalConstants.POST_REQUEST,
@@ -83,7 +95,7 @@ export const UploadDocumentForm = (props: FormProps) => {
                 return;
             }
 
-            router.push(GlobalConstants.CARS + "/" + props.entityId);
+            router.push(GlobalConstants.CARS + "/" + userId);
         } catch (error) {
             console.log(error);
         }

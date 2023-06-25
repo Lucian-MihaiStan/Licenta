@@ -2,9 +2,12 @@ package ro.license.livepark.jobs;
 
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import ro.license.livepark.controller.car.CarController;
 import ro.license.livepark.email.NotificationEmailService;
 import ro.license.livepark.entities.car.CarDTO;
 import ro.license.livepark.entities.driver.DriverDTO;
@@ -22,6 +25,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class NotificationOTDJob {
 
+    private final Logger logger = LoggerFactory.getLogger(NotificationOTDJob.class);
     private final NotificationLocalCacheJob notificationLocalCacheJob;
     private final CarService carService;
     private final DriverService driverService;
@@ -31,66 +35,71 @@ public class NotificationOTDJob {
 
     @Scheduled(fixedDelay = 6000000) // Run every 60 seconds
     public void runJob() {
-        System.out.println("Scheduled NotificationOTD job is running...");
+        try {
+            logger.info("Scheduled NotificationOTD job is running...");
 
-        if (notificationLocalCacheJob == null) {
-            System.err.println("NotificationLocalCacheJob is null");
-            return;
-        }
+            if (notificationLocalCacheJob == null) {
+                logger.error("NotificationLocalCacheJob is null");
+                return;
+            }
 
-        Map<String, Map<String, Notification>> localCache = notificationLocalCacheJob.getLocalCache();
-        if (localCache == null) {
-            System.err.println("Local cache is null");
-            return;
-        }
+            Map<String, Map<String, Notification>> localCache = notificationLocalCacheJob.getLocalCache();
+            if (localCache == null) {
+                logger.error("Local cache is null");
+                return;
+            }
 
-        if (localCache.isEmpty())
-            return;
+            if (localCache.isEmpty())
+                return;
 
-        for (Map.Entry<String, Map<String, Notification>> carNotifications : localCache.entrySet()) {
-            String licensePlate = carNotifications.getKey();
-            Map<String, Notification> notifications = carNotifications.getValue();
+            for (Map.Entry<String, Map<String, Notification>> carNotifications : localCache.entrySet()) {
+                String licensePlate = carNotifications.getKey();
+                Map<String, Notification> notifications = carNotifications.getValue();
 
-            if (notifications.isEmpty())
-                continue;
-
-            CarDTO carDTO = carService.findByPlate(licensePlate);
-            if (carDTO == null)
-                throw new IllegalStateException("Unable to find car with plate " + licensePlate);
-
-            if (carDTO.ownerId() == null)
-                throw new IllegalStateException("Car with plate " + licensePlate + " has no owner");
-
-            DriverDTO driverDTO = driverService.findDriverDTOByUserId(carDTO.ownerId());
-            if (driverDTO == null)
-                throw new IllegalStateException("Unable to find driver with user id " + carDTO.ownerId());
-
-            UserDTO userInfo = userService.getUserInfo(driverDTO.driverId());
-            if (userInfo == null)
-                throw new IllegalStateException("Unable to find user with id " + driverDTO.driverId());
-
-            if (userInfo.email() == null)
-                throw new IllegalStateException("User with id " + driverDTO.driverId() + " has no email");
-
-            String email = userInfo.email();
-            for (Map.Entry<String, Notification> notificationType : notifications.entrySet()) {
-                String keyword = notificationType.getKey();
-                Notification notification = notificationType.getValue();
-
-                if (notification == null)
+                if (notifications.isEmpty())
                     continue;
 
-                notificationService.save(notification);
+                CarDTO carDTO = carService.findByPlate(licensePlate);
+                if (carDTO == null)
+                    throw new IllegalStateException("Unable to find car with plate " + licensePlate);
 
-                try {
-                    emailService.send(email, String.format("LivePark - %s is expiring!", keyword) + notification.getVerbosity().getText(),
-                            "Hi " +
-                                    String.format("Your %s is expiring in %d days!", keyword, NotificationLocalCacheJob.numberOfDaysLeft(notification.getCreatedAt())));
-                 } catch (Exception e) {
-                    System.err.println("Unable to send email to " + email);
-                    e.printStackTrace();
+                if (carDTO.ownerId() == null)
+                    throw new IllegalStateException("Car with plate " + licensePlate + " has no owner");
+
+                DriverDTO driverDTO = driverService.findDriverDTOByUserId(carDTO.ownerId());
+                if (driverDTO == null)
+                    throw new IllegalStateException("Unable to find driver with user id " + carDTO.ownerId());
+
+                UserDTO userInfo = userService.getUserInfo(driverDTO.driverId());
+                if (userInfo == null)
+                    throw new IllegalStateException("Unable to find user with id " + driverDTO.driverId());
+
+                if (userInfo.email() == null)
+                    throw new IllegalStateException("User with id " + driverDTO.driverId() + " has no email");
+
+                String email = userInfo.email();
+                for (Map.Entry<String, Notification> notificationType : notifications.entrySet()) {
+                    String keyword = notificationType.getKey();
+                    Notification notification = notificationType.getValue();
+
+                    if (notification == null)
+                        continue;
+
+                    notificationService.save(notification);
+
+                    try {
+                        emailService.send(email, String.format("LivePark - %s is expiring!", keyword) + notification.getVerbosity().getText(),
+                                "Hi " +
+                                        String.format("Your %s is expiring in %d days!", keyword, NotificationLocalCacheJob.numberOfDaysLeft(notification.getCreatedAt())));
+                    } catch (Exception e) {
+                        System.err.println("Unable to send email to " + email);
+                        e.printStackTrace();
+                    }
                 }
             }
+        } catch (Exception e) {
+            logger.error("Error in NotificationOTDJob: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

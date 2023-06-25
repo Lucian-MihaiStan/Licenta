@@ -55,6 +55,13 @@ const Dashboard:  NextPage = () => {
         <div className={classNames("container-fluid")}>
             <div className={classNames("row", )}>
                 <div className={classNames("col", dashboardStyle.top_bar)}>
+
+                    <div className={classNames(dashboardStyle.profile_button_div)}>
+                        <button className={classNames("btn btn-light", dashboardStyle.profile_button)} onClick={event => routeToPage(event, GlobalConstants.PROFILE + "/" + userId)}>
+                            Log Out
+                        </button>
+                    </div>
+
                     <div className={classNames(dashboardStyle.profile_button_div)}>
                         <button className={classNames("btn btn-light", dashboardStyle.profile_button)} onClick={event => routeToPage(event, GlobalConstants.PROFILE + "/" + userId)}>
                             Profile

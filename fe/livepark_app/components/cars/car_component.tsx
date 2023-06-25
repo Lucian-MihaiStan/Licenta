@@ -30,14 +30,25 @@ export const CarCard = forwardRef((carProps: CarCardProps) => {
         <div className={classNames("card mb-3", cars_style.mwidth)}>
             <div className={classNames("row no-gutters")}>
                 <div className={classNames("col-md-4", cars_style.wrapper_img)}>
-
-                <Image
-                    src='/audi_ParkLive.png'
-                    className={classNames(cars_style.img_position)}
-                    alt={car.brand}
-                    width={100}
-                    height={100}
-                />
+                
+                {
+                    car.brand.toUpperCase() == "AUDI" ? 
+                        <Image
+                            src='/audi_ParkLive.png'
+                            className={classNames(cars_style.img_position)}
+                            alt={car.brand}
+                            width={100}
+                            height={100}
+                        />
+                    :
+                        <Image
+                        src='/dacia_ParkLive.png'
+                        className={classNames(cars_style.img_position)}
+                        alt={car.brand}
+                        width={100}
+                        height={100}
+                        />
+                }
 
                 </div>
 

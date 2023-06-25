@@ -18,13 +18,5 @@ export namespace Models {
         fireExtinguisherExpirationDate: Date,
         firstAidKitExpirationDate: Date
     }
-
-    export type NotificationModel = {
-        id: number,
-        title: string,
-        message: string,
-        createdAt: Date,
-    }
-
 }
 

@@ -1,0 +1,40 @@
+.notifications_div_position {
+    display: flex;
+    padding-top: 10vh;
+    align-items: center;
+
+    flex-direction: column;
+    background-repeat: no-repeat, repeat;
+    background-size: cover;
+    min-height: 100vh;
+    background-image: url('../../../public/notification_background_ParkLive.jpg');;
+
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: black;
+    border-bottom: 5px solid black;
+    text-align: center;
+}
+
+.mwidth {
+    max-width: 80vh;
+    border-radius: 20px;
+    background-color: white;
+    justify-content: center;
+}
+
+.ul_list {
+    padding-top: 3vh;
+    padding-left: 55vh; /*TODO*/
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+
+.ul_list:hover {
+    opacity: 80%;
+    cursor: pointer;
+}

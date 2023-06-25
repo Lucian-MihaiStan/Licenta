@@ -1,5 +1,7 @@
 package ro.license.livepark.jobs;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,7 @@ import java.util.Map;
 @Component
 public class NotificationLocalCacheJob {
 
+    private final Logger logger = LoggerFactory.getLogger(NotificationLocalCacheJob.class);
     private final CarService carService;
     private final DriverService driverService;
 
@@ -33,14 +36,14 @@ public class NotificationLocalCacheJob {
     @Scheduled(fixedDelay = 200000000) // Run every 20 seconds
     public void runJob() {
         try {
-            System.out.println("Scheduled NotificationLocalCache job is running...");
+            logger.info("Scheduled NotificationLocalCache job is running...");
 
             List<CarDTO> cars = carService.findAll();
 
             for (CarDTO car : cars) {
 
                 Map<String, Date> dateExpiration = new HashMap<>();
-                System.out.println(car.plate());
+                logger.info(car.plate());
 
                 if (checkDate(car.rcaExpirationDate()))
                     dateExpiration.put("RCA", car.rcaExpirationDate());
@@ -69,6 +72,7 @@ public class NotificationLocalCacheJob {
             }
 
         } catch (Exception e) {
+            logger.error("Error in NotificationLocalCache job: " + e.getMessage());
             e.printStackTrace();
         }
     }

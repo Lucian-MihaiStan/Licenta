@@ -141,7 +141,7 @@ const DocumentType: NextPage = () => {
     return (
         <>
         <Head>
-            <title> Cars: LivePark </title>
+            <title> Document: ParkLive </title>
             <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
 	        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
         </Head>
@@ -199,13 +199,17 @@ const DocumentType: NextPage = () => {
 
                                         <div className={classNames("row", "col")}>
                                             {
-                                                oldDocumentBase64Encode != null && oldDocumentBase64Encode != "" ?
+                                                oldDocumentBase64Encode != null && oldDocumentBase64Encode != "" ? 
+                                                <>
                                                     <div>
-                                                        <embed src={oldDocumentBase64Encode} />
-                                                    </div> :
-                                                    <div>
-                                                        No document added.
+                                                        Preview:
                                                     </div>
+                                                     <embed src={oldDocumentBase64Encode} className={documents_style.embed_style} />
+                                                </> 
+                                                : 
+                                                <div>
+                                                    No document added. 
+                                                </div>
                                             }
                                         </div>
                                     </div>
@@ -244,13 +248,6 @@ const DocumentType: NextPage = () => {
                         </div>
 
                     </div>
-
-
-                    
-
-             
-
-                    
                 </div>
             </section>
         </div>
