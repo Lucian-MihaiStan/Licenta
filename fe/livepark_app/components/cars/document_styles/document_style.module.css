@@ -1,0 +1,88 @@
+.document_form {
+    display: flex;
+    border-radius: 20px;
+    min-height: 80vh;
+    min-width: 100vh;
+    max-width: 100vh;
+    max-height: 100vh;
+}
+
+.title_header {
+    display: flex;
+    font-family: "Arial Black";
+    justify-content: center;
+    font-size: 4vh;
+    align-items: center;
+    width: 100%;
+    height: 10vh;
+}
+
+.subtitle {
+}
+
+.arrow_drop {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+}
+
+.arrow_drop:hover {
+    cursor: pointer;
+    opacity: 80%;
+}
+
+.description_div {
+    font-size: 2vh;
+    font-family: "Times New Roman";
+}
+
+.infos {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+
+.btn_update_date {
+    border-radius: 10px;
+}
+
+.btn_update_div {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+
+.input_date_div {
+    padding-top: 1vh;
+}
+
+.input_date {
+    border-radius: 10px;
+    width: 20vh;
+    text-align: center;
+}
+
+.input_date:hover {
+    cursor: pointer;
+}
+
+.input_file {
+    max-width: 40vh;
+    border-radius: 10px;
+}
+
+.button_upload {
+    border-radius: 10px;
+    font-size: 1.7vh;
+
+}
+
+.upload_download_div {
+    padding-top: 1vh;   
+}
+
+.upload_download {
+    padding-right: 1vh;
+}
+
+.embed_style {
+    width: 100%;
+}

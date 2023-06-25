@@ -1,10 +1,73 @@
 .loginmaindiv {
-    width: 100vw;
-    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     font-family: sans-serif;
-    font-size: 16px;
+}
+
+.left_div {
+    padding-left: 30vh;
+    padding-right: 30vh; 
+    background-color: #f3f2f3;
+}
+
+.right_div {
+    font-size: 20px;
+    min-height: 100vh;
+    /* background-color: #7B9E87; */
+    background-color: #254d32;
+    color: white;
+    font-size: 40px;
+    font-style: italic;
+    font-family: "Times New Roman";
+}
+
+.mainplacement {
+    min-width: 100vh;
+    min-height: 100vh;
+    text-align: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title_parklive {
+    font-size: 55px;
+    font-weight: bold;
+}
+
+.rowelem {
+    min-width: 100vh;
+    min-height: 100vh;
+}
+
+.underline_title {
+    border-bottom: 3px solid #254d32;
+    font-size: 35px;
+    color: #254d32;
+    font-weight: bold;
+}
+
+.button_login_forgot {
+    margin: 1vh;
+}
+
+.signin {
+    background-color: #254d32;
+    padding-left: 5vh;
+    padding-right: 5vh;
+}
+
+.button_parklive {
+    margin-top: 5vh;
+    border-radius: 25px;
+    font-size: 30px;
+}
+
+.label_terms {
+    font-size: 20px;
+    color: #254d32;
 }

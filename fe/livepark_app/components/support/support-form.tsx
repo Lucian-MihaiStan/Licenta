@@ -4,6 +4,9 @@ import { useRouter } from "next/router";
 import { TextBoxDivForm } from "../html_components/textbox/textbox-register-login";
 import { InputConstants } from "../globalc_namespace/inputc/input-constants";
 import textBoxStyles from '../html_components/textbox/textbox_module_css/textbox.module.css'
+import support_style from './support_styles/support_styles.module.css'
+import Head from "next/head";
+import classNames from "classnames";
 
 export const SupportForm = (): JSX.Element => {
 
@@ -29,8 +32,7 @@ export const SupportForm = (): JSX.Element => {
             headers: {
                 "Content-Type": GlobalConstants.APPLICATION_JSON,
                 "Access-Control-Allow-Origin": GlobalConstants.STAR,
-                "Origin": GlobalConstants.FRONTEND_API_LINK,
-                "Authorization": "Bearer " + localStorage.getItem(GlobalConstants.TOKEN)
+                "Origin": GlobalConstants.FRONTEND_API_LINK
             },
             body: JSON.stringify({
                 firstName: fname,
@@ -50,20 +52,30 @@ export const SupportForm = (): JSX.Element => {
     }
 
     return (
-        <div>
-            
-            <form onSubmit={sendMessage}>
+        <>
+        
+        <Head>
+            <link rel="icon" href="public/favicon.ico" />
+            <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>            
+        </Head>
+        
+        <div className={classNames("container-fluid")}>
 
-                <div>
+        <div className={classNames("row")}>
+            <div className={classNames("col", support_style.div_form)}>
+                
+                <div className={classNames(support_style.one_input)}>
                     <TextBoxDivForm 
                         type={InputConstants.TEXT_TYPE} 
                         name={InputConstants.FIRST_NAME} 
                         placeholder={InputConstants.FIRST_NAME_PLACEHOLDER}
                         ref={fFirstName}
                     />
-                </div>
-                
-                <div>
+                </div>              
+
+
+                <div className={classNames(support_style.one_input)}>
                     <TextBoxDivForm
                         type={InputConstants.TEXT_TYPE} 
                         name={InputConstants.LAST_NAME}
@@ -72,7 +84,7 @@ export const SupportForm = (): JSX.Element => {
                     />
                 </div>
 
-                <div>
+                <div className={classNames(support_style.one_input)}>
                     <TextBoxDivForm
                         type={InputConstants.TEXT_TYPE}
                         name={InputConstants.EMAIL}
@@ -81,7 +93,7 @@ export const SupportForm = (): JSX.Element => {
                     />
                 </div>
 
-                <div>
+                <div className={classNames(support_style.one_input)}>
                     <TextBoxDivForm
                         type={InputConstants.TEXT_TYPE}
                         name={InputConstants.SUBJECT}
@@ -90,14 +102,23 @@ export const SupportForm = (): JSX.Element => {
                     />
                 </div>
 
-                <div className={textBoxStyles.custom_field}>
+            </div>
+
+            <div className={classNames("col", support_style.div_form)}>
+                <div>
                     <textarea  id="message" name="message" ref={fMessage}></textarea>
                     <span className={textBoxStyles.placeholder}>Text</span>
                 </div>
-                <input type="submit" value="Submit" />
+                
+                <button className={classNames("btn btn-dark")}> Send! </button>
 
-            </form>
+            </div>
+
+
         </div>
+
+        </div>
+        </>
     )
 }
 

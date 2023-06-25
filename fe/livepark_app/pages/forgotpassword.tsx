@@ -5,6 +5,8 @@ import { TextBoxDivForm } from "@/components/html_components/textbox/textbox-reg
 import { NextPage } from "next";
 import { GlobalConstants } from "@/components/globalc_namespace/global-constants";
 import { useRouter } from "next/router";
+import common_login_styles from "@/components/login_pages/common_login_modules/common-login.module.css";
+import classNames from "classnames";
 
 const ForgotPassword: NextPage = () => {
 
@@ -32,35 +34,44 @@ const ForgotPassword: NextPage = () => {
         router.push(GlobalConstants.LOGIN);
     }
 
+    function routeToPage(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, link: string): void {
+        e.preventDefault();
+        router.push(link);
+    }
+
     return (
         <>
         <Head>
-            <title>Forgot Password</title>
+            <title>Forgot Password: ParkLive</title>
             <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
         </Head>
-        <main>
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-6 mt-5 mx-auto">
-                        <form noValidate onSubmit={forgotPassword}>
-                            <h1 className="h3 mb-3 font-weight-normal">Forgot Password</h1>
-                            <div className="form-group">
-                                <TextBoxDivForm
-                                    type={InputConstants.TEXT_TYPE}
-                                    name={InputConstants.EMAIL}
-                                    placeholder={InputConstants.EMAIL_PLACEHOLDER}
-                                    ref={emailRef}
-                                />
-                            </div>
-                            <button type="submit" className="btn btn-lg btn-primary btn-block">
-                                Send Email
-                            </button>
-                        </form>
+        <div className={classNames("container-fluid")}>
+            <div className={classNames("row")}>
+                <div className={classNames("col", common_login_styles.loginmaindiv, common_login_styles.left_div)}>
+                    <h3 className={common_login_styles.underline_title}>Forgot Password</h3>
+                    <TextBoxDivForm
+                        type={InputConstants.TEXT_TYPE}
+                        name={InputConstants.EMAIL}
+                        placeholder={InputConstants.EMAIL_PLACEHOLDER}
+                        ref={emailRef}
+                    />
+
+                    <div className="row">
+                        <button className={classNames('btn btn-success', common_login_styles.button_parklive, common_login_styles.button_login_forgot, common_login_styles.signin)} onClick={event => forgotPassword(event)}> Send Email </button>
                     </div>
                 </div>
+
+                <div className={classNames("col", common_login_styles.loginmaindiv, common_login_styles.right_div)}>
+                        <div>
+                            <div className={common_login_styles.title_parklive}> ParkLive </div>
+                        </div>
+
+                        <button className={classNames('btn btn-light btn-lg', common_login_styles.button_parklive)} onClick={(e) => routeToPage(e, GlobalConstants.REGISTER_FRONTEND_APP_LINK)}> Sign Up </button>
+                        <button className={classNames('btn btn-light btn-lg', common_login_styles.button_parklive)} onClick={(e) => routeToPage(e, GlobalConstants.LOGIN_FRONTEND_APP_LINK)}> Sign In</button>
+                </div>
             </div>
-        </main>
+        </div>
         </>
     )
 }

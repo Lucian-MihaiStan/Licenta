@@ -2,6 +2,11 @@ import { MouseEvent, useEffect, useState } from "react";
 import { GlobalConstants } from "../globalc_namespace/global-constants";
 import { useRouter } from "next/router";
 import { Models } from "../../components/cars/car";
+import Head from "next/head";
+import cars_style from "@/components/cars/cars_styles/cars_style.module.css";
+import classNames from "classnames";
+import { CarCard } from "./car_component";
+import Car from "@/pages/owner/[owner]/car/[carId]";
 
 export const CarsForm = () => {
 
@@ -40,24 +45,32 @@ export const CarsForm = () => {
     }
 
     return (
-        <div>
+        <>
+        <Head>
+            <title> Cars: ParkLive </title>
+            <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+	        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        </Head>
 
-            <ul>
+        <div className={classNames(cars_style.cars_div_position)}>
+            <div className={classNames(cars_style.title)}>MY CARS</div>
+
+            <div className={classNames(cars_style.subtitle)}>Got a new car?</div>
+
+            <button className={classNames("btn btn-dark", cars_style.add_button)} onClick={(e) => routeToPage(e, GlobalConstants.ADD_CAR_PAGE)}> Add here </button>
+
+            <div className={classNames("container-fluid", cars_style.ul_list)}>
                 { 
                     Array.isArray(cars) 
                     ? cars.map((car) => {
                         return (
-                            <div>
-                                <button onClick={(e) => routeToPage(e, `${GlobalConstants.OWNER}/${userId}${GlobalConstants.CAR}/${car.carId}`)}> {car.plate} </button>
-                            </div>
+                            <CarCard car={car} userId={userId} view_documents={true}/>
                         )
                     }) : null
                 }
-            </ul>
-
-            <button onClick={(e) => routeToPage(e, GlobalConstants.ADD_CAR_PAGE)}> Add car </button>
-
+            </div>
         </div>
+        </>
     );
 
 }

@@ -1,0 +1,110 @@
+.center_dcontent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.left_div {
+    font-family: "Times New Roman";
+    background-repeat: no-repeat, repeat;
+    background-size: cover;
+    background-blend-mode: hard-light;
+    background-image: url('../../../public/parking_photoParkLiveEdited.png');;
+}
+
+.right_div {
+    min-height: 100vh;
+    /* background-color: #7B9E87; */
+    font-family: "Times New Roman";
+    background-blend-mode: hard-light;
+    background-repeat: no-repeat, repeat;
+    background-size: cover;
+    background-image: url('../../../public/document_photoParkLiveEdited.png');;
+}
+
+.top_bar {
+    font-size: 20px;
+    display: flex; 
+    justify-content: flex-end;
+    background-color: #254d32;
+    color: white;
+    text-decoration: solid;
+    position: fixed;
+    z-index: 10;
+    font-family: sans-serif;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+
+.profile_button_div {
+    justify-content: center;
+    margin-right: 2vh;
+}
+
+.profile_button {
+    padding-top: vh;
+    border-radius: 25px;
+    font-family: 'Times New Roman';
+}
+
+.welcome_div {
+    justify-self: center;
+    padding-top: 0.5vh;
+}
+
+.words_left {
+    color: white;
+    font-style: bold;
+    font-family: "Arial Black";
+    text-align: center;
+    text-decoration: solid;
+    font-size: 50px;
+}
+
+.words_right {
+    font-style: bold;
+    font-family: "Arial Black";
+    text-align: center;
+    text-decoration: solid;
+    font-size: 50px;
+}
+
+.show_button {
+    margin-top: 10vh;
+    font-size: 30px;
+    border-radius: 25px;
+    font-family: 'Times New Roman';
+    padding-left: 5vh;
+    padding-right: 5vh;
+}
+
+.title_div {
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    font-size: 30px;
+    text-align: center;
+    font-family: 'Times New Roman';
+    font-family: 'Arial Black';
+}
+
+.title_bar {
+    position: fixed;
+    z-index: 10;
+    justify-content: center;
+    background-color: #254d32;
+    color: white;
+    text-decoration: solid;
+}
+
+.bottom_div {
+    display: flex;
+    font-size: 30px;
+    text-align: center;
+    color: white;
+    justify-content: center;
+    font-family: 'Times New Roman';
+    background-color: #254d32;
+}

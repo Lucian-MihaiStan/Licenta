@@ -2,6 +2,8 @@ import { GlobalConstants } from '../globalc_namespace/global-constants';
 import { useRouter } from 'next/router';
 import navigationBarStyle from './navigation-bar.module.css'
 import Head from 'next/head';
+import Image from "next/image";
+
 import { MouseEvent, use, useRef, useState, useEffect } from 'react';
 
 export const NavigationBar = (): JSX.Element => {
@@ -48,7 +50,7 @@ export const NavigationBar = (): JSX.Element => {
             <div className={`${navigationBarStyle.sidebar} ${isSidebarOpen ? navigationBarStyle.open : ""}`} ref={sidebar_ref}>
                 <div className={navigationBarStyle.logo_details}>
                     {
-                        isSidebarOpen ? <i className="bx bxl-c-plus-plus icon"></i> : <></>
+                        isSidebarOpen ? <Image className={navigationBarStyle.padding_icon} src='/favicon.ico' width={30} height={30} alt={"P"}/> : <></>
                     }
 
                     <div className={navigationBarStyle.logo_name}><p>Parklive</p></div>
