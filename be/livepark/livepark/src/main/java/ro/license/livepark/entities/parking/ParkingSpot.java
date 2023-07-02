@@ -60,7 +60,6 @@ public class ParkingSpot {
     public void setStatus(ParkingSpotStatus status) {
         System.out.println("ParkingSpot with sensor deviceId " + getSensor().getDeviceName() + " changed the status from " + this.status + " to " + status);
         this.status = status;
-        // TODO notify frontend to refresh
     }
 
     public void setPosition(Position p) {

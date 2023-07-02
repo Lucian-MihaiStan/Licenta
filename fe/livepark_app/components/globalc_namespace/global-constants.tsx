@@ -126,13 +126,17 @@ export namespace GlobalConstants {
     export const PARKING_SPOTS_LINK = BACKEND_API_LINK + API + "/parkingSpots";
     export const RESERVATIONS_LINK = BACKEND_API_LINK + API + "/reservations";
     export const USERS_LINK = BACKEND_API_LINK + API + "/users";
-    export const ADD_PARKING_PAGE = "addParking";
+    export const ADD_PARKING_PAGE = "/parking/addParking";
     export const PARKING_AREAS_PAGE = "/parking/parkingAreas";
     export const VALIDATION_LINK = BACKEND_API_LINK + API + AUTH + VALIDATION;
     export const CONFIGURE_PARKING_SCHEME = "/parking/configureParkingScheme";
     export const CONFIGURE_PARKING_SPOTS_DETAILS = "/parking/configureParkingSpotsDetails";
     export const VIEW_PARKING_PAGE = "/parking/viewParking";
+    export const EDIT_PARKING_PAGE = "/parking/editParking";
+    export const EDIT_PARKING_SCHEME = "/parking/editParkingScheme";
+    export const EDIT_PARKING_SPOTS_DETAILS = "/parking/editParkingSpotsDetails";
     export const USER_RESERVATIONS_PAGE = "/parking/userReservations";
+    export const ADMIN_RESERVATIONS_PAGE = "/parking/adminReservations";
     export const ALL_USERS_PAGE = "/usersManagement";
 
 }

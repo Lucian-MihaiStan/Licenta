@@ -4,6 +4,7 @@ import { NavigationBar } from "../../components/navigation_bar/navigation-bar";
 import {ParkingPage} from "@/components/parking/parking_areas";
 import navigationBarStyle from "@/components/navigation_bar/navigation-bar.module.css";
 import {BrowserRouter} from "react-router-dom";
+import Head from "next/head";
 
 
 const ParkingAreas: NextPage = () => {
@@ -11,6 +12,10 @@ const ParkingAreas: NextPage = () => {
     useEffect(() => setRender(true), []);
     return (
         !render ? <div> Loading... </div> :
+        <>
+            <Head>
+                <title> Parking Areas </title>
+            </Head>
         <div>
             <NavigationBar/>
             <section className={navigationBarStyle.home_section}>
@@ -19,6 +24,7 @@ const ParkingAreas: NextPage = () => {
                 </BrowserRouter>
             </section>
         </div>
+        </>
     )
 }
 

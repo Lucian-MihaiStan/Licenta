@@ -10,5 +10,5 @@ import java.util.List;
 @Repository("ParkingSpotRepository")
 public interface ParkingSpotRepository extends JpaRepository<ParkingSpot, Integer> {
 
-    public List<ParkingSpot> findAllByParkingOrderByPosIAscPosJAsc(Parking parking);
+    List<ParkingSpot> findAllByParkingOrderByPosIAscPosJAsc(Parking parking);
 }

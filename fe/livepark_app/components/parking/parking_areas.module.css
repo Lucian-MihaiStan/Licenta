@@ -1,5 +1,3 @@
-@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css');
-
 .titleBox {
     position: relative;
     margin: auto;
@@ -30,7 +28,7 @@
     margin-left: 60px;
 }
 .parkingSlot:hover {
-    cursor: pointer;
+    /*cursor: pointer;*/
     box-shadow: 0 4px 4px 0 #888888;
 }
 .parkingName {
@@ -203,7 +201,7 @@
 .deleteBtn{
     position: relative;
     left: 770px;
-    bottom:30px;
+    top: 15px;
     width: 15px;
     height: 25px;
     border: transparent;
@@ -221,4 +219,17 @@
 }
 .transparentBtn:focus {
     outline: none;
+}
+.editBtn{
+    position: relative;
+    left: 750px;
+    bottom:55px;
+    width: 25px;
+    height: 25px;
+    border: transparent;
+    background-color: transparent;
+}
+.deleteBtn:hover,
+.editBtn:hover {
+    cursor: pointer;
 }

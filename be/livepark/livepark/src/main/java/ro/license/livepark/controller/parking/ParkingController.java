@@ -45,7 +45,7 @@ public class ParkingController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getParking(@PathVariable("id") int id) {
-       ParkingInfoDTO p = parkingService.getParkingDTO(id);
+       ParkingDTO p = parkingService.getParkingDTO(id);
        if (p == null)
            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
        return new ResponseEntity<>(p, HttpStatus.OK);

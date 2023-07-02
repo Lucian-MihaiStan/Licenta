@@ -34,7 +34,7 @@ const Home: NextPage = () => {
         <div className={classNames("row")}>
             <div className={classNames("col", dashboardStyle.center_dcontent, dashboardStyle.left_div)}>
                 <div className={classNames("bold", dashboardStyle.words_left)}>YOU WANT TO</div>
-                <div className={classNames("bold", dashboardStyle.words_left)}>FIND PARKING?</div>
+                <div className={classNames("bold", dashboardStyle.words_left)}>FIND A PARKING SPOT?</div>
                 <button className={classNames("btn btn-light", dashboardStyle.show_button)} onClick={event => routeToPage(event, GlobalConstants.LOGIN)}>
                     SHOW ME PARKING AREAS
                 </button>
@@ -48,16 +48,6 @@ const Home: NextPage = () => {
                 </button>
             </div>
         </div>
-
-        <div className={classNames("row", dashboardStyle.form_support)}>
-            <SupportForm/>
-        </div>
-
-        <div className={classNames("row")}>
-          <div className={classNames("col", dashboardStyle.bottom_div)}>
-                Thanks for using ParkLive!
-          </div>
-        </div>  
     </div>
 
     

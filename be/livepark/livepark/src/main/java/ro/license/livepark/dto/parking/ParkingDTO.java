@@ -1,9 +1,11 @@
 package ro.license.livepark.dto.parking;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import ro.license.livepark.config.parkingUtils.SensorConfiguration;
+import ro.license.livepark.entities.parking.SensorConfiguration;
 
 @Data
+@AllArgsConstructor
 public class ParkingDTO {
     private String name;
 

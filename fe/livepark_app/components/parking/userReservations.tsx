@@ -4,11 +4,11 @@ import { useRouter } from "next/router";
 import styles from "./userReservations.module.css";
 import {Reservation} from "@/components/parking/reservation";
 import {DeleteIcon} from "@/components/parking/images/delete-icon";
-import styles2 from "@/components/parking/parkingSpotsDetails.module.css";
+import Head from "next/head";
 
 
 export const UserReservations = () => {
-    const routerUtils = useRouter();
+    const router = useRouter();
     const [reservations, setReservations] = useState<Reservation[]>([]);
 
     function getParsedDate(dateStr: string): string{
@@ -50,6 +50,11 @@ export const UserReservations = () => {
                 "Origin": GlobalConstants.FRONTEND_API_LINK,
             }
         });
+        if (!response.ok) {
+            alert("ERROR: There was an error encountered while trying to get the reservations from the server. Please try again.");
+            await router.push(GlobalConstants.DASHBOARD);
+            return;
+        }
 
         const resList = await response.json();
         resList.map((r:Reservation) => {
@@ -79,6 +84,10 @@ export const UserReservations = () => {
     }
 
     return (
+        <>
+            <Head>
+                <title> Reservations </title>
+            </Head>
         <div>
             <div className={styles.titleBox}>Your reservations</div>
             <ul className={styles.reservationList}>
@@ -110,6 +119,7 @@ export const UserReservations = () => {
                 }
             </ul>
         </div>
+        </>
     );
 
 }

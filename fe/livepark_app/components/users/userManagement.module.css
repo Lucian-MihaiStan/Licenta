@@ -5,6 +5,8 @@
     font-family: sans-serif;
     min-width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    position: relative;
+    left: 30px;
 }
 .table thead tr {
     background-color: #2196F3;
@@ -40,3 +42,13 @@
     cursor: pointer;
 }
 
+.titleBox {
+    position: relative;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    'Liberation Sans', sans-serif;
+    left: 230px;
+    width: 400px;
+    margin-bottom: 30px;
+}

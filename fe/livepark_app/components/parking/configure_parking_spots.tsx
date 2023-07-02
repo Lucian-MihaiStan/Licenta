@@ -207,6 +207,7 @@ export const ParkingSpotsForm = () => {
 
     return (
         <div>
+            <div className={styles.title}>Please configure your parking map:</div>
             <div className={styles.inputZone}>
                 <label className={styles.label}> Height: </label>
                 <input

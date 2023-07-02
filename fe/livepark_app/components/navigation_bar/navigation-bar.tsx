@@ -82,6 +82,17 @@ export const NavigationBar = (): JSX.Element => {
                         <span className={navigationBarStyle.tooltip}>Parking areas</span>
                     </li>
 
+                    {
+                        (userRole == GlobalConstants.USER_ROLE_ADMIN || userRole == GlobalConstants.USER_ROLE_MASTER) &&
+                        <li>
+                            <a onClick={(e) => routeToPage(e, GlobalConstants.ADMIN_RESERVATIONS_PAGE)}>
+                                <i className='bx bx-registered'></i>
+                                <span className={navigationBarStyle.links_name}>Parkings reservations</span>
+                            </a>
+                            <span className={navigationBarStyle.tooltip}>Reservations for your parkings</span>
+                        </li>
+                    }
+
                     <li>
                         <a onClick={(e) => routeToPage(e, GlobalConstants.USER_RESERVATIONS_PAGE)}>
                             <i className='bx bx-calendar-check'></i>

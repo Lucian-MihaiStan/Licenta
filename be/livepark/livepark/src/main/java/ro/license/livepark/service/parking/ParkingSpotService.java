@@ -97,8 +97,8 @@ public class ParkingSpotService {
             Sensor s = p.getSensor();
             String deviceName = dto.getSensorDeviceName();
             if (deviceName.isBlank() && s != null) {
-                p.setSensor(null);
                 sensorRepository.delete(s);
+                p.setSensor(null);
             } else if (!deviceName.isBlank() && s == null) {
                 s = new Sensor();
                 s.setParkingSpot(p);

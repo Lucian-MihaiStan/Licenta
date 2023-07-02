@@ -4,6 +4,7 @@ export type InputProps = {
     type: string | HTMLInputTypeAttribute | undefined;
     name: string | undefined;
     placeholder: string | undefined;
+    value?: string | undefined;
 };
 
 export type FormProps = {

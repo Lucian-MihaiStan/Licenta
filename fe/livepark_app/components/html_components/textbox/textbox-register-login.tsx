@@ -21,6 +21,7 @@ export const TextBoxDivForm = forwardRef((props: InputProps, ref: ForwardedRef<a
                 name={props.name}
                 placeholder=" "
                 ref={internalRef}
+                value={props.value}
             />
             <span className={textBoxStyles.placeholder}>{props.placeholder}</span>
         </div>

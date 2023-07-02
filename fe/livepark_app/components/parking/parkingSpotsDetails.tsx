@@ -73,17 +73,20 @@ export const ConfigureParkingSpotsDetails = () => {
                         Array.isArray(arr)
                             ? arr.map((s) => {
                                 return (
-                                    <div key={s.key}
-                                         className={`${styles.slot} ${s.isRotated && !s.isAutoCreated && styles.rotatedFirstSlot} ${s.isRotated && s.isAutoCreated && styles.rotatedSecondSlot} ${s.isDeleted && styles2.deletedSlot} ${s.isAutoCreated && styles.autocreatedSlot} ${(s.number && slots[s.position.i][s.position.j].sensorDeviceName) && styles2.configuredSlot}`}>
-                                        {
-                                            !s.isDeleted ?
-                                            <button className={`${styles2.editButton}`} onClick={() => document.getElementById('modal' + s.key)!.style.display = "block"}>
-                                                <div className={`${s.isRotated &&  styles.rotatedBackwards}`}>
-                                                    <EditIcon/>
-                                                </div>
-                                            </button> : null
-                                        }
-
+                                    <div key={s.key}>
+                                        <div className={`${styles.slot} ${s.isRotated && !s.isAutoCreated && styles.rotatedFirstSlot}
+                                                        ${s.isRotated && s.isAutoCreated && styles.rotatedSecondSlot}
+                                                        ${s.isDeleted && styles2.deletedSlot} ${s.isAutoCreated && styles.autocreatedSlot}
+                                                        ${(s.number && slots[s.position.i][s.position.j].sensorDeviceName) && styles2.configuredSlot}`}>
+                                            {
+                                                !s.isDeleted ?
+                                                <button className={`${styles2.editButton}`} onClick={() => document.getElementById('modal' + s.key)!.style.display = "block"}>
+                                                    <div className={`${s.isRotated &&  styles.rotatedBackwards}`}>
+                                                        <EditIcon/>
+                                                    </div>
+                                                </button> : null
+                                            }
+                                        </div>
                                         <div id={"modal" + s.key} className={styles2.modal}>
                                             <div className={styles2.modalContent}>
                                                 <button className={styles2.close} onClick={() => document.getElementById('modal' + s.key)!.style.display = "none"}>&times;</button>
@@ -91,23 +94,22 @@ export const ConfigureParkingSpotsDetails = () => {
                                                     <label className={styles2.label}>Identifying number: <input id={"number" + s.key} type="text" className={styles2.spotNumber} defaultValue={s.number}/> </label>
                                                 </div>
                                                 <div>
-                                                    <label className={styles2.sensorLabel}>Sensor device name: </label><textarea id={"deviceName" + s.key} className={styles2.deviceName} defaultValue={slots[s.position.i][s.position.j].sensorDeviceName}/>
+                                                    <label className={styles2.sensorLabel}>Sensor device_Id: </label><textarea id={"deviceName" + s.key} className={styles2.deviceName} defaultValue={slots[s.position.i][s.position.j].sensorDeviceName}/>
                                                 </div>
                                                 <button className={styles2.saveButton} onClick={() => handleSave(s)}>Save</button>
                                             </div>
                                         </div>
-
                                     </div>
                                 )
-                            }) : <div className={styles.slot}></div>
+                            }) : null
                     }
                 </div>
         )
     }
 
     return (
-        <div>
-            <div className={styles2.title}>Configure the identifying number and the sensor device name for each parking spot:</div>
+        <div className={styles.mainArea}>
+            <div className={styles2.title}>Configure the identifying number and the device_id of the sensor for each parking spot:</div>
             <div className={styles.grid} style={{width: (10 + width * 48) + 'px', height: (5 + height * 86) + 'px'}}>
                 {
                     slots.map(applyMap)

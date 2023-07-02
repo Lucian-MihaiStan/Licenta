@@ -48,8 +48,8 @@ public class ReservationService {
         Date now = new Date();
         Date startDate = Date.from(now.toInstant().minus(1, ChronoUnit.DAYS));
         List<Parking> parkings = parkingRepository.findAllByAdminId(adminId);
-        List<Reservation> reservations = reservationRepository.findAllByExpirationTimeAfterOrderByExpirationTimeDesc(startDate);
-        reservations = reservations.stream().filter( r -> parkings.contains(r.getParkingSpot().getParking())).toList();
+        List<Reservation> reservations = reservationRepository.findAllByExpirationTimeAfterOrderByCreatedTimeDesc(startDate);
+        reservations = reservations.stream().filter( r -> parkings.stream().anyMatch(p -> r.getParkingSpot().getParking().getId() == p.getId())).toList();
         return reservations.stream().map(ReservationInfoDTO::new).toList();
     }
 
@@ -79,6 +79,9 @@ public class ReservationService {
     public boolean deleteReservation(int id) {
         if (reservationRepository.findById(id).isEmpty())
             return false;
+        ParkingSpot p = reservationRepository.findById(id).get().getParkingSpot();
+        if (p.getStatus() == ParkingSpot.ParkingSpotStatus.RESERVED)
+            p.setStatus(ParkingSpot.ParkingSpotStatus.EMPTY);
         reservationRepository.deleteById(id);
         return true;
     }

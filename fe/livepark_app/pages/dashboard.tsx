@@ -75,7 +75,7 @@ const Dashboard:  NextPage = () => {
             <div className={classNames("row")}>
                 <div className={classNames("col", dashboardStyle.center_dcontent, dashboardStyle.left_div)}>
                     <div className={classNames("bold", dashboardStyle.words_left)}>YOU WANT TO</div>
-                    <div className={classNames("bold", dashboardStyle.words_left)}>FIND PARKING?</div>
+                    <div className={classNames("bold", dashboardStyle.words_left)}>FIND A PARKING SPOT?</div>
                     <button className={classNames("btn btn-light", dashboardStyle.show_button)} onClick={event => routeToPage(event, GlobalConstants.PARKING_AREAS_PAGE)}>
                         SHOW ME PARKING AREAS
                     </button>
@@ -88,12 +88,6 @@ const Dashboard:  NextPage = () => {
                         SHOW ME MY CARS
                     </button>
                 </div>
-            </div>
-
-            <div className={classNames("row", dashboardStyle.form_support)}>
-
-                <SupportForm/>    
-        
             </div>
         </div>
         </>

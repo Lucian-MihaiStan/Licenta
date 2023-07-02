@@ -1,8 +1,19 @@
-/*@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css');*/
-
+.title {
+    position: relative;
+    left: 20vh;
+    top: 5vh;
+    height: auto;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    'Liberation Sans', sans-serif;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
 .grid {
     position: relative;
-    left: 200px;
+    left: 150px;
+    top: 5vh;
     border: 2px dashed black;
     background: darkgray;
 }
@@ -107,7 +118,8 @@
 
 .inputZone {
     position: relative;
-    left: 200px;
+    left: 150px;
+    top: 5vh;
 }
 .input {
     border-radius: 5px;

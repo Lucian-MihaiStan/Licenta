@@ -8,8 +8,10 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.stereotype.Component;
 import ro.license.livepark.entities.parking.Parking;
 import ro.license.livepark.entities.parking.ParkingSpot;
+import ro.license.livepark.entities.parking.Reservation;
 import ro.license.livepark.repository.parking.ParkingRepository;
 import ro.license.livepark.repository.parking.ParkingSpotRepository;
+import ro.license.livepark.repository.parking.ReservationRepository;
 
 import java.util.Base64;
 import java.util.List;
@@ -18,13 +20,15 @@ import java.util.Map;
 public class ParkingMqttCallback implements MqttCallback {
 
     private Parking p;
-    private ParkingSpotRepository parkingSpotRepository;
-    private ParkingRepository parkingRepository;
+    private final ParkingSpotRepository parkingSpotRepository;
+    private final ParkingRepository parkingRepository;
+    private final ReservationRepository reservationRepository;
 
-    public ParkingMqttCallback(Parking p, ParkingRepository parkingRepository, ParkingSpotRepository parkingSpotRepository) {
+    public ParkingMqttCallback(Parking p, ParkingRepository parkingRepository, ParkingSpotRepository parkingSpotRepository, ReservationRepository reservationRepository) {
         this.p = p;
         this.parkingRepository = parkingRepository;
         this.parkingSpotRepository = parkingSpotRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     public void connectionLost(Throwable cause) {
@@ -49,11 +53,19 @@ public class ParkingMqttCallback implements MqttCallback {
                     int frametype = header_first & 15; // bits 0-3
                     if (frametype == 0 || frametype == 1) {
                         int status = (header_first >> 7) & 1;
-                        if (status == 0 && parkingSpot.getStatus() != ParkingSpot.ParkingSpotStatus.EMPTY) {
+                        if (status == 0 && parkingSpot.getStatus() != ParkingSpot.ParkingSpotStatus.EMPTY
+                                        && parkingSpot.getStatus() != ParkingSpot.ParkingSpotStatus.RESERVED) {
                             parkingSpot.setStatus(ParkingSpot.ParkingSpotStatus.EMPTY);
                             parkingSpotRepository.save(parkingSpot);
                         }
-                        if (status == 1 && parkingSpot.getStatus() != ParkingSpot.ParkingSpotStatus.OCCUPIED) {
+                        else if (status == 1 && parkingSpot.getStatus() == ParkingSpot.ParkingSpotStatus.RESERVED) {
+                            Reservation r = reservationRepository.findFirstByParkingSpotOrderByCreatedTimeDesc(parkingSpot);
+                            r.setUsed(true);
+                            parkingSpot.setStatus(ParkingSpot.ParkingSpotStatus.OCCUPIED);
+                            reservationRepository.save(r);
+                            parkingSpotRepository.save(parkingSpot);
+                        }
+                        else if (status == 1 && parkingSpot.getStatus() != ParkingSpot.ParkingSpotStatus.OCCUPIED) {
                             parkingSpot.setStatus(ParkingSpot.ParkingSpotStatus.OCCUPIED);
                             parkingSpotRepository.save(parkingSpot);
                         }

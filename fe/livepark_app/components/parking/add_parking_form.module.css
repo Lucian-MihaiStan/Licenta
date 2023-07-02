@@ -1,14 +1,12 @@
-@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css');
-
 .title {
     position: relative;
-    left: 200px;
+    left: 150px;
+    top: 20px;
     height: auto;
     font-size: 30px;
     font-weight: bold;
     font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
     'Liberation Sans', sans-serif;
-    text-decoration: underline;
     margin-bottom: 30px;
 }
 .form {
@@ -25,8 +23,8 @@
 }
 .form2 {
     position: relative;
-    top: -920px;
-    left: 400px;
+    top: -915px;
+    left: 630px;
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -37,7 +35,7 @@
 }
 .mapTitle {
     position: absolute;
-    left: 355px;
+    left: 555px;
     font-size: 16px;
     font-weight: bold;
     font-family: Inter, system-ui -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',

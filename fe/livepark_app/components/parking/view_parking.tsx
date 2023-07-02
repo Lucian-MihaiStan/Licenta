@@ -101,16 +101,17 @@ export const ViewParking = () => {
                         Array.isArray(arr)
                             ? arr.map((s) => {
                                 return (
-                                    <div key={s.key}
-                                         className={`${styles.slot} ${s.isRotated && !s.isAutoCreated && styles.rotatedFirstSlot} 
-                                         ${s.isRotated && s.isAutoCreated && styles.rotatedSecondSlot} ${s.isDeleted && styles.transparentSlot} 
-                                         ${s.isAutoCreated && styles.autocreatedSlot} ${s.status == ParkingSpotStatus.OCCUPIED && styles.occupiedSlot}
-                                         ${s.status == ParkingSpotStatus.EMPTY && styles.emptySlot} ${s.status == ParkingSpotStatus.RESERVED && styles.reservedSlot}`}>
-                                        {
-                                            !s.isDeleted && s.status == ParkingSpotStatus.EMPTY ?
-                                                <button className={`${styles2.reserveButton} ${styles.pointerCursor}`} onClick={() => document.getElementById('modal' + s.key)!.style.display = "block"}>
-                                                </button> : null
-                                        }
+                                    <div key={s.key}>
+                                        <div className={`${styles.slot} ${s.isRotated && !s.isAutoCreated && styles.rotatedFirstSlot} 
+                                             ${s.isRotated && s.isAutoCreated && styles.rotatedSecondSlot} ${s.isDeleted && styles.transparentSlot} 
+                                             ${s.isAutoCreated && styles.autocreatedSlot} ${s.status == ParkingSpotStatus.OCCUPIED && styles.occupiedSlot}
+                                             ${s.status == ParkingSpotStatus.EMPTY && styles.emptySlot} ${s.status == ParkingSpotStatus.RESERVED && styles.reservedSlot}`}>
+                                            {
+                                                !s.isDeleted && s.status == ParkingSpotStatus.EMPTY ?
+                                                    <button className={`${styles2.reserveButton} ${styles.pointerCursor}`} onClick={() => document.getElementById('modal' + s.key)!.style.display = "block"}>
+                                                    </button> : null
+                                            }
+                                        </div>
                                         <div id={"modal" + s.key} className={styles2.modal}>
                                             <div className={styles2.modalContent}>
                                                 <button className={styles2.close} onClick={() =>document.getElementById('modal' + s.key)!.style.display = "none"}>&times;</button>
@@ -125,7 +126,7 @@ export const ViewParking = () => {
                                         </div>
                                     </div>
                                 )
-                            }) : <div className={styles.slot}></div>
+                            }) : null
                     }
                 </div>
             </>
@@ -154,6 +155,12 @@ export const ViewParking = () => {
         </GoogleMap>
         <a href={"https://www.google.com/maps/dir//" + parking_data.lat + "," + parking_data.lng + "/@" + parking_data.lat + "," + parking_data.lng + ",14z"} target="_blank" className={styles2.mapsButton}>Open with Google Maps</a>
         <div className={styles2.descriptionText}>If you want to make a reservation for a parking spot, click on an empty one:</div>
+        <div className={`${styles2.legend} ${styles2.descriptionText}`}>
+            <div className={styles2.emptyRectangle}></div> <div className={styles2.legendLabel}>Empty </div>
+            <div className={styles2.occupiedRectangle}></div> <div className={styles2.legendLabel}>Occupied </div>
+            <div className={styles2.reservedRectangle}></div> <div className={styles2.legendLabel}>Reserved </div>
+            <div className={styles2.unknownRectangle}></div> <div className={styles2.legendLabel}>Unknown </div>
+        </div>
         <div className={styles2.grid} style={{width: (width * 48 + 10) + 'px', height: (5 + height * 86) + 'px'}}>
             {
                 slots.map(applyMap)

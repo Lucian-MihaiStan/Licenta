@@ -1,15 +1,15 @@
 spring:
   userdatasource:
-    username: livepark_admin
+    username: parklive_admin
     password: admin_pass
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/livepark_user_db
+    url: jdbc:postgresql://localhost:5432/parklive_user_db
 
   globaldatasource:
-    username: livepark_user
-    password: livepark_pass
+    username: parklive_user
+    password: parklive_pass
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5433/livepark_db
+    url: jdbc:postgresql://localhost:5433/parklive_db
 
   jpa:
     hibernate:

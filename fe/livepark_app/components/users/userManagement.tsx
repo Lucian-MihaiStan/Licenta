@@ -5,6 +5,7 @@ import styles from "./userManagement.module.css";
 import {UserModel} from "@/components/users/user";
 import {EditIcon} from "@/components/parking/images/edit-icon";
 import {PlusIcon} from "@/components/parking/images/plus-icon";
+import Head from "next/head";
 
 
 export const AllUsersComponent = () => {
@@ -108,8 +109,12 @@ export const AllUsersComponent = () => {
 
     return (
         Object.keys(isEditing).length === 0 ? null :
+        <>
+            <Head>
+                <title> Users management </title>
+            </Head>
         <div>
-            <div className={styles.titleBox}>Your reservations</div>
+            <div className={styles.titleBox}>User accounts</div>
             <table className={styles.table}>
                 <thead>
                 <tr>
@@ -156,6 +161,7 @@ export const AllUsersComponent = () => {
                 </tbody>
             </table>
         </div>
+        </>
     );
 
 }

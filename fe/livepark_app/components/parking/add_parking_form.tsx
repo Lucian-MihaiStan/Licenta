@@ -29,8 +29,11 @@ export const AddParkingForm = () => {
     const [location, setLocation] = React.useState<any>(null);
 
     const toNextPage = () => {
-        if (location == null) {
-            alert("Please mark the parking location on the map.");
+        if (location == null || name.current?.getData() == '' || address.current?.getData() == '' || parkingFee.current?.getData() == '' ||
+            (usingSensors && (expiration_minutes.current?.getData() == '' || expiration_hours.current?.getData() == '' ||
+                                host.current?.getData() == '' || port.current?.getData() == '' || username.current?.getData() == '' ||
+                                password.current?.getData() == '' || topic.current?.getData() == ''))) {
+            alert("Please fill every field and mark the parking location on the map.");
             return;
         }
         const sensorConfig = usingSensors ? {
@@ -177,7 +180,7 @@ export const AddParkingForm = () => {
                     zoom={13}
                     center={mapCenter}
                     mapTypeId={google.maps.MapTypeId.ROADMAP}
-                    mapContainerStyle={{ width: '400px', height: '400px', position: 'absolute', left: '350px', top: '25px', outline: 'transparent 1px', borderRadius: '25px'}}
+                    mapContainerStyle={{ width: '400px', height: '400px', position: 'absolute', left: '550px', top: '25px', outline: 'transparent 1px', borderRadius: '25px'}}
                     onClick={ev => {
                         setLocation({lat: ev.latLng!.lat(), lng: ev.latLng!.lng()});
                         if (mapRef) {
