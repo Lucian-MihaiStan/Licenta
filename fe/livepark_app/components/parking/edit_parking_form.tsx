@@ -52,13 +52,13 @@ export const EditParkingForm = () => {
         if (parking.sensorConfig != null) {
             expiration_hours.current.value = parking.expiration_hours;
             expiration_minutes.current.value = parking.expiration_minutes;
+            host.current.value = parking.sensorConfig?.host;
+            port.current.value = parking.sensorConfig?.port;
+            username.current.value = parking.sensorConfig?.username;
+            password.current.value = parking.sensorConfig?.password;
+            topic.current.value = parking.sensorConfig?.topic;
+            setWithTLS(parking.sensorConfig?.withTLS);
         }
-        host.current.value = parking.sensorConfig?.host;
-        port.current.value = parking.sensorConfig?.port;
-        username.current.value = parking.sensorConfig?.username;
-        password.current.value = parking.sensorConfig?.password;
-        topic.current.value = parking.sensorConfig?.topic;
-        setWithTLS(parking.sensorConfig?.withTLS);
     }
     useEffect(() => {
         handleParking();

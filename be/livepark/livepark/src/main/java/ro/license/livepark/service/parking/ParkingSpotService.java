@@ -96,15 +96,15 @@ public class ParkingSpotService {
 
             Sensor s = p.getSensor();
             String deviceName = dto.getSensorDeviceName();
-            if (deviceName.isBlank() && s != null) {
+            if ((deviceName == null || deviceName.isBlank()) && s != null) {
                 sensorRepository.delete(s);
                 p.setSensor(null);
-            } else if (!deviceName.isBlank() && s == null) {
+            } else if (deviceName != null && !deviceName.isBlank() && s == null) {
                 s = new Sensor();
                 s.setParkingSpot(p);
                 s.setDeviceName(dto.getSensorDeviceName());
                 p.setSensor(s);
-            } else if (!deviceName.isBlank() && s != null && !s.getDeviceName().equals(deviceName)) {
+            } else if (deviceName != null && !deviceName.isBlank() && s != null && !s.getDeviceName().equals(deviceName)) {
                 s.setDeviceName(deviceName);
                 p.setSensor(s);
             }
