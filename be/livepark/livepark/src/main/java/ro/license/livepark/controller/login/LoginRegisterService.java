@@ -64,14 +64,18 @@ public class LoginRegisterService {
         if (!(EmailValidator.getInstance().isValid(email)))
             return ResponseEntity.badRequest().body(MessageWrapper.builder().message("Email is not valid!").build());
 
-        UserDTO userFound = userService.findByUsername(requestPkg.getUsername());
+        String username = requestPkg.getUsername();
+        String password = requestPkg.getPassword();
+
+        UserDTO userFound = userService.findByUsername(username);
+
         if (userFound != null)
             return ResponseEntity.badRequest().body(MessageWrapper.builder().message("Username already exists").build());
 
         User user = User
                 .builder()
-                .username(requestPkg.getUsername())
-                .password(passwordEncoder.encode(requestPkg.getPassword()))
+                .username(username)
+                .password(passwordEncoder.encode(password))
                 .email(email)
                 .firstName(requestPkg.getFirstName())
                 .lastName(requestPkg.getLastName())
@@ -80,12 +84,7 @@ public class LoginRegisterService {
 
         userService.save(user);
 
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(requestPkg.getUsername(), requestPkg.getPassword());
-        Authentication authentication = authenticationManager.authenticate(authToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        Object principal = authentication.getPrincipal();
-        if (!(principal instanceof User))
-            throw new IllegalStateException("Unknown element " + principal);
+        String jwtToken = getJwtToken(username, password, authenticationManager, tokenizer);
 
         String content = "Dear [[name]],<br>\n"
                 + "Please click the link below to verify your registration:<br>"
@@ -94,7 +93,7 @@ public class LoginRegisterService {
                 + "Your company name.";
 
         content = content.replace("[[name]]", user.getFullName());
-        content = content.replace("[[URL]]", "http://localhost:3000/validation/?token=" + tokenizer.generateJwtToken(authentication));
+        content = content.replace("[[URL]]", "http://localhost:3000/validation/?token=" + jwtToken);
 
         String subject = "Please verify your registration on LivePark";
         validationEmailService.send(
@@ -104,6 +103,17 @@ public class LoginRegisterService {
         );
 
         return ResponseEntity.ok(MessageWrapper.builder().message("Successfully register!").build());
+    }
+
+    public static String getJwtToken(String username, String password, AuthenticationManager authenticationManager, JWToken tokenizer) {
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
+        Authentication authentication = authenticationManager.authenticate(authToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Object principal = authentication.getPrincipal();
+        if (!(principal instanceof User))
+            throw new IllegalStateException("Unknown element " + principal);
+
+        return tokenizer.generateJwtToken(authentication);
     }
 
     public ResponseEntity<?> validateEmail(String token) {

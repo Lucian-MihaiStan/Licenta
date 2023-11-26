@@ -7,7 +7,7 @@ import ro.license.livepark.controller.constants.LoginRegisterControllerConstants
 import ro.license.livepark.http.packages.received.LoginUserRequestPkg;
 import ro.license.livepark.http.packages.received.RegisterUserRequestPkg;
 
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/auth")
 @RestController
 @RequiredArgsConstructor
@@ -26,7 +26,7 @@ public class LoginRegisterController {
     }
 
     @GetMapping(LoginRegisterControllerConstants.VALIDATE_EMAIL)
-    public ResponseEntity<?> validateEmail(@RequestParam("token") String token) {
+        public ResponseEntity<?> validateEmail(@RequestParam("token") String token) {
         return loginRegisterService.validateEmail(token);
     }
 

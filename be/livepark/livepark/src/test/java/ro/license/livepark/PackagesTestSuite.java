@@ -64,9 +64,7 @@ public class PackagesTestSuite {
 
     @Test
     public void loginUserRequestPkgTest() {
-        LoginUserRequestPkg pck = new LoginUserRequestPkg();
-        pck.setUsername("username");
-        pck.setPassword("password");
+        LoginUserRequestPkg pck = LoginUserRequestPkg.builder().username("username").password("password").build();
 
         assert(pck.getUsername().equals("username"));
         assert(pck.getPassword().equals("password"));
