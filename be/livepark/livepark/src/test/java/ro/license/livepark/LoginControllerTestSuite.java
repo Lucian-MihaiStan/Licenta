@@ -1,6 +1,7 @@
 package ro.license.livepark;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import ro.license.livepark.auth.JWToken;
 import ro.license.livepark.controller.login.LoginRegisterService;
 import ro.license.livepark.http.packages.received.LoginUserRequestPkg;
 import ro.license.livepark.http.packages.received.RegisterUserRequestPkg;
+import ro.license.livepark.utilities.GlobalRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -32,9 +34,11 @@ public class LoginControllerTestSuite {
     @Autowired
     private JWToken tokenizer;
 
+    @Autowired
+    private GlobalRepository globalRepository;
+
     @BeforeEach
     public void beforeEach() {
-        // TODO Lucian here you have to delete the database and create it again
     }
 
     @Test
@@ -104,6 +108,11 @@ public class LoginControllerTestSuite {
 //                )
 //                .andExpect(MockMvcResultMatchers.status().isOk())
 //                .andExpect(MockMvcResultMatchers.content().string("{\"message\":\"Password reset successfully!\"}"));
+    }
+
+    @AfterEach
+    public void afterEach() {
+        globalRepository.clearAll();
     }
 
 }

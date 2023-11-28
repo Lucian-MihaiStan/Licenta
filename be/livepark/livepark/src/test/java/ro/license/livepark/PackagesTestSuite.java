@@ -33,10 +33,7 @@ public class PackagesTestSuite {
 
     @Test
     public void documentIdEntityPkg() {
-        DocumentIdEntityPkg pck = new DocumentIdEntityPkg();
-        pck.setEntityId(1L);
-        pck.setDocumentType("CI");
-        pck.setDocumentId("123456789");
+        DocumentIdEntityPkg pck = DocumentIdEntityPkg.builder().entityId(1L).documentType("CI").documentId("123456789").build();
 
         assert(pck.getEntityId() == 1L);
         assert(pck.getDocumentType().equals("CI"));
@@ -72,9 +69,7 @@ public class PackagesTestSuite {
 
     @Test
     public void passwordUpdatePkgTest() {
-        PasswordUpdatePkg pck = new PasswordUpdatePkg();
-        pck.setUsername("username");
-        pck.setNewPassword("newPassword");
+        PasswordUpdatePkg pck = PasswordUpdatePkg.builder().username("username").newPassword("newPassword").build();
 
         assert(pck.getUsername().equals("username"));
         assert(pck.getNewPassword().equals("newPassword"));
